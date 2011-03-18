@@ -415,9 +415,9 @@
 		<struts.version>1.3.10</struts.version>
 		<struts2.version>2.2.1</struts2.version>
 
-		<jndi.name>qc</jndi.name>
+		<jndi.name>bctest</jndi.name>
 		<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-		<db.url><![CDATA[jdbc:mysql://localhost:3306/qc?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+		<db.url><![CDATA[jdbc:mysql://localhost:3306/bctest?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 		<db.username>root</db.username>
 		<db.password>password</db.password>
 		<!--
@@ -437,9 +437,9 @@
 		<profile>
 			<id>mysql</id>
 			<properties>
-				<jndi.name>qc</jndi.name>
+				<jndi.name>bctest</jndi.name>
 				<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-				<db.url><![CDATA[jdbc:mysql://localhost:3306/qc?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+				<db.url><![CDATA[jdbc:mysql://localhost:3306/bctest?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 				<db.username>root</db.username>
 				<db.password>password</db.password>
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
@@ -455,11 +455,11 @@
 		<profile>
 			<id>oracle</id>
 			<properties>
-				<jndi.name>qc</jndi.name>
+				<jndi.name>bctest</jndi.name>
 				<db.driverClassName>oracle.jdbc.OracleDriver</db.driverClassName>
-				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:dragon]]></db.url>
-				<db.username>qc</db.username>
-				<db.password>qc</db.password>
+				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:bctest]]></db.url>
+				<db.username>bctest</db.username>
+				<db.password>bctest</db.password>
 				<db.sequence>hibernate_sequence</db.sequence>
 				<hibernate.dialect>org.hibernate.dialect.Oracle9Dialect</hibernate.dialect>
 			</properties>
