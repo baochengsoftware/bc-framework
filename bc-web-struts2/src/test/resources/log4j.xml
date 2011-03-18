@@ -41,11 +41,11 @@
 	<category name="org.apache.struts2">
 	  <priority value="DEBUG" />
 	</category>
-	<category name="qc.web.struts2">
+	<category name="cn.bc.web.struts2">
 	  <priority value="DEBUG" />
 	</category>
-	<category name="qc.orm.hibernate">
-	  <priority value="${logLevel-qc.orm.hibernate}" />
+	<category name="cn.bc.orm.hibernate">
+	  <priority value="${logLevel-bc.orm.hibernate}" />
 	</category>
     	
   	<!-- 设置默认的日志级别(该设置必须放在最后,否则加载会解析出错) -->

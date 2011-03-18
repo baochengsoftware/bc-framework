@@ -39,10 +39,10 @@
 	</category>
     
 	<!-- this -->
-	<category name="qc.test.TestUtils">
+	<category name="cn.bc.test.TestUtils">
 	  <priority value="INFO" />
 	</category>
-	<category name="qc.orm.hibernate">
+	<category name="cn.bc.orm.hibernate">
 	  <priority value="${logLevel-bc.orm.hibernate}" />
 	</category>
     	
