@@ -16,6 +16,7 @@
 		<default-interceptor-ref name="paramsPrepareParamsStack" /> -->
 
 		<action name="example" class="example" method="open">
+			<result>/thankyou.jsp</result>
 			<result name="input">/example/ExampleForm.jsp</result>
 			<result name="error">/WEB-INF/jsp/error.jsp</result>
 		</action>

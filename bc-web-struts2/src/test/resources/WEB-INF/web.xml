@@ -8,20 +8,22 @@
 		<welcome-file>index.html</welcome-file>
 		<welcome-file>index.htm</welcome-file>
 	</welcome-file-list>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:cn/bc/web/struts2/StrutsCRUDActionTest-context.xml</param-value>
+	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:qc/web/struts/StrutsCRUDActionTest-context.xml</param-value>
-	</context-param>
-
+	<!-- 
 	<servlet>
 		<servlet-name>context</servlet-name>
 		<servlet-class>org.springframework.web.context.ContextLoaderServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	-->
 
 	<filter>
 		<filter-name>struts2</filter-name>

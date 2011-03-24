@@ -6,13 +6,15 @@ import org.apache.struts2.dispatcher.mapper.ActionMapping;
 import cn.bc.core.service.CrudService;
 import cn.bc.test.Example;
 
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionProxy;
 
 public class StrutsCRUDActionTest extends StrutsSpringTestCase {
 	private CrudService<Example> crudService;
 
 	@Override
 	protected String getContextLocations() {
-		return "classpath:qc/web/struts2/StrutsCRUDActionTest-context.xml";
+		return "classpath:cn/bc/web/struts2/StrutsCRUDActionTest-context.xml";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -21,6 +23,7 @@ public class StrutsCRUDActionTest extends StrutsSpringTestCase {
 		super.setUp();
 		this.crudService = (CrudService<Example>) applicationContext
 				.getBean("crudService");
+		assertNotNull(this.crudService);
 
 		// XmlConfigurationProvider c = new
 		// XmlConfigurationProvider("struts.xml");
@@ -35,10 +38,28 @@ public class StrutsCRUDActionTest extends StrutsSpringTestCase {
 
 	// 测试Action配置文件是否正确
 	public void testGetActionMapping() {
-//		ActionMapping mapping = getActionMapping("/example");
-//		assertNotNull(mapping);
-//		assertEquals("/", mapping.getNamespace());
-//		assertEquals("example", mapping.getName());
+		ActionMapping mapping = getActionMapping("/example");
+		assertNotNull(mapping);
+		assertEquals("/", mapping.getNamespace());
+		assertEquals("example", mapping.getName());
+	}
+
+	// 测试Action配置文件是否正确
+	public void testGetActionProxy() throws Exception {
+		request.setParameter("id", "111");
+		//ActionProxy proxy = getActionProxy("/example.action");
+		ActionProxy proxy = getActionProxy("/example!open");
+		assertNotNull(proxy);
+
+		@SuppressWarnings("unchecked")
+		StrutsCRUDAction<Example> action = (StrutsCRUDAction<Example>) proxy
+				.getAction();
+		assertNotNull(action);
+
+//		proxy.execute();
+//		String result = proxy.execute();
+//		assertEquals(Action.SUCCESS, result);
+//		assertEquals("111", action.getId());
 	}
 
 	// @SuppressWarnings("unchecked")
