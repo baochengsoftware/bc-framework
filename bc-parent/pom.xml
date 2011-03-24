@@ -71,6 +71,40 @@
 						<argLine>-Xmx256m</argLine>
 					</configuration>
 				</plugin>
+				
+				<!-- <plugin> <groupId>org.mortbay.jetty</groupId> <artifactId>maven-jetty-plugin</artifactId> 
+					<version>6.1.9</version> </plugin> -->
+				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>${jetty.version}</version>
+					<!-- 修改端口：mvn jetty:run -Djetty.port=8081 -->
+
+					<!-- 配置参考：http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin -->
+					<configuration>
+						<!--<scanIntervalSeconds>10</scanIntervalSeconds> -->
+						<webAppConfig>
+							<contextPath>/</contextPath><!--默认为： /${project.artifactId} -->
+							<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+						</webAppConfig>
+						<connectors>
+							<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+								<port>${jetty.port}</port>
+								<maxIdleTime>60000</maxIdleTime>
+							</connector>
+						</connectors>
+					</configuration>
+
+					<dependencies>
+						<!-- adding a dependency on jetty-servlets:GZip compression and other 
+							jetty extensions -->
+						<dependency>
+							<groupId>org.eclipse.jetty</groupId>
+							<artifactId>jetty-servlets</artifactId>
+							<version>${jetty.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -114,7 +148,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<!--			<scope>test</scope>-->
+			<!-- <scope>test</scope> -->
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
@@ -210,11 +244,11 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<!--			<dependency>-->
-			<!--				<groupId>org.springframework</groupId>-->
-			<!--				<artifactId>spring-webmvc-struts</artifactId>-->
-			<!--				<version>${spring.version}</version>-->
-			<!--			</dependency>-->
+			<!-- <dependency> -->
+			<!-- <groupId>org.springframework</groupId> -->
+			<!-- <artifactId>spring-webmvc-struts</artifactId> -->
+			<!-- <version>${spring.version}</version> -->
+			<!-- </dependency> -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
@@ -287,8 +321,8 @@
 				<groupId>strutstestcase</groupId>
 				<artifactId>strutstestcase</artifactId>
 				<version>2.1.4-1.2-2.4</version>
-				<!--<version>2.0-1.1-2.3</version>-->
-				<!--<version>1.9-1.1-2.3</version>-->
+				<!--<version>2.0-1.1-2.3</version> -->
+				<!--<version>1.9-1.1-2.3</version> -->
 				<scope>test</scope>
 			</dependency>
 
@@ -409,7 +443,10 @@
 	</dependencyManagement>
 
 	<properties>
+		<jetty.version>7.0.1.v20091125</jetty.version>
+		<jetty.port>8082</jetty.port>
 		<maven.test.skip>false</maven.test.skip>
+		
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.6.0.Final</hibernate.version>
 		<struts.version>1.3.10</struts.version>
@@ -420,16 +457,12 @@
 		<db.url><![CDATA[jdbc:mysql://localhost:3306/bctest?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 		<db.username>root</db.username>
 		<db.password>password</db.password>
-		<!--
-			使用oracle数据库时设置为sequence的名称，用于测试中qc.core.jdbc.SimpleJdbcInsertEx插入数据并返回id值
-		-->
+		<!-- 使用oracle数据库时设置为sequence的名称，用于测试中qc.core.jdbc.SimpleJdbcInsertEx插入数据并返回id值 -->
 		<db.sequence></db.sequence>
 		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 		<hibernate.show_sql>false</hibernate.show_sql>
-		<!--
-			警示：update/create-drop/create/validate，如果在classpath中有/import.sql文件，
-			hibernate3在启动时会执行
-		-->
+		<!-- 警示：update/create-drop/create/validate，如果在classpath中有/import.sql文件， 
+			hibernate3在启动时会执行 -->
 		<hibernate.hbm2ddl.auto>none</hibernate.hbm2ddl.auto>
 	</properties>
 
