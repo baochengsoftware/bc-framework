@@ -2,11 +2,12 @@
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
-<!-- struts.xml should be in the src/main/resources folder (struts.xml must be on the web application's root class path). -->
+<!-- struts.xml should be in the src/main/resources folder (struts.xml must 
+	be on the web application's root class path). -->
 <struts>
-	<constant name="struts.devMode" value="true" />	
-	
-	<!-- Configuration Spring plugin. -->
+	<constant name="struts.devMode" value="true" />
+
+	<!-- Configuration Spring plugin. http://struts.apache.org/2.x/docs/spring-plugin.html -->
 	<constant name="struts.objectFactory"
 		value="org.apache.struts2.spring.StrutsSpringObjectFactory" />
 
@@ -14,23 +15,24 @@
 	<package name="default" extends="struts-default" namespace="/">
 		<!-- Default interceptor stack.
 		<default-interceptor-ref name="paramsPrepareParamsStack" /> -->
+		<action name="example" class="example">
+			<result>/example/success.jsp</result>
+			<result name="input">/example/input.jsp</result>
+			
+			<result name="open">/example/Open.jsp</result>
+			<result name="edit">/example/Edit.jsp</result>
+			<result name="view">/example/View.jsp</result>
+			<result name="save">/example/Save.jsp</result>
+			<result name="delete">/example/Delete.jsp</result>
+		</action>
 
-		<action name="example" class="example" method="open">
-			<result>/thankyou.jsp</result>
-			<result name="input">/example/ExampleForm.jsp</result>
-			<result name="error">/WEB-INF/jsp/error.jsp</result>
-		</action>
-		<action name="example" class="example" method="edit">
-			<result name="success">/example/ExampleForm.jsp</result>
-			<result name="error">/WEB-INF/jsp/error.jsp</result>
-		</action>
-		<action name="example" class="example" method="view">
-			<result name="success">/example/ExampleView.jsp</result>
-			<result name="error">/WEB-INF/jsp/error.jsp</result>
-		</action>
-		<action name="example" class="example" method="delete">
-		</action>
-		<action name="example" class="example" method="save">
+		<action name="crud" class="crudAction">
+			<result>/example/success.jsp</result>
+			<result name="open">/crud/Open.jsp</result>
+			<result name="edit">/crud/Edit.jsp</result>
+			<result name="view">/crud/View.jsp</result>
+			<result name="save">/crud/Save.jsp</result>
+			<result name="delete">/crud/Delete.jsp</result>
 		</action>
 	</package>
 

@@ -78,10 +78,13 @@ public class StrutsCRUDAction<T extends Object> extends ActionSupport implements
 			if (this.crudService instanceof SetEntityClass) {
 				if (logger.isDebugEnabled())
 					logger.debug("reset crudService's entityClass to '"
-							+ entityClass + "'");
+							+ this.getEntityClass() + "'");
 				// 补充设置crudService的entityClass
 				((SetEntityClass<T>) this.crudService)
-						.setEntityClass(entityClass);
+						.setEntityClass(this.getEntityClass());
+			}
+			if (this.crudService.getEntityClass() == null) {
+				logger.error("crudService's entityClass is still null!");
 			}
 		}
 	}
@@ -108,15 +111,15 @@ public class StrutsCRUDAction<T extends Object> extends ActionSupport implements
 	public String open() {
 		Serializable id = parseId(this.getId());
 		this.entity = this.crudService.load(id);
-		return "input";
+		return "open";
 	}
 
 	public String edit() {
-		return null;
+		return "edit";
 	}
 
 	public String save() {
-		return null;
+		return "save";
 	}
 
 	public void validate() {
@@ -124,10 +127,10 @@ public class StrutsCRUDAction<T extends Object> extends ActionSupport implements
 	}
 
 	public String delete() {
-		return null;
+		return "delete";
 	}
 
 	public String view() {
-		return null;
+		return "view";
 	}
 }
