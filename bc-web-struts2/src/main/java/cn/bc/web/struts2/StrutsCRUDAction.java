@@ -4,13 +4,13 @@
 package cn.bc.web.struts2;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
-
 
 import cn.bc.core.SetEntityClass;
 import cn.bc.core.service.CrudService;
@@ -35,8 +35,17 @@ public class StrutsCRUDAction<T extends Object> extends ActionSupport implements
 	private CrudService<T> crudService;
 	private Class<T> entityClass;
 	private T entity;
+	private List<T> entities;
 	private String id;
 	private boolean readOnly;
+
+	public List<T> getEntities() {
+		return entities;
+	}
+
+	public void setEntities(List<T> entities) {
+		this.entities = entities;
+	}
 
 	public String getId() {
 		return id;
@@ -115,7 +124,14 @@ public class StrutsCRUDAction<T extends Object> extends ActionSupport implements
 	}
 
 	public String edit() {
+		if(this.getId() == null || this.getId().length() == 0){
+			this.setEntity(this.create());
+		}
 		return "edit";
+	}
+
+	protected T create() {
+		return this.crudService.create();
 	}
 
 	public String save() {
@@ -128,6 +144,12 @@ public class StrutsCRUDAction<T extends Object> extends ActionSupport implements
 
 	public String delete() {
 		return "delete";
+	}
+
+	public String display() {
+		logger.debug("display...");
+		this.setEntities(this.crudService.createQuery().list());
+		return "display";
 	}
 
 	public String view() {

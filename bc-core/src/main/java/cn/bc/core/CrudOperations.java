@@ -73,6 +73,11 @@ public interface CrudOperations<T extends Object> {
 	T load(Serializable id);
 	
 	/**
+	 * CRUD'C:创建新的对象
+	 */
+	T create();
+	
+	/**
 	 * CRUD'R:复杂查询的封装
 	 * @return 实例化对象查询器
 	 */

@@ -84,7 +84,7 @@
 					<configuration>
 						<!--<scanIntervalSeconds>10</scanIntervalSeconds> -->
 						<webAppConfig>
-							<contextPath>/</contextPath><!--默认为： /${project.artifactId} -->
+							<contextPath>${jetty.path}</contextPath><!--默认为： /${project.artifactId} -->
 							<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
 						</webAppConfig>
 						<connectors>
@@ -445,6 +445,7 @@
 	<properties>
 		<jetty.version>7.0.1.v20091125</jetty.version>
 		<jetty.port>8082</jetty.port>
+		<jetty.path>/</jetty.path>
 		<maven.test.skip>false</maven.test.skip>
 		
 		<spring.version>3.0.5.RELEASE</spring.version>

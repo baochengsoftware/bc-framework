@@ -5,23 +5,27 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import cn.bc.core.SetEntityClass;
 import cn.bc.core.dao.CrudDao;
 import cn.bc.core.exception.CoreException;
 import cn.bc.core.query.Query;
 
-
 public class CrudDaoMock implements CrudDao<Example>, SetEntityClass<Example> {
+	protected final Log logger = LogFactory.getLog(getClass());
 	private long id = 0;
 	private Map<String, Example> entities = new HashMap<String, Example>();
 	private Class<Example> entityClass;
 
-	public CrudDaoMock(){
-//		Example e = new Example();
-//		e.setId(new Long(1));
-//		e.setName("name");
-//		entities.put("1", e);
+	public CrudDaoMock() {
+		// Example e = new Example();
+		// e.setId(new Long(1));
+		// e.setName("name");
+		// entities.put("1", e);
 	}
+
 	public Class<Example> getEntityClass() {
 		return this.entityClass;
 	}
@@ -51,6 +55,20 @@ public class CrudDaoMock implements CrudDao<Example>, SetEntityClass<Example> {
 
 		for (Serializable id : ids) {
 			this.delete(id);
+		}
+	}
+
+	public Example create() {
+		try {
+			Example e = (Example) this.getEntityClass().newInstance();
+			logger.debug("initialize entity in CrudDaoMock.");
+			return e;
+		} catch (InstantiationException e) {
+			logger.error(e.getMessage(), e);
+			return null;
+		} catch (IllegalAccessException e) {
+			logger.error(e.getMessage(), e);
+			return null;
 		}
 	}
 

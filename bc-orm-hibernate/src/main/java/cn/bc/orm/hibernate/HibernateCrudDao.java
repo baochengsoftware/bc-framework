@@ -223,4 +223,18 @@ public class HibernateCrudDao<T extends Object> implements CrudDao<T>,SetEntityC
 		}
 		return queryObj;
 	}
+
+	public T create() {
+		try {
+			T e = (T) this.getEntityClass().newInstance();
+			logger.debug("initialize entity in HibernateCrudDao.");
+			return e;
+		} catch (InstantiationException e) {
+			logger.error(e.getMessage(), e);
+			return null;
+		} catch (IllegalAccessException e) {
+			logger.error(e.getMessage(), e);
+			return null;
+		}
+	}
 }
