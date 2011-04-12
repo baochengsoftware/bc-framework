@@ -25,4 +25,15 @@ public interface Entity<ID extends Serializable> {
 	 * @return 主键是否已被设置
 	 */
 	boolean isNew();
+	
+	/**
+	 * @return 全局唯一标识
+	 */
+	String getUid();
+	
+	/**
+	 * @param id 设置全局唯一标识
+	 */
+	void setUid(String uid);
+	
 }

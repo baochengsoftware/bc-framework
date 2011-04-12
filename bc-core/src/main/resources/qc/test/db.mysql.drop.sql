@@ -1,1 +1,1 @@
-drop table if exists QC_EXAMPLE;
+drop table if exists ZTEST_EXAMPLE;

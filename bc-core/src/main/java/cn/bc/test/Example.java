@@ -9,6 +9,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import cn.bc.core.DefaultEntity;
+
 /**
  * 仅用于测试时方便构建测试对象
  * 
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BC_EXAMPLE")
 @NamedQueries(value = { @NamedQuery(name = "Example.findAllUsers", query = "from Example") })
-public class Example implements java.io.Serializable,cn.bc.core.Entity<Long> {
+public class Example extends DefaultEntity {
 	private static final long serialVersionUID = 2473068721739186595L;
 
 	@Id
