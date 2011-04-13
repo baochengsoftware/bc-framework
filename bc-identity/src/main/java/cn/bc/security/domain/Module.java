@@ -23,7 +23,14 @@ public class Module extends DefaultEntity {
 	private int type;//模块类型，TYPE_*定义的相关常数
 	private String url;//模块地址
 	private Module belong;//所隶属的模块
+	private String options;//模块的初始化参数
 	
+	public String getOptions() {
+		return options;
+	}
+	public void setOptions(String options) {
+		this.options = options;
+	}
 	public String getCode() {
 		return code;
 	}
