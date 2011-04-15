@@ -25,7 +25,8 @@ import cn.bc.core.query.Query;
  */
 public class DefaultCrudService<T extends Object> implements CrudService<T>,
 		SetEntityClass<T> {
-	protected final Log logger = LogFactory.getLog(getClass());
+	private static Log logger = LogFactory.getLog(DefaultCrudService.class);
+	//protected final Log logger = LogFactory.getLog(getClass());
 	private CrudDao<T> crudDao;
 	protected Class<T> entityClass;
 

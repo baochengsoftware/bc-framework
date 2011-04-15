@@ -8,11 +8,16 @@
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
 	<groupId>bc</groupId>
-	<artifactId>bc-identity</artifactId>
+	<artifactId>bc-security</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>bc</groupId>
 			<artifactId>bc-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>bc</groupId>
+			<artifactId>bc-identity</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
