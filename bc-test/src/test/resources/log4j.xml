@@ -30,7 +30,7 @@
 	</category>
 	<!-- spring：设为INFO，查看加载了哪些xml配置文件 -->
 	<category name="org.springframework.beans.factory.xml.XmlBeanDefinitionReader">
-	  <priority value="INFO" />
+	  <priority value="ERROR" />
 	</category>
     
 	<!-- hibernate -->

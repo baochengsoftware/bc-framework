@@ -10,7 +10,7 @@ package cn.bc.core.exception;
  * 
  */
 public class CoreException extends RuntimeException {
-	private static final long serialVersionUID = -900402016781472L;
+	private static final long serialVersionUID = 1L;
 
 	public CoreException() {
 		super();

@@ -453,9 +453,9 @@
 		<struts.version>1.3.10</struts.version>
 		<struts2.version>2.2.1</struts2.version>
 
-		<jndi.name>bctest</jndi.name>
+		<jndi.name>bc-demo</jndi.name>
 		<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-		<db.url><![CDATA[jdbc:mysql://localhost:3306/bctest?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+		<db.url><![CDATA[jdbc:mysql://localhost:3306/bc-demo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 		<db.username>root</db.username>
 		<db.password>password</db.password>
 		<!-- 使用oracle数据库时设置为sequence的名称，用于测试中qc.core.jdbc.SimpleJdbcInsertEx插入数据并返回id值 -->
@@ -471,9 +471,9 @@
 		<profile>
 			<id>mysql</id>
 			<properties>
-				<jndi.name>bctest</jndi.name>
+				<jndi.name>bc-demo</jndi.name>
 				<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-				<db.url><![CDATA[jdbc:mysql://localhost:3306/bctest?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+				<db.url><![CDATA[jdbc:mysql://localhost:3306/bc-demo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 				<db.username>root</db.username>
 				<db.password>password</db.password>
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
@@ -489,11 +489,11 @@
 		<profile>
 			<id>oracle</id>
 			<properties>
-				<jndi.name>bctest</jndi.name>
+				<jndi.name>bc-demo</jndi.name>
 				<db.driverClassName>oracle.jdbc.OracleDriver</db.driverClassName>
-				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:bctest]]></db.url>
-				<db.username>bctest</db.username>
-				<db.password>bctest</db.password>
+				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:bc-demo]]></db.url>
+				<db.username>bc-demo</db.username>
+				<db.password>bc-demo</db.password>
 				<db.sequence>hibernate_sequence</db.sequence>
 				<hibernate.dialect>org.hibernate.dialect.Oracle9Dialect</hibernate.dialect>
 			</properties>

@@ -52,4 +52,9 @@ public interface Entity<ID extends Serializable> {
 	 * @param status 设置状态：值参考STATUS_*常数的定义
 	 */
 	void setStatus(int status);
+	
+	/**
+	 * @return 是否为内置对象,内置对象不允许删除、禁用等操作
+	 */
+	boolean isInner();
 }

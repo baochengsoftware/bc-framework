@@ -13,6 +13,7 @@ public class DefaultEntity implements Entity<Long> {
 	private Long id;
 	private String uid;
 	private int status;
+	private boolean inner;
 	
 	public Long getId() {
 		return id;
@@ -34,5 +35,11 @@ public class DefaultEntity implements Entity<Long> {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public boolean isInner() {
+		return inner;
+	}
+	public void setInner(boolean inner) {
+		this.inner = inner;
 	}
 }

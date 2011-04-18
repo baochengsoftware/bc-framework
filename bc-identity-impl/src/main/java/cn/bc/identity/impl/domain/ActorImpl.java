@@ -8,7 +8,7 @@ import cn.bc.identity.domain.ActorDetail;
 
 
 /**
- * 用户
+ * 参与者的默认实现
  * 
  * @author dragon
  */
@@ -23,6 +23,7 @@ public class ActorImpl implements Actor {
 	private String phone;
 	private String order;
 	private ActorDetail detail;
+	private boolean inner;
 	
 	public Long getId() {
 		return id;
@@ -88,5 +89,11 @@ public class ActorImpl implements Actor {
 	}
 	public boolean isNew() {
 		return getId() == null || getId() <= 0;
+	}
+	public boolean isInner() {
+		return inner;
+	}
+	public void setInner(boolean inner) {
+		this.inner = inner;
 	}
 }

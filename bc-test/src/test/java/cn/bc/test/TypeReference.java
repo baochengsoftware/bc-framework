@@ -1,4 +1,4 @@
-package cn.bc.core;
+package cn.bc.test;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.GenericArrayType;

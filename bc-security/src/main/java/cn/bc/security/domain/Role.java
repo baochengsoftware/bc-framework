@@ -6,7 +6,6 @@ package cn.bc.security.domain;
 import java.util.List;
 
 import cn.bc.core.DefaultEntity;
-import cn.bc.identity.domain.Actor;
 
 /**
  * 角色
@@ -14,24 +13,19 @@ import cn.bc.identity.domain.Actor;
  * @author dragon
  */
 public class Role extends DefaultEntity {
+	/**类型：默认*/
+	public static final int TYPE_DEFAULT = 0;
 
-	private String label;//名称
-	private String code;//编码
-	private Actor organizer;//所隶属的组织
-	private int type;//类型，TYPE_*定义的相关常数
+	private String name;//名称
+	private String code;//编码，兼排序号的作用
+	private int type;//类型，保留未用的字段
 	private List<Module> modules;//可访问的模块列表
 	
-	public Actor getOrganizer() {
-		return organizer;
+	public String getName() {
+		return name;
 	}
-	public void setOrganizer(Actor organizer) {
-		this.organizer = organizer;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getCode() {
 		return code;

@@ -12,7 +12,6 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- struts的配置 -->
-	<bean id="UserFormAction" class="cn.bc.identity.struts2.UserFormAction"
-		scope="prototype" />
+	<import resource="classpath:spring-test-db.xml"/>
+	<import resource="classpath:cn/bc/identity/spring.xml"/>
 </beans>

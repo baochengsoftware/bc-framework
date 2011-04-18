@@ -13,7 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import cn.bc.identity.domain.ActorDetail;
 
 /**
- * 参与者的扩展属性封装
+ * 参与者的扩展属性封装的默认实现
  * 
  * @author dragon
  * 

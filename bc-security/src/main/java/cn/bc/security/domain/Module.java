@@ -20,13 +20,19 @@ public class Module extends DefaultEntity {
 	/**模块类型为HTML*/
 	public static final int TYPE_HTML = 4;
 
-	private String label;//名称
+	private String name;//名称
 	private String code;//编码
 	private int type;//模块类型，TYPE_*定义的相关常数
 	private String url;//模块地址
 	private Module belong;//所隶属的模块
 	private String option;//模块的初始化参数
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getOption() {
 		return option;
 	}
@@ -38,12 +44,6 @@ public class Module extends DefaultEntity {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
 	}
 	public int getType() {
 		return type;
