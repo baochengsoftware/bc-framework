@@ -7,7 +7,9 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>cn.bc.identity.domain.Generator</class>
 		<class>cn.bc.identity.impl.domain.ActorImpl</class>
-		<class>cn.bc.identity.impl.domain.ActorDetailImpl</class>
+		<class>cn.bc.identity.domain.ActorDetailImpl</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 		</properties>
 	</persistence-unit>

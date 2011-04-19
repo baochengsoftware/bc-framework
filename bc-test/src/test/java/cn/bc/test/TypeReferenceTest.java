@@ -6,9 +6,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-
-import cn.bc.test.Example;
-
 import com.google.gson.reflect.TypeToken;
 
 public class TypeReferenceTest {

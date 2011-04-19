@@ -11,21 +11,21 @@ import cn.bc.identity.domain.Actor;
  * @author dragon
  */
 public class User extends ActorImpl {
+	private static final long serialVersionUID = 1L;
 
 	public int getType() {
 		return Actor.TYPE_USER;
 	}
-
 	public void setType(int type) {
 		// do nothing;
 	}
 
-	public int getSex() {
+	public Integer getSex() {
 		return getDetail().getInteger("sex");
 	}
 
-	public void setSex(int sex) {
-		getDetail().set("sex", new Integer(sex));
+	public void setSex(Integer sex) {
+		getDetail().set("sex", sex);
 	}
 
 	public String getFirstName() {

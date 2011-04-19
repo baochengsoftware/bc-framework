@@ -12,7 +12,9 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- Generator:需要在主配置文件配置entityManagerFactory和transactionManager的实现 -->
+	<!-- 需要在主配置文件配置entityManagerFactory和transactionManager的实现 -->
+	
+	<!-- Generator -->
 	<bean id="generatorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
 		p:entityClass="cn.bc.identity.domain.Generator" p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="generatorService" class="cn.bc.identity.impl.service.GeneratorServiceImpl" />
@@ -29,4 +31,11 @@
 			<tx:method name="currentValue" propagation="REQUIRED" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
+	
+	<!-- Actor
+	<bean id="actorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityClass="cn.bc.identity.impl.domain.ActorImpl"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="actorService" class="cn.bc.identity.impl.service.ActorServiceImpl"
+		p:crudDao-ref="actorDao" /> -->
 </beans>

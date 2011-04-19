@@ -1,27 +1,39 @@
-/**
- * 
- */
-package cn.bc.identity.impl.domain;
+package cn.bc.identity.domain;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.bc.identity.domain.ActorDetail;
-
-/**
- * 参与者的扩展属性封装的默认实现
- * 
- * @author dragon
- * 
- */
-public class ActorDetailImpl implements ActorDetail {
+@Entity
+@Table(name = "BC_IDENTITY_ACTOR_DETAIL")
+public class ActorDetailImpl extends ActorDetail {
 	private static Log logger = LogFactory.getLog(ActorDetailImpl.class);
+	
+	/**
+	 * @return 创建时间
+	 */
+	//@Column
+	@Transient
+	public Calendar getCreateDate() {
+		return getCalendar("createDate");
+	}
+
+	public void setCreateDate(Calendar createDate) {
+		setAttr("createDate", createDate);
+	}
+
+	@Transient
 	private Map<String, Object> attrs;
 
+	@Transient
 	protected Object getAttr(String key) {
 		return (attrs != null && attrs.containsKey(key)) ? attrs.get(key)
 				: null;
@@ -38,6 +50,7 @@ public class ActorDetailImpl implements ActorDetail {
 		attrs.put(key, value);
 	}
 
+	@Transient
 	public Object get(String key) {
 		return getAttr(key);
 	}
@@ -46,51 +59,38 @@ public class ActorDetailImpl implements ActorDetail {
 		setAttr(key, value);
 	}
 
+	@Transient
 	public String getString(String key) {
 		return (String) getAttr(key);
 	}
 
-	public void set(String key, String value) {
-		setAttr(key, value);
+	@Transient
+	public Boolean getBoolean(String key) {
+		return Boolean.valueOf(String.valueOf(getAttr(key)));
 	}
 
-	public boolean getBoolean(String key) {
-		return (boolean) Boolean.parseBoolean(String.valueOf(getAttr(key)));
-	}
-
-	public void set(String key, boolean value) {
-		setAttr(key, value);
-	}
-
+	@Transient
 	public Integer getInteger(String key) {
 		return (Integer) getAttr(key);
 	}
 
-	public void set(String key, Integer value) {
-		setAttr(key, value);
-	}
-
+	@Transient
 	public Long getLong(String key) {
 		return (Long) getAttr(key);
 	}
 
-	public void set(String key, Long value) {
-		setAttr(key, value);
-	}
-
+	@Transient
 	public Float getFloat(String key) {
 		return (Float) getAttr(key);
 	}
 
-	public void set(String key, Float value) {
-		setAttr(key, value);
-	}
-
+	@Transient
 	public Calendar getCalendar(String key) {
 		return (Calendar) getAttr(key);
 	}
 
-	public void set(String key, Calendar value) {
-		setAttr(key, value);
+	@Transient
+	public Date getDate(String key) {
+		return (Date) getAttr(key);
 	}
 }

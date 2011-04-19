@@ -4,101 +4,85 @@
 package cn.bc.identity.domain;
 
 import java.util.Calendar;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 
 /**
- * 参与者的扩展属性封装
+ * 参与者扩展属性的抽象
+ * 
  * @author dragon
- *
+ * 
  */
-public interface ActorDetail {
+@Entity
+public abstract class ActorDetail {
+	@Id
+	@Column(name = "ID")
+	private Long id;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	/**
 	 * @param key 键
 	 * @return 指定键的属性值
 	 */
-	Object get(String key);
+	public abstract Object get(String key);
 	
 	/**
 	 * 设置属性值
 	 * @param key 键
 	 * @param value 值
 	 */
-	void set(String key, Object value);
+	public abstract void set(String key, Object value);
 	
 	/**
 	 * @param key 键
-	 * @return 字符串属性的值
+	 * @return 字符串值
 	 */
-	String getString(String key);
-	
-	/**
-	 * 设置字符串属性的值
-	 * @param key 键
-	 * @param value 值
-	 */
-	void set(String key, String value);
+	public abstract String getString(String key);
 	
 	/**
 	 * @param key 键
 	 * @return 布尔值
 	 */
-	boolean getBoolean(String key);
-	
-	/**
-	 * 设置布尔值
-	 * @param key 键
-	 * @param value 值
-	 */
-	void set(String key, boolean value);
+	public abstract Boolean getBoolean(String key);
 	
 	/**
 	 * @param key 键
 	 * @return Integer值
 	 */
-	Integer getInteger(String key);
-	
-	/**
-	 * 设置Integer值
-	 * @param key 键
-	 * @param value 值
-	 */
-	void set(String key, Integer value);
+	public abstract Integer getInteger(String key);
 	
 	/**
 	 * @param key 键
 	 * @return long值
 	 */
-	Long getLong(String key);
-	
-	/**
-	 * 设置Long值
-	 * @param key 键
-	 * @param value 值
-	 */
-	void set(String key, Long value);
+	public abstract Long getLong(String key);
 	
 	/**
 	 * @param key 键
 	 * @return long值
 	 */
-	Float getFloat(String key);
-	
-	/**
-	 * 设置Float值
-	 * @param key 键
-	 * @param value 值
-	 */
-	void set(String key, Float value);
+	public abstract Float getFloat(String key);
 	
 	/**
 	 * @param key 键
 	 * @return Calendar值
 	 */
-	Calendar getCalendar(String key);
+	public abstract Calendar getCalendar(String key);
 	
 	/**
-	 * 设置Calendar值
 	 * @param key 键
-	 * @param value 值
+	 * @return Calendar值
 	 */
-	void set(String key, Calendar value);
+	public abstract Date getDate(String key);
 }
