@@ -15,6 +15,8 @@ import cn.bc.core.Entity;
  * @author dragon
  */
 public interface Actor extends Entity<Long> {
+	/** 类型:未定义 */
+	public static final int TYPE_UNDEFINED = 0;
 	/** 类型:用户 */
 	public static final int TYPE_USER = 1;
 	/** 类型:单位 */

@@ -3,18 +3,18 @@
  */
 package cn.bc.identity.impl.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorDetail;
-import cn.bc.identity.domain.ActorDetailImpl;
 
 /**
  * 参与者的默认实现
@@ -30,37 +30,28 @@ public class ActorImpl implements Actor {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	private Long id;
-	@Id
 	@Column(name = "UID")
 	private String uid;
-	@Id
-	@Column(name = "STATUS")
-	private int status;
-	@Id
-	@Column(name = "INNER")
-	private boolean inner;
+	@Column(name = "STATUS_")
+	private int status = cn.bc.core.Entity.STATUS_DISABLED;
+	@Column(name = "INNER_")
+	private boolean inner = false;
 
-	@Id
 	@Column(name = "NAME")
 	private String name;
-	@Id
 	@Column(name = "CODE")
 	private String code;
-	@Id
 	@Column(name = "TYPE_")
-	private int type;
-	@Id
+	private int type = Actor.TYPE_UNDEFINED;
 	@Column(name = "EMAIL")
 	private String email;
-	@Id
 	@Column(name = "PHONE")
 	private String phone;
-	@Id
 	@Column(name = "ORDER_")
 	private String order;
 
-	@OneToOne(targetEntity = ActorDetailImpl.class)
-	@MapsId("ID")
+	@OneToOne(targetEntity = ActorDetailImpl.class, cascade = CascadeType.ALL, optional = true)
+	@JoinColumn(name = "DETAIL_ID", referencedColumnName = "ID")
 	private ActorDetail detail;
 
 	public Long getId() {
@@ -128,8 +119,8 @@ public class ActorImpl implements Actor {
 	}
 
 	public ActorDetail getDetail() {
-		if (this.detail == null)
-			this.detail = new ActorDetailImpl();
+		// if (this.detail == null)
+		// this.detail = new ActorDetail();
 		return detail;
 	}
 

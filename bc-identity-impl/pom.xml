@@ -48,4 +48,8 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<properties>
+		<hibernate.show_sql>true</hibernate.show_sql>
+	</properties>
 </project>

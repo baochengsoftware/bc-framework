@@ -32,10 +32,17 @@
 		</tx:attributes>
 	</tx:advice>
 	
-	<!-- Actor
+	<!-- Actor -->
 	<bean id="actorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
 		p:entityClass="cn.bc.identity.impl.domain.ActorImpl"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="actorService" class="cn.bc.identity.impl.service.ActorServiceImpl"
-		p:crudDao-ref="actorDao" /> -->
+		p:crudDao-ref="actorDao" />
+	
+	<!-- Address -->
+	<bean id="addressDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityClass="cn.bc.one2onetest.Address"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="addressService" class="cn.bc.one2onetest.AddressServiceImpl"
+		p:crudDao-ref="addressDao" />
 </beans>
