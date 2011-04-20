@@ -3,20 +3,19 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>bc-parent</artifactId>
-		<groupId>bc</groupId>
+		<groupId>cn.bc</groupId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
-	<groupId>bc</groupId>
 	<artifactId>bc-security</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-identity</artifactId>
 			<version>${project.version}</version>
 		</dependency>
