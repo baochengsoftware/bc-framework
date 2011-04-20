@@ -12,13 +12,11 @@
 		<class>cn.bc.identity.impl.domain.ActorImpl</class>
 		<class>cn.bc.identity.impl.domain.ActorDetailImpl</class>
 
-		<!-- Test -->
+		<!-- Test
 		<class>cn.bc.one2onetest.Person</class>
-		<class>cn.bc.one2onetest.Address</class>
+		<class>cn.bc.one2onetest.Address</class> -->
 
 		<!-- 排除没有在这里声明的注解类 -->
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
-		<properties>
-		</properties>
 	</persistence-unit>
 </persistence>

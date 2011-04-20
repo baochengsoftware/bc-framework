@@ -2,16 +2,15 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
+		<groupId>cn.bc</groupId>
 		<artifactId>bc-parent</artifactId>
-		<groupId>bc</groupId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
-	<groupId>bc</groupId>
 	<artifactId>bc-web-struts</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-web</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -66,13 +65,13 @@
 
 		<!-- for test -->
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-test</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-orm-hibernate</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>

@@ -3,38 +3,40 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>bc-parent</artifactId>
-		<groupId>bc</groupId>
+		<groupId>cn.bc</groupId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
-	<groupId>bc</groupId>
 	<artifactId>bc-test</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
-
-		<!-- for test -->
+		
+		<!-- 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>test</scope>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<scope>test</scope>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-jaxrs</artifactId>
+		</dependency>
+		 -->
 	</dependencies>
 </project>

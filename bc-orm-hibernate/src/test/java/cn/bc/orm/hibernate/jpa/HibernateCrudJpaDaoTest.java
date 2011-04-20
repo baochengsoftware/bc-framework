@@ -15,7 +15,6 @@ import org.springframework.test.context.transaction.AfterTransaction;
 import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.bc.core.Entity;
 import cn.bc.orm.hibernate.AbstractSpringManageDaoTest;
 import cn.bc.test.Example;
 
@@ -56,7 +55,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 	public void afterTransaction() {
 		if (ids.isEmpty())
 			return;
-		String sql = "delete from bc_example where id in(";
+		String sql = "delete from ZTEST_EXAMPLE where id in(";
 		for (int i = 0; i < ids.size(); i++) {
 			sql += (i == 0 ? "?" : ",?");
 		}

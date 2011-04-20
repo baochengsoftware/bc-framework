@@ -11,6 +11,7 @@ import cn.bc.core.DefaultEntity;
  *
  */
 public class Duty extends DefaultEntity{
+	private static final long serialVersionUID = 1L;
 	private String code;//编码，兼排序号的作用
 	private String name;//名称
 	

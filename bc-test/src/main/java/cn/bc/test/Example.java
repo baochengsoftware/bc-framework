@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import cn.bc.core.DefaultEntity;
@@ -18,11 +16,11 @@ import cn.bc.core.DefaultEntity;
  * 
  */
 @Entity
-@Table(name = "BC_EXAMPLE")
-@NamedQueries(value = { @NamedQuery(name = "Example.findAllUsers", query = "from Example") })
+@Table(name = "ZTEST_EXAMPLE")
+//@NamedQueries(value = { @NamedQuery(name = "Example.findAllUsers", query = "from Example") })
 public class Example extends DefaultEntity {
-	private static final long serialVersionUID = 2473068721739186595L;
-
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")

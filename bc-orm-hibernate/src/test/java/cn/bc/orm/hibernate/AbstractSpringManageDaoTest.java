@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.bc.core.Page;
 import cn.bc.core.dao.CrudDao;
-import cn.bc.core.jdbc.SimpleJdbcInsertEx;
 import cn.bc.core.query.condition.impl.EqualsCondition;
+import cn.bc.db.jdbc.SimpleJdbcInsertEx;
 import cn.bc.test.Example;
 import cn.bc.test.TestUtils;
 
@@ -49,7 +49,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		this.simpleJdbcTemplate = new SimpleJdbcTemplate(dataSource);
 		this.jdbcInsert = new SimpleJdbcInsertEx(dataSource, TestUtils
-				.getDbSequence()).withTableName("bc_example")
+				.getDbSequence()).withTableName("ZTEST_EXAMPLE")
 				.usingGeneratedKeyColumns("id");
 	}
 

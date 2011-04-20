@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.bc.core.jdbc;
+package cn.bc.db.jdbc;
 
 import javax.sql.DataSource;
 

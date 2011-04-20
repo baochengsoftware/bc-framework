@@ -7,12 +7,12 @@
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>bc-core</artifactId>
-	<name>bc-core</name>
+	<artifactId>bc-db-jdbc</artifactId>
+	<name>bc-db-jdbc</name>
 	<dependencies>
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 	</dependencies>
 </project>

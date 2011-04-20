@@ -3,39 +3,35 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>bc-parent</artifactId>
-		<groupId>bc</groupId>
+		<groupId>cn.bc</groupId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
-	<groupId>bc</groupId>
 	<artifactId>bc-identity-impl</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>bc</groupId>
-			<artifactId>bc-core</artifactId>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-identity-impl-extras</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>bc</groupId>
-			<artifactId>bc-identity</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>bc</groupId>
-			<artifactId>bc-orm-hibernate</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-web-struts2</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
 		<!-- for test -->
 		<dependency>
-			<groupId>bc</groupId>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-orm-hibernate</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
 			<artifactId>bc-test</artifactId>
 			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
