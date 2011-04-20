@@ -73,6 +73,12 @@ public interface CrudOperations<T extends Object> {
 	T load(Serializable id);
 	
 	/**
+	 * CRUD'R:查询指定主键的对象,并且不管对象的状态如何，强制重新加载
+	 * @param id 对象主键
+	 */
+	T forceLoad(Serializable id);
+	
+	/**
 	 * CRUD'C:创建新的对象
 	 */
 	T create();

@@ -80,6 +80,10 @@ public class DefaultCrudService<T extends Object> implements CrudService<T>,
 		return this.crudDao.load(id);
 	}
 
+	public T forceLoad(Serializable id) {
+		return this.crudDao.forceLoad(id);
+	}
+
 	public T create() {
 		return this.crudDao.create();
 	}

@@ -30,7 +30,7 @@
 	</category>
 	<!-- spring：设为INFO，查看加载了哪些xml配置文件 -->
 	<category name="org.springframework.beans.factory.xml.XmlBeanDefinitionReader">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
     
 	<!-- hibernate -->
@@ -39,7 +39,7 @@
 	</category>
 	<!-- hibernate：设为INFO，查看实体对象映射到那张数据表；设为DEBUG则可以查看实体属性与表中列的映射 -->
 	<category name="org.hibernate.cfg.HbmBinder">
-	  <priority value="INFO" />
+	  <priority value="WARN" />
 	</category>
     
 	<!-- this -->

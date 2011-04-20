@@ -57,4 +57,9 @@ public interface Entity<ID extends Serializable> extends Serializable {
 	 * @return 是否为内置对象,内置对象不允许删除、禁用等操作
 	 */
 	boolean isInner();
+	
+	/**
+	 * @param inner 设置是否为内置对象
+	 */
+	void setInner(boolean inner);
 }

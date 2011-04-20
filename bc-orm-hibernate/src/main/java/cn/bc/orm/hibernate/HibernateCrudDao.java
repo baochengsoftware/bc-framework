@@ -90,7 +90,6 @@ public class HibernateCrudDao<T extends Object> implements CrudDao<T>,SetEntityC
 		return defaultQuery(this.entityClass);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected cn.bc.core.query.Query<T> defaultQuery(Class<T> persistentClass) {
 		Session session = null;
 		try {
@@ -99,9 +98,9 @@ public class HibernateCrudDao<T extends Object> implements CrudDao<T>,SetEntityC
 			// e.printStackTrace();
 		}
 		if (persistentClass == null)
-			return (cn.bc.core.query.Query) new HibernateQuery<T>(session);
+			return new HibernateQuery<T>(session);
 		else
-			return (cn.bc.core.query.Query) new HibernateQuery<T>(session, persistentClass);
+			return new HibernateQuery<T>(session, persistentClass);
 	}
 
 	private Session getSession() {
@@ -145,6 +144,12 @@ public class HibernateCrudDao<T extends Object> implements CrudDao<T>,SetEntityC
 
 	public T load(Serializable pk) {
 		return this.getHibernateTemplate().get(this.entityClass, pk);
+	}
+
+	public T forceLoad(Serializable pk) {
+		T e = this.getHibernateTemplate().get(this.entityClass, pk);
+		this.getHibernateTemplate().refresh(e);
+		return e;
 	}
 
 	public void save(T entity) {

@@ -84,6 +84,10 @@ public class CrudDaoMock implements CrudDao<Example>, SetEntityClass<Example> {
 		return null;
 	}
 
+	public Example forceLoad(Serializable id) {
+		return load(id);
+	}
+
 	public void save(Example entity) {
 		if (entity == null) {
 			return;

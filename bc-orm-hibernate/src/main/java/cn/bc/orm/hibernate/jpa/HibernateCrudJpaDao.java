@@ -21,7 +21,6 @@ import org.springframework.util.StringUtils;
 import cn.bc.core.SetEntityClass;
 import cn.bc.core.dao.CrudDao;
 
-
 /**
  * CrudDao的SpringHibernateJPA实现
  * 
@@ -91,14 +90,11 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 		return defaultQuery(this.entityClass);
 	}
 
-	@SuppressWarnings("unchecked")
 	protected cn.bc.core.query.Query<T> defaultQuery(Class<T> persistentClass) {
 		if (persistentClass == null)
-			return (cn.bc.core.query.Query) new HibernateJpaQuery<T>(
-					this.jpaTemplate);
+			return new HibernateJpaQuery<T>(this.jpaTemplate);
 		else
-			return (cn.bc.core.query.Query) new HibernateJpaQuery<T>(
-					this.jpaTemplate, persistentClass);
+			return new HibernateJpaQuery<T>(this.jpaTemplate, persistentClass);
 	}
 
 	public void delete(Serializable pk) {
@@ -113,8 +109,8 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 		T e = this.jpaTemplate.find(entityClass, pk);
 		if (e != null)
 			this.jpaTemplate.remove(e);
-		//else
-		//	throw new QcException("");
+		// else
+		// throw new QcException("");
 	}
 
 	public void delete(Serializable[] pks) {
@@ -147,7 +143,13 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 		return this.jpaTemplate.find(this.entityClass, pk);
 	}
 
-	@SuppressWarnings("unchecked")
+	public T forceLoad(Serializable pk) {
+		T e = this.jpaTemplate.find(this.entityClass, pk);
+		this.jpaTemplate.refresh(e);
+		return e;
+	}
+
+	@SuppressWarnings("rawtypes")
 	public void save(T entity) {
 		if (null != entity) {
 			if (entity instanceof cn.bc.core.Entity) {
@@ -214,17 +216,16 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 		this.executeUpdate(hql.toString(), args);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void executeUpdate(final String hql, final List<Object> args) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("hql=" + hql);
 			logger.debug("args="
 					+ StringUtils.collectionToCommaDelimitedString(args));
 		}
-		Object o = this.jpaTemplate.execute(new JpaCallback() {
+		Object o = this.jpaTemplate.execute(new JpaCallback<Object>() {
 			public Object doInJpa(EntityManager em) throws PersistenceException {
-				javax.persistence.Query query = createQuery(em, hql, args
-						.toArray());
+				javax.persistence.Query query = createQuery(em, hql,
+						args.toArray());
 				jpaTemplate.prepareQuery(query);
 				return query.executeUpdate();
 			}
