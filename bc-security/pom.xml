@@ -19,5 +19,11 @@
 			<artifactId>bc-identity</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 </project>

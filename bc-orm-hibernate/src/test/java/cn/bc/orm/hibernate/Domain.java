@@ -9,8 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.cfg.HbmBinder;
-
 /**
  * 仅用于测试时方便构建测试对象
  * 
@@ -20,7 +18,7 @@ import org.hibernate.cfg.HbmBinder;
 @Entity
 @Table(name = "ZTEST_DOMAIN")
 //@NamedQueries(value = { @NamedQuery(name = "Example.findAllUsers", query = "from Example") })
-public class TestDomain implements Serializable {
+public class Domain implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -32,11 +30,10 @@ public class TestDomain implements Serializable {
 	@Column(name = "NAME", nullable = false)
 	private String name;
 
-	public TestDomain() {
-		HbmBinder h;
+	public Domain() {
 	}
 
-	public TestDomain(String name) {
+	public Domain(String name) {
 		this.name = name;
 	}
 

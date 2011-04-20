@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>bc</groupId>
+		<groupId>cn.bc</groupId>
 		<artifactId>bc-parent</artifactId>
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>bc-parent/pom.xml</relativePath>
@@ -14,11 +14,17 @@
 	<modules>
 		<module>bc-parent</module>
 		<module>bc-core</module>
-		<module>bc-test</module>
-		<module>bc-identity</module>
+		
+		<module>bc-db-jdbc</module>
 		<module>bc-orm-hibernate</module>
+
+		<module>bc-test</module>
+		
+		<module>bc-identity</module>
+		<module>bc-identity-impl-extras</module>
 		<module>bc-identity-impl</module>
 		<module>bc-security</module>
+		
 		<module>bc-web</module>
 		<module>bc-web-struts</module>
 		<module>bc-web-struts2</module>

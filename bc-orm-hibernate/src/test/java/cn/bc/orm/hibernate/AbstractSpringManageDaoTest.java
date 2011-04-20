@@ -28,7 +28,7 @@ import cn.bc.test.TestUtils;
 @Transactional
 // 基类也要声明这个
 public abstract class AbstractSpringManageDaoTest implements InitializingBean {
-	protected CrudDao<TestDomain> crudDao;
+	protected CrudDao<Domain> crudDao;
 	protected DataSource dataSource;
 	protected SimpleJdbcTemplate simpleJdbcTemplate;
 	private SimpleJdbcInsert jdbcInsert;
@@ -44,7 +44,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	}
 
 	@Autowired
-	public void setCrudDao(CrudDao<TestDomain> crudDao) {
+	public void setCrudDao(CrudDao<Domain> crudDao) {
 		this.crudDao = crudDao;
 	}
 
@@ -64,7 +64,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	@Test
 	@Rollback(true)
 	public void save() {
-		TestDomain entity = new TestDomain("test1");
+		Domain entity = new Domain("test1");
 		crudDao.save(entity);
 		Assert.assertTrue(entity.getId() > 0);
 
@@ -79,9 +79,9 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 
 	@Test
 	public void saveMul() {
-		List<TestDomain> entities = new ArrayList<TestDomain>();
-		entities.add(new TestDomain("test1"));
-		entities.add(new TestDomain("test2"));
+		List<Domain> entities = new ArrayList<Domain>();
+		entities.add(new Domain("test1"));
+		entities.add(new Domain("test2"));
 		crudDao.save(entities);
 		Assert.assertTrue(entities.get(0).getId() > 0);
 		Assert.assertTrue(entities.get(1).getId() > 0);
@@ -92,7 +92,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	public void delete() {
 		Long id1 = insertOne("name");
 		crudDao.delete(id1);
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNull(entity);
 	}
 
@@ -100,7 +100,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	public void delete_notExists() {
 		Long id1 = new Long(Integer.MAX_VALUE);
 		crudDao.delete(id1);
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNull(entity);
 	}
 
@@ -110,7 +110,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 		Long id2 = insertOne("name1");
 
 		crudDao.delete(new Long[] { id1, id2 });
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNull(entity);
 		entity = crudDao.load(id2);
 		Assert.assertNull(entity);
@@ -122,7 +122,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "newName");
 		crudDao.update(id1, map);
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("newName", entity.getName());
 	}
@@ -137,7 +137,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 		map.put("name", "newName");
 		crudDao.update(new Long[] { id1, id2 }, map);
 
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("newName", entity.getName());
 
@@ -150,7 +150,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	@Rollback(true)
 	public void load() {
 		Long id1 = insertOne("name");
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("name", entity.getName());
 	}
@@ -158,7 +158,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	@Test
 	public void query_count() {
 		// 插入0条
-		cn.bc.core.query.Query<TestDomain> q = crudDao.createQuery();
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
 		q.condition(new EqualsCondition("id", new Long(0)));
 		Assert.assertNotNull(q);
 		Assert.assertEquals(0, q.count());
@@ -182,10 +182,10 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	public void query_singleResult() {
 		Long id1 = insertOne("name");
 		Assert.assertTrue(id1 > 0);
-		cn.bc.core.query.Query<TestDomain> q = crudDao.createQuery();
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
 		q.condition(new EqualsCondition("id", id1));
 		Assert.assertNotNull(q);
-		TestDomain e = q.singleResult();
+		Domain e = q.singleResult();
 		Assert.assertNotNull(e);
 		Assert.assertEquals(id1, e.getId());
 		Assert.assertEquals("name", e.getName());
@@ -194,10 +194,10 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	@Test
 	public void query_list() {
 		// 插入0条
-		cn.bc.core.query.Query<TestDomain> q = crudDao.createQuery();
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
 		q.condition(new EqualsCondition("id", new Long(0)));
 		Assert.assertNotNull(q);
-		List<TestDomain> list = q.list();
+		List<Domain> list = q.list();
 		Assert.assertNotNull(list);
 		Assert.assertTrue(list.size() == 0);
 
@@ -226,9 +226,9 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 		String uuid = UUID.randomUUID().toString();
 		for (int i = 0; i < 10; i++)
 			insertOne(uuid);
-		cn.bc.core.query.Query<TestDomain> q = crudDao.createQuery();
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
 		q.condition(new EqualsCondition("name", uuid));
-		List<TestDomain> list = q.list(1, 10);
+		List<Domain> list = q.list(1, 10);
 		Assert.assertNotNull(list);
 		Assert.assertEquals(10, list.size());
 
@@ -240,10 +240,10 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	@Test
 	public void query_page() {
 		// 插入0条
-		cn.bc.core.query.Query<TestDomain> q = crudDao.createQuery();
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
 		q.condition(new EqualsCondition("id", new Long(0)));
 		Assert.assertNotNull(q);
-		Page<TestDomain> page = q.page(1, 100);
+		Page<Domain> page = q.page(1, 100);
 		Assert.assertNotNull(page);
 		Assert.assertTrue(page.getList() == null || page.getList().isEmpty());
 		Assert.assertEquals(1, page.getPageNo());
@@ -301,12 +301,12 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	@Test
 	public void query_overPage() {
 		// 插入10条，然后查询超过这些数据范围的页
-		cn.bc.core.query.Query<TestDomain> q = crudDao.createQuery();
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
 		String uuid = UUID.randomUUID().toString();
 		for (int i = 0; i < 10; i++)
 			insertOne(uuid);
 		q.condition(new EqualsCondition("name", uuid));
-		Page<TestDomain> page = q.page(1, 5);
+		Page<Domain> page = q.page(1, 5);
 		Assert.assertNotNull(page.getList());
 		Assert.assertEquals(5, page.getList().size());
 		Assert.assertEquals(1, page.getPageNo());

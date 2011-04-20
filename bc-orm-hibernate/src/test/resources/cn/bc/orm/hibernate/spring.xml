@@ -16,7 +16,7 @@
 
 	<!-- dao配置的参考范例：当只使用hibernate原始的orm功能时直接使用HibernateCrudDao实现类 -->
 	<bean id="crudDao" class="cn.bc.orm.hibernate.HibernateCrudDao"
-		p:entityClass="cn.bc.orm.hibernate.TestDomain" p:sessionFactory-ref="sessionFactory" />
+		p:entityClass="cn.bc.orm.hibernate.Domain" p:sessionFactory-ref="sessionFactory" />
 
 	<!-- 配置crudDao的事务管理 -->
 	<aop:config>

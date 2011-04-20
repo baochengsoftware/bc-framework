@@ -16,7 +16,7 @@
 
 	<!-- dao配置的参考范例：当用hibernate的jpa功能时直接使用HibernateCrudJpaDao实现类 -->
 	<bean id="crudDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
-		p:entityClass="cn.bc.orm.hibernate.TestDomain" p:entityManagerFactory-ref="entityManagerFactory" />
+		p:entityClass="cn.bc.orm.hibernate.Domain" p:entityManagerFactory-ref="entityManagerFactory" />
 
 	<!-- 配置crudDao的事务管理 -->
 	<aop:config>

@@ -16,7 +16,7 @@ import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.bc.orm.hibernate.AbstractSpringManageDaoTest;
-import cn.bc.orm.hibernate.TestDomain;
+import cn.bc.orm.hibernate.Domain;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,7 +28,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 
 	@Override
 	protected Long insertOne(String name) {
-		TestDomain entity = new TestDomain(name);
+		Domain entity = new Domain(name);
 		crudDao.save(entity);
 		Assert.assertFalse(entity.isNew());
 		return entity.getId();
@@ -70,7 +70,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "newName");
 		crudDao.update(id1, map);
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("newName", entity.getName());
 	}
@@ -84,7 +84,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 		map.put("name", "newName");
 		crudDao.update(new Long[]{id1,id2}, map);
 		
-		TestDomain entity = crudDao.load(id1);
+		Domain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("newName", entity.getName());
 		
