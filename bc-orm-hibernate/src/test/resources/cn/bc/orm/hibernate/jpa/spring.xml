@@ -12,34 +12,11 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- 配置数据库连接 -->
-	<context:property-placeholder location="classpath:db.properties" />
-	<bean class="cn.bc.test.TestUtils">
-		<constructor-arg value="${db.sequence}"/>
-	</bean>
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="persistenceUnit" />
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaProperties">
-			<value>
-				hibernate.dialect=${hibernate.dialect}
-				hibernate.show_sql=${hibernate.show_sql}
-				hibernate.hbm2ddl.auto=${hibernate.hbm2ddl.auto}
-            </value>
-		</property>
-	</bean>
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-	</bean>
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		p:driverClassName="${db.driverClassName}" p:url="${db.url}"
-		p:username="${db.username}" p:password="${db.password}" />
+	<!-- 需要在主配置文件配置entityManagerFactory的实现,每个dao如果没有自己的实现类， 则需要注入entityClass属性指向实际的领域对象 -->
 
-	<!-- 配置crudDao的hibernate jpa实现 -->
+	<!-- dao配置的参考范例：当用hibernate的jpa功能时直接使用HibernateCrudJpaDao实现类 -->
 	<bean id="crudDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
-		p:entityClass="cn.bc.test.Example" p:entityManagerFactory-ref="entityManagerFactory" />
+		p:entityClass="cn.bc.orm.hibernate.TestDomain" p:entityManagerFactory-ref="entityManagerFactory" />
 
 	<!-- 配置crudDao的事务管理 -->
 	<aop:config>

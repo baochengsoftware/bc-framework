@@ -26,16 +26,20 @@
 	
 	<!-- spring -->
 	<category name="org.springframework">
-	  <priority value="ERROR" />
+	  <priority value="WARN" />
 	</category>
 	<!-- spring：设为INFO，查看加载了哪些xml配置文件 -->
 	<category name="org.springframework.beans.factory.xml.XmlBeanDefinitionReader">
-	  <priority value="ERROR" />
+	  <priority value="INFO" />
 	</category>
     
 	<!-- hibernate -->
 	<category name="org.hibernate">
-	  <priority value="ERROR" />
+	  <priority value="WARN" />
+	</category>
+	<!-- hibernate：设为INFO，查看实体对象映射到那张数据表；设为DEBUG则可以查看实体属性与表中列的映射 -->
+	<category name="org.hibernate.cfg.HbmBinder">
+	  <priority value="INFO" />
 	</category>
     
 	<!-- this -->

@@ -16,19 +16,19 @@ import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.bc.orm.hibernate.AbstractSpringManageDaoTest;
-import cn.bc.test.Example;
+import cn.bc.orm.hibernate.TestDomain;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration
+@ContextConfiguration("classpath:spring-test4jpa.xml")
 public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 	// 记录在事务开始前预插入的测试数据的id
 	private List<Long> ids = new ArrayList<Long>();
 
 	@Override
 	protected Long insertOne(String name) {
-		Example entity = new Example(name);
+		TestDomain entity = new TestDomain(name);
 		crudDao.save(entity);
 		Assert.assertFalse(entity.isNew());
 		return entity.getId();
@@ -55,7 +55,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 	public void afterTransaction() {
 		if (ids.isEmpty())
 			return;
-		String sql = "delete from ZTEST_EXAMPLE where id in(";
+		String sql = "delete from " + getTableName() + " where id in(";
 		for (int i = 0; i < ids.size(); i++) {
 			sql += (i == 0 ? "?" : ",?");
 		}
@@ -70,7 +70,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name", "newName");
 		crudDao.update(id1, map);
-		Example entity = crudDao.load(id1);
+		TestDomain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("newName", entity.getName());
 	}
@@ -84,7 +84,7 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 		map.put("name", "newName");
 		crudDao.update(new Long[]{id1,id2}, map);
 		
-		Example entity = crudDao.load(id1);
+		TestDomain entity = crudDao.load(id1);
 		Assert.assertNotNull(entity);
 		Assert.assertEquals("newName", entity.getName());
 		

@@ -5,7 +5,11 @@
 	<persistence-unit name="persistenceUnit"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>cn.bc.test.Example</class>
+		<class>cn.bc.orm.hibernate.TestDomain</class>
+
+		<!-- 排除没有在这里声明的注解类:否则报错“nested exception is org.hibernate.DuplicateMappingException: 
+			Duplicate class/entity mapping cn.bc.orm.hibernate.TestDomain” -->
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 		</properties>
 	</persistence-unit>

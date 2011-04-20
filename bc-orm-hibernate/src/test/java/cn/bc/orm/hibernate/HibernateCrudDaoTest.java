@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
-@ContextConfiguration
+@ContextConfiguration("classpath:spring-test.xml")
 public class HibernateCrudDaoTest extends AbstractSpringManageDaoTest {
 	@Override
 	protected Long insertOne(String name) {
