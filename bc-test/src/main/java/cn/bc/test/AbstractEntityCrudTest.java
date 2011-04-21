@@ -37,7 +37,16 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 	 *            传入的一些配置信息
 	 * @return
 	 */
-	protected abstract E createInstance(String config);
+	protected E createInstance(String config) {
+		E entity = this.crudOperations.create();
+		
+		//补充一些必填域的设置
+		entity.setInner(false);
+		entity.setStatus(Entity.STATUS_DISABLED);
+		entity.setUid(UUID.randomUUID().toString());
+		
+		return entity;
+	}
 
 	/**
 	 * @return 实体对象对应的数据库表名

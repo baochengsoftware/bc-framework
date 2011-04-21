@@ -15,5 +15,10 @@
 			<artifactId>persistence-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.commontemplate</groupId>
+			<artifactId>commontemplate</artifactId>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>

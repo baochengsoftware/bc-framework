@@ -6,45 +6,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.bc.core.dao.CrudDao;
 import cn.bc.core.exception.CoreException;
-import cn.bc.identity.domain.Generator;
-import cn.bc.identity.service.GeneratorService;
+import cn.bc.identity.domain.IdGenerator;
+import cn.bc.identity.service.IdGeneratorService;
 
-public class GeneratorServiceImpl implements GeneratorService {
-	private static Log logger = LogFactory.getLog(GeneratorServiceImpl.class);
-	protected CrudDao<Generator> generatorDao;
+/**
+ * 标识生成器Service接口的实现
+ * @author dragon
+ *
+ */
+public class IdGeneratorServiceImpl implements IdGeneratorService {
+	private static Log logger = LogFactory.getLog(IdGeneratorServiceImpl.class);
+	protected CrudDao<IdGenerator> idGeneratorDao;
 
 	@Autowired
-	public void setGeneratorDao(CrudDao<Generator> generatorDao) {
-		this.generatorDao = generatorDao;
+	public void setIdGeneratorDao(CrudDao<IdGenerator> idGeneratorDao) {
+		this.idGeneratorDao = idGeneratorDao;
 	}
 
 	public Long nextValue(String type) {
-		Generator entity = generatorDao.load(type);
+		IdGenerator entity = idGeneratorDao.load(type);
 		if (entity == null)
 			throw new CoreException("type is not exist. type=" + type);
 		entity.setValue(entity.getValue() + 1);
-		generatorDao.save(entity);
+		idGeneratorDao.save(entity);
 		return entity.getValue();
 	}
 
 	public String next(String type) {
-		Generator entity = generatorDao.load(type);
+		IdGenerator entity = idGeneratorDao.load(type);
 		if (entity == null)
 			throw new CoreException("type is not exist. type=" + type);
 		entity.setValue(entity.getValue() + 1);
-		generatorDao.save(entity);
+		idGeneratorDao.save(entity);
 		return this.formatValue(type, entity.getValue(), entity.getFormat());
 	}
 
 	public Long currentValue(String type) {
-		Generator entity = generatorDao.load(type);
+		IdGenerator entity = idGeneratorDao.load(type);
 		if (entity == null)
 			throw new CoreException("type is not exist. type=" + type);
 		return entity.getValue();
 	}
 
 	public String current(String type) {
-		Generator entity = generatorDao.load(type);
+		IdGenerator entity = idGeneratorDao.load(type);
 		if (entity == null)
 			throw new CoreException("type is not exist. type=" + type);
 		return this.formatValue(type, entity.getValue(), entity.getFormat());
@@ -64,7 +69,7 @@ public class GeneratorServiceImpl implements GeneratorService {
 		}
 	}
 
-	public void save(Generator generator) {
-		generatorDao.save(generator);
+	public void save(IdGenerator generator) {
+		idGeneratorDao.save(generator);
 	}
 }

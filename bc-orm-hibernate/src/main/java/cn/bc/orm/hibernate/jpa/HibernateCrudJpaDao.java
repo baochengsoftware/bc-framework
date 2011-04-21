@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import cn.bc.core.SetEntityClass;
 import cn.bc.core.dao.CrudDao;
+import cn.bc.core.exception.CoreException;
 
 /**
  * CrudDao的SpringHibernateJPA实现
@@ -257,14 +258,14 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 	public T create() {
 		try {
 			T e = (T) this.getEntityClass().newInstance();
-			logger.debug("initialize entity in HibernateCrudDao.");
+			logger.debug("initialize entity in HibernateCrudJpaDao.");
 			return e;
 		} catch (InstantiationException e) {
 			logger.error(e.getMessage(), e);
-			return null;
+			throw new CoreException(e);
 		} catch (IllegalAccessException e) {
 			logger.error(e.getMessage(), e);
-			return null;
+			throw new CoreException(e);
 		}
 	}
 }

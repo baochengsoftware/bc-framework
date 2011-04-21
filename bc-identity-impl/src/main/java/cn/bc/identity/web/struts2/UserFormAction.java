@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.bc.identity.struts2;
+package cn.bc.identity.web.struts2;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

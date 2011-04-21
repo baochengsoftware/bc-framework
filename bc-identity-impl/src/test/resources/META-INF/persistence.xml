@@ -6,15 +6,12 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<!-- 标识生成器 -->
-		<class>cn.bc.identity.domain.Generator</class>
+		<class>cn.bc.identity.domain.IdGenerator</class>
 		
 		<!-- Actor -->
+		<class>cn.bc.identity.domain.Duty</class>
 		<class>cn.bc.identity.impl.domain.ActorImpl</class>
 		<class>cn.bc.identity.impl.domain.ActorDetailImpl</class>
-
-		<!-- Test
-		<class>cn.bc.one2onetest.Person</class>
-		<class>cn.bc.one2onetest.Address</class> -->
 
 		<!-- 排除没有在这里声明的注解类 -->
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

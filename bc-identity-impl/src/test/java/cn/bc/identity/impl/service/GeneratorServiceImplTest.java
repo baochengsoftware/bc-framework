@@ -11,24 +11,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import cn.bc.identity.domain.Generator;
-import cn.bc.identity.service.GeneratorService;
+import cn.bc.identity.domain.IdGenerator;
+import cn.bc.identity.service.IdGeneratorService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration("classpath:spring-test.xml")
 public class GeneratorServiceImplTest {
-	protected GeneratorService generatorService;
+	protected IdGeneratorService generatorService;
 
 	@Autowired
-	public void setGeneratorService(GeneratorService generatorService) {
+	public void setGeneratorService(IdGeneratorService generatorService) {
 		this.generatorService = generatorService;
 	}
 
 	//先插入一条数据，并返回类型的值
 	private String insertTestData(Long value,String format) {
 		String uuid = UUID.randomUUID().toString();//使用uuid避免与现有数据产生冲突
-		Generator generator = new Generator();
+		IdGenerator generator = new IdGenerator();
 		generator.setType(uuid);
 		generator.setValue(value);
 		generator.setFormat(format);

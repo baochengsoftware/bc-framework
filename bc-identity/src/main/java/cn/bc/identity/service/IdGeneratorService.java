@@ -1,8 +1,13 @@
 package cn.bc.identity.service;
 
-import cn.bc.identity.domain.Generator;
+import cn.bc.identity.domain.IdGenerator;
 
-public interface GeneratorService {
+/**
+ * 标识生成器Service接口
+ * @author dragon
+ *
+ */
+public interface IdGeneratorService {
 	/**
 	 * 获取下一个值，改值是经过格式化后的值
 	 * @param type 类型
@@ -35,5 +40,5 @@ public interface GeneratorService {
 	 * 插入一个新的类型
 	 * @param generator
 	 */
-	void save(Generator generator);
+	void save(IdGenerator generator);
 }

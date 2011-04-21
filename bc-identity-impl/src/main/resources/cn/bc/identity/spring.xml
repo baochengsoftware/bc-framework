@@ -13,29 +13,42 @@
         http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 	<!-- 需要在主配置文件配置entityManagerFactory和transactionManager的实现 -->
-	
-	<!-- Generator -->
-	<bean id="generatorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
-		p:entityClass="cn.bc.identity.domain.Generator" p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="generatorService" class="cn.bc.identity.impl.service.GeneratorServiceImpl" />
+
+	<!-- IdGenerator -->
+	<bean id="idGeneratorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityClass="cn.bc.identity.domain.IdGenerator"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="idGeneratorService" class="cn.bc.identity.impl.service.IdGeneratorServiceImpl" />
 	<aop:config>
-		<aop:pointcut id="generatorServiceMethod"
-			expression="within(cn.bc.identity.impl.service.GeneratorServiceImpl)" />
-		<aop:advisor pointcut-ref="generatorServiceMethod" advice-ref="generatorServiceTxAdvice" />
+		<aop:pointcut id="idGeneratorServiceMethod"
+			expression="within(cn.bc.identity.impl.service.IdGeneratorServiceImpl)" />
+		<aop:advisor pointcut-ref="idGeneratorServiceMethod"
+			advice-ref="idGeneratorServiceTxAdvice" />
 	</aop:config>
-	<tx:advice id="generatorServiceTxAdvice" transaction-manager="transactionManager">
+	<tx:advice id="idGeneratorServiceTxAdvice"
+		transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="next" propagation="REQUIRED" read-only="false" />
-			<tx:method name="nextValue" propagation="REQUIRED" read-only="false" />
+			<tx:method name="nextValue" propagation="REQUIRED"
+				read-only="false" />
 			<tx:method name="current" propagation="REQUIRED" read-only="true" />
-			<tx:method name="currentValue" propagation="REQUIRED" read-only="true" />
+			<tx:method name="currentValue" propagation="REQUIRED"
+				read-only="true" />
 		</tx:attributes>
 	</tx:advice>
-	
+
 	<!-- Actor -->
 	<bean id="actorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
-		p:entityClass="cn.bc.identity.impl.domain.ActorImpl"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="actorService" class="cn.bc.identity.impl.service.ActorServiceImpl"
+		p:entityClass="cn.bc.identity.impl.domain.ActorImpl"
 		p:crudDao-ref="actorDao" />
+
+	<!-- Duty -->
+	<bean id="dutyDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="dutyService" class="cn.bc.identity.impl.service.DutyServiceImpl" p:crudDao-ref="dutyDao" />
+<!-- 	<bean id="dutyAction" class="cn.bc.identity.struts2.DutyAction" -->
+<!-- 		scope="prototype" p:dutyService-ref="dutyService" -->
+<!-- 		p:idGeneratorService-ref="idGeneratorService" /> -->
 </beans>

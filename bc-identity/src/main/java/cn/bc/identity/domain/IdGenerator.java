@@ -15,8 +15,8 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "BC_IDENTITY_GENERATOR")
-public class Generator {
+@Table(name = "BC_IDENTITY_IDGENERATOR")
+public class IdGenerator {
 	@Id
 	@Column(name = "TYPE_")
 	private String type;// 分类

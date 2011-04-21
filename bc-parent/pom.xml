@@ -439,6 +439,11 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>5.1.6</version>
 			</dependency>
+			<dependency>
+				<groupId>org.commontemplate</groupId>
+				<artifactId>commontemplate</artifactId>
+				<version>0.8.7</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
