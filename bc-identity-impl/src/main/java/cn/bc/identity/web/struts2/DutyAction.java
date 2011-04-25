@@ -34,7 +34,7 @@ public class DutyAction extends ActionSupport {
 	private IdGeneratorService idGeneratorService;
 	private Long id;
 	private Duty b;
-	private List<Duty> list;
+	private List<Duty> bs;
 
 	@Autowired
 	public void setDutyService(DutyService dutyService) {
@@ -62,12 +62,12 @@ public class DutyAction extends ActionSupport {
 		this.id = id;
 	}
 
-	public List<Duty> getList() {
-		return list;
+	public List<Duty> getBs() {
+		return bs;
 	}
 
-	public void setList(List<Duty> list) {
-		this.list = list;
+	public void setBs(List<Duty> bs) {
+		this.bs = bs;
 	}
 
 	public String execute() throws Exception {
@@ -75,6 +75,7 @@ public class DutyAction extends ActionSupport {
 		return SUCCESS;
 	}
 
+	//获取表单页面
 	public String form() throws Exception {
 		try {
 			logger.debug("do in method form.");
@@ -86,9 +87,18 @@ public class DutyAction extends ActionSupport {
 		return "form";
 	}
 
+	//获取列表视图页面
 	public String list() throws Exception {
 		logger.debug("do in method list.");
-		list = this.dutyService.createQuery().list();
+		bs = this.dutyService.createQuery().list();
 		return "list";
+	}
+
+	//保存表单数据
+	public String save() throws Exception {
+		logger.debug("do in method save.");
+		logger.debug(b);
+		this.dutyService.save(b);
+		return "saveSuccess";
 	}
 }

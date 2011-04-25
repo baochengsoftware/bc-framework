@@ -3,13 +3,16 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="duty" extends="struts-default" namespace="/duty">
+	<package name="duty" extends="bc-default" namespace="/duty">
 		<action name="form" class="dutyAction" method="form">
 			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result>
-<!-- 			<result name="form" type="freemarker">/bc/identity/duty/form.jsp</result> -->
 		</action>
+		<action name="save" class="dutyAction" method="save">
+		</action>
+		
 		<action name="list" class="dutyAction" method="list">
-			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result>
+			<result name="list">/bc/identity/duty/dutes.jsp</result>
+<!-- 			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result> -->
 		</action>
 	</package>
 </struts>

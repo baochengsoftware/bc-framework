@@ -36,4 +36,9 @@ public class Duty extends DefaultEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String toString() {
+		return "id:" + getId() + ",code:" + getCode() + ",name:" + getName()
+				+ ",status:" + getStatus() + ",inner:" + isInner();
+	}
 }

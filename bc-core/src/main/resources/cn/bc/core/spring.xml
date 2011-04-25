@@ -17,8 +17,11 @@
 		定义了其他的接口方法，该方法的名称又与下面声明的不匹配，则需要自己另行配置事务管理
 	 -->
 	<aop:config>
+		<!-- http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/aop.html#aop-pointcuts
+			包或实现类使用within关键字，接口实现使用this关键字
+		 -->
 		<aop:pointcut id="crudServiceMethod"
-			expression="within(cn.bc.core.service.CrudService)" />
+			expression="this(cn.bc.core.service.CrudService)" />
 		<aop:advisor pointcut-ref="crudServiceMethod" advice-ref="crudServiceTxAdvice" />
 	</aop:config>
 	<tx:advice id="crudServiceTxAdvice" transaction-manager="transactionManager">
