@@ -5,11 +5,11 @@
 <struts>
 	<package name="duty" extends="struts-default" namespace="/duty">
 		<action name="form" class="dutyAction" method="form">
-			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/dutyForm.ftl</result>
+			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result>
 <!-- 			<result name="form" type="freemarker">/bc/identity/duty/form.jsp</result> -->
 		</action>
-		<action name="grid" class="dutyAction" method="grid">
-			<result name="grid">/bc/identity/duty/grid.jsp</result>
+		<action name="list" class="dutyAction" method="list">
+			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result>
 		</action>
 	</package>
 </struts>

@@ -3,6 +3,8 @@
  */
 package cn.bc.identity.web.struts2;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class DutyAction extends ActionSupport {
 	private IdGeneratorService idGeneratorService;
 	private Long id;
 	private Duty b;
+	private List<Duty> list;
 
 	@Autowired
 	public void setDutyService(DutyService dutyService) {
@@ -59,6 +62,14 @@ public class DutyAction extends ActionSupport {
 		this.id = id;
 	}
 
+	public List<Duty> getList() {
+		return list;
+	}
+
+	public void setList(List<Duty> list) {
+		this.list = list;
+	}
+
 	public String execute() throws Exception {
 		logger.debug("do in method execute.");
 		return SUCCESS;
@@ -75,8 +86,9 @@ public class DutyAction extends ActionSupport {
 		return "form";
 	}
 
-	public String grid() throws Exception {
-		logger.debug("do in method grid.");
-		return "form";
+	public String list() throws Exception {
+		logger.debug("do in method list.");
+		list = this.dutyService.createQuery().list();
+		return "list";
 	}
 }

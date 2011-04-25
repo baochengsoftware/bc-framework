@@ -11,6 +11,7 @@ import cn.bc.core.DefaultEntity;
  * @author dragon
  */
 public class Module extends DefaultEntity {
+	private static final long serialVersionUID = 1L;
 	/**模块类型为文件夹*/
 	public static final int TYPE_FOLDER = 1;
 	/**模块类型为内部链接*/
