@@ -132,4 +132,23 @@ public class StringUtils {
 			baos.write((hexString.indexOf(bytes.charAt(i)) << 4 | hexString.indexOf(bytes.charAt(i + 1))));
 		return new String(baos.toByteArray());
 	}
+    
+    /**
+     * 将字符串数组转换成Long数组
+     * @param sArray
+     * @return
+     */
+    public static Long[] stringArray2LongArray(String[] sArray){
+        if(null == sArray || sArray.length == 0)
+            return null;
+        Long[] longArray = new Long[sArray.length];
+        for(int i = 0; i < sArray.length; i++){
+            try {
+                longArray[i] = new Long(sArray[i]);
+            } catch (NumberFormatException e) {
+                longArray[i] = new Long(0);
+            } 
+        }
+        return longArray;
+    }
 }
