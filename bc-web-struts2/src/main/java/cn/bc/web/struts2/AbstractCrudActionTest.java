@@ -125,8 +125,9 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 	public void testSave() throws Exception {
 		// 在调用getActionProxy方法前设置请求的参数
 		String uid = UUID.randomUUID().toString();
-		request.setParameter("e.type", "1");
-		request.setParameter("e.uid", uid);
+		request.setParameter("entity.id", "");
+		request.setParameter("entity.type", "1");
+		request.setParameter("entity.uid", uid);
 		
 		// 测试ActionProxy的配置
 		ActionProxy proxy = getActionProxy(getNamespace() + "/save");
@@ -138,6 +139,11 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 		Assert.assertNotNull(action);
 		Assert.assertNull(action.getEntity());
 		Assert.assertNull(action.getE());
+		
+		//在执行action前先手工初始化一下实体对象
+		//否则报错：SEVERE:   [48:32.453] Could not create and/or set value back on to object
+		//         WARNING:  [48:32.453] Error setting expression 'entity.id' with value '[Ljava.lang.String;@1cd3dd7'
+		action.setEntity(this.getEntityClass().newInstance());
 
 		// 运行action并检验返回值
 		String result = proxy.execute();

@@ -26,6 +26,10 @@ import cn.bc.identity.domain.ActorDetail;
 public class ActorImpl implements Actor {
 	private static final long serialVersionUID = 1L;
 
+	public ActorImpl(){
+		
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
