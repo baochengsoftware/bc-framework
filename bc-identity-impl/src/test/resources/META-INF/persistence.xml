@@ -12,6 +12,7 @@
 		<class>cn.bc.identity.domain.Duty</class>
 		<class>cn.bc.identity.impl.domain.ActorImpl</class>
 		<class>cn.bc.identity.impl.domain.ActorDetailImpl</class>
+		<!-- <class>cn.bc.identity.impl.domain.Unit</class> -->
 
 		<!-- 排除没有在这里声明的注解类 -->
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

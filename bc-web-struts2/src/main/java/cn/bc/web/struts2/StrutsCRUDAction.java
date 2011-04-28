@@ -22,10 +22,6 @@ import com.opensymphony.xwork2.ActionSupport;
  * 
  * @author dragon
  * 
- */
-/**
- * @author dragon
- * 
  * @param <T>
  */
 public class StrutsCRUDAction<T extends Object> extends ActionSupport implements

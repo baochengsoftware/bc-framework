@@ -1,8 +1,7 @@
 package cn.bc.identity.impl.service;
 
 import cn.bc.core.service.DefaultCrudService;
-import cn.bc.identity.domain.Actor;
-import cn.bc.identity.service.ActorService;
+import cn.bc.identity.impl.domain.ActorImpl;
 
 /**
  * 参与者Service接口的实现
@@ -10,5 +9,5 @@ import cn.bc.identity.service.ActorService;
  * @author dragon
  * 
  */
-public class ActorServiceImpl extends DefaultCrudService<Actor> implements ActorService {
+public class ActorServiceImpl extends DefaultCrudService<ActorImpl> implements ActorService {
 }

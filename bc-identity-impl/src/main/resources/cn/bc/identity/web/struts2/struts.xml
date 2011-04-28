@@ -4,15 +4,31 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="duty" extends="bc-default" namespace="/duty">
-		<action name="form" class="dutyAction" method="form">
+		<action name="create" class="dutyAction" method="create">
 			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result>
 		</action>
-		<action name="save" class="dutyAction" method="save">
+		<action name="edit" class="dutyAction" method="edit">
+			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result>
 		</action>
+		<action name="save" class="dutyAction" method="save"/>
+		<action name="delete" class="dutyAction" method="delete"/>
 		
 		<action name="list" class="dutyAction" method="list">
 			<result name="list">/bc/identity/duty/dutes.jsp</result>
 <!-- 			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result> -->
+		</action>
+	</package>
+	<package name="actor" extends="bc-default" namespace="/actor">
+		<action name="create" class="actorAction" method="create">
+			<result name="form">/bc/identity/actor/form.jsp</result>
+		</action>
+		<action name="edit" class="actorAction" method="edit">
+			<result name="form">/bc/identity/actor/form.jsp</result>
+		</action>
+		<action name="save" class="actorAction" method="save"/>
+		<action name="delete" class="actorAction" method="delete"/>
+		
+		<action name="list" class="actorAction" method="list">
 		</action>
 	</package>
 </struts>
