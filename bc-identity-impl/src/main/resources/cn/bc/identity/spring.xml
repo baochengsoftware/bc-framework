@@ -51,4 +51,9 @@
 <!-- 	<bean id="dutyAction" class="cn.bc.identity.struts2.DutyAction" -->
 <!-- 		scope="prototype" p:dutyService-ref="dutyService" -->
 <!-- 		p:idGeneratorService-ref="idGeneratorService" /> -->
+
+	<!-- Unit -->
+	<bean id="unitDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="unitService" class="cn.bc.identity.impl.service.UnitServiceImpl" p:crudDao-ref="unitDao" />
 </beans>

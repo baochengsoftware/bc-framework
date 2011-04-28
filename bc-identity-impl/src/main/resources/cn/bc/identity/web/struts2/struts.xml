@@ -18,4 +18,17 @@
 <!-- 			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result> -->
 		</action>
 	</package>
+	<package name="actor" extends="bc-default" namespace="/actor">
+		<action name="create" class="actorAction" method="create">
+			<result name="form">/bc/identity/actor/form.jsp</result>
+		</action>
+		<action name="edit" class="actorAction" method="edit">
+			<result name="form">/bc/identity/actor/form.jsp</result>
+		</action>
+		<action name="save" class="actorAction" method="save"/>
+		<action name="delete" class="actorAction" method="delete"/>
+		
+		<action name="list" class="actorAction" method="list">
+		</action>
+	</package>
 </struts>

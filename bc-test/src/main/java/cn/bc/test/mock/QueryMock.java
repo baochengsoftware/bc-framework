@@ -1,4 +1,4 @@
-package cn.bc.test;
+package cn.bc.test.mock;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import cn.bc.core.Entity;
 import cn.bc.core.Page;
 import cn.bc.core.query.condition.Condition;
 
@@ -18,11 +19,11 @@ import cn.bc.core.query.condition.Condition;
  * 
  * @param <T>
  */
-public class QueryMock<T extends Object> implements
+public class QueryMock<T extends Entity<Long>> implements
 		cn.bc.core.query.Query<T> {
 	//private Condition condition;
 	private Class<T> entityClass;
-	private Map<String, Example> entities;
+	private Map<String, T> entities;
 	
 	@SuppressWarnings("unchecked")
 	private QueryMock() {
@@ -37,12 +38,9 @@ public class QueryMock<T extends Object> implements
 	}
 
 	/**
-	 * 构造一个基于hibernate的Query实现
-	 * 
-	 * @param jpaTemplate
-	 *            hibernate会话
+	 * 构造一个基于内存的Query实现
 	 */
-	public QueryMock(Map<String, Example> entities) {
+	public QueryMock(Map<String, T> entities) {
 		this();
 		this.entities = entities;
 	}
@@ -81,9 +79,8 @@ public class QueryMock<T extends Object> implements
 				pageNo, pageSize));
 	}
 
-	@SuppressWarnings("unchecked")
 	public T singleResult() {
-		Collection<Example> c = entities.values();
+		Collection<T> c = entities.values();
 		return c.iterator().hasNext() ? (T)c.iterator().next() : null;
 	}
 }

@@ -19,6 +19,11 @@
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-test</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 		</dependency>

@@ -16,13 +16,12 @@ import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorDetail;
 import cn.bc.identity.impl.domain.ActorDetailImpl;
 import cn.bc.identity.impl.domain.ActorImpl;
-import cn.bc.identity.service.ActorService;
 import cn.bc.test.AbstractEntityCrudTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration("classpath:spring-test.xml")
-public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,Actor> {
+public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,ActorImpl> {
 	ActorService actorService;
 	@Autowired
 	public void setActorService(ActorService actorService) {
@@ -31,8 +30,8 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,Actor> {
 	}
 
 	@Override
-	protected Actor createInstance(String config) {
-		Actor actor = new ActorImpl();
+	protected ActorImpl createInstance(String config) {
+		ActorImpl actor = new ActorImpl();
 		
 		//补充一些必填域的设置
 		actor.setType(Actor.TYPE_USER);
@@ -52,7 +51,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,Actor> {
 	
 	private Actor saveOneWithDetail() {
 		// 先插入一条数据
-		Actor entity = this.createInstance(this.getDefaultConfig());
+		ActorImpl entity = this.createInstance(this.getDefaultConfig());
 		ActorDetail detail = new ActorDetailImpl();
 		Calendar now = Calendar.getInstance();
 		now.set(Calendar.YEAR, 2010);

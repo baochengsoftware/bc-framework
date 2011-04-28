@@ -19,6 +19,10 @@
 		<default-interceptor-ref name="noCacheStack"/>
 		
 		<global-results>
+			<result name="list" type="freemarker">/cn/bc/web/struts2/page.ftl
+			</result>
+			<result name="saveSuccess" type="freemarker">/cn/bc/web/struts2/form.save.success.ftl
+			</result>
 			<result name="saveSuccess" type="freemarker">/cn/bc/web/struts2/form.save.success.ftl
 			</result>
 			<result name="deleteSuccess" type="freemarker">/cn/bc/web/struts2/form.delete.success.ftl

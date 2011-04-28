@@ -6,8 +6,8 @@ import org.apache.struts2.StrutsSpringTestCase;
 import org.apache.struts2.dispatcher.mapper.ActionMapping;
 
 import cn.bc.core.service.CrudService;
-import cn.bc.core.service.DefaultCrudService;
 import cn.bc.test.Example;
+import cn.bc.test.mock.CrudServiceMock;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionProxy;
@@ -104,7 +104,7 @@ public class ExampleActionTest extends StrutsSpringTestCase {
 		ExampleAction action = (ExampleAction) proxy.getAction();
 		assertNotNull(action);
 		assertNotNull(action.getCrudService());
-		assertTrue(action.getCrudService() instanceof DefaultCrudService);
+		assertTrue(action.getCrudService() instanceof CrudServiceMock);
 
 		//action未执行前参数值应未设置
 		assertNull(action.getId());
