@@ -7,24 +7,28 @@ import cn.bc.identity.domain.ActorImpl;
 import cn.bc.test.mock.CrudServiceMock;
 import cn.bc.web.struts2.AbstractCrudActionTest;
 
-public class ActorActionTest extends AbstractCrudActionTest<Long, ActorImpl> {
+public abstract class AbstractActorActionTest extends AbstractCrudActionTest<Long, ActorImpl> {
+	protected Class<ActorImpl> getEntityClass() {
+		return ActorImpl.class;
+	}
 
-	@Override
 	protected String getEntityConfigName() {
 		return "Actor";
 	}
 
 	public ActorImpl createEntity() {
 		ActorImpl e = new ActorImpl();
+		e.setUid(UUID.randomUUID().toString());
+		
+		//设置一些必填域
 		e.setCode("code");
 		e.setName("name");
-		e.setUid(UUID.randomUUID().toString());
+		
 		return e;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public CrudService<ActorImpl> createCrudService() {
-		CrudServiceMock sm = new CrudServiceMock<ActorImpl>();//使用内存模拟避免写入数据库
+		CrudServiceMock<ActorImpl> sm = new CrudServiceMock<ActorImpl>();//使用内存模拟避免写入数据库
 		sm.setEntityClass(ActorImpl.class);
 		return sm;
 	}

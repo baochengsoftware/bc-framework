@@ -151,4 +151,15 @@ public class StringUtils {
         }
         return longArray;
     }
+    
+	/**
+	 * 在字符串两边添加双引号
+	 * 
+	 * @param str
+	 *            源字符串
+	 * @return
+	 */
+	public static String wrapQuota(String str) {
+		return "\"" + str + "\"";
+	}
 }

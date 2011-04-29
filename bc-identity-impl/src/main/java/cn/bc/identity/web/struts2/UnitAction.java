@@ -5,14 +5,11 @@ package cn.bc.identity.web.struts2;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.service.ActorService;
-import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Grid;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.Option;
@@ -24,29 +21,25 @@ import cn.bc.web.ui.html.page.Option;
  * 
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller
-public class ActorAction extends CrudAction<Long, Actor> {
+@Controller("unitAction")
+public class UnitAction extends AbstractActorAction {
 	private static final long serialVersionUID = 1L;
-	private ActorService actorService;
 
-	public ActorService getActorService() {
-		return actorService;
-	}
-
-	@Autowired
-	public void setActorService(ActorService actorService) {
-		this.actorService = actorService;
-		this.setCrudService(actorService);
+	@Override
+	protected String getEntityConfigName() {
+		return "Unit";
 	}
 
 	protected Grid buildGrid(List<Actor> entities) {
 		return super.buildGrid(entities)
-				.addColumn(new TextColumn("code", "编码", 80))
-				.addColumn(new TextColumn("name", "名称"))
-				.addColumn(new TextColumn("email", "邮箱", 100));
+				.addColumn(new TextColumn("status", getText("actor.status"), 40))
+				.addColumn(new TextColumn("code", getText("actor.code"), 80))
+				.addColumn(new TextColumn("name", getText("actor.name")))
+				.addColumn(new TextColumn("phone", getText("actor.phone"), 120))
+				.addColumn(new TextColumn("email", getText("actor.email"), 150));
 	}
 
 	protected Option buildListPageOption() {
-		return super.buildListPageOption();
+		return super.buildListPageOption().setWidth(650).setMinWidth(500).setMinHeight(300);
 	}
 }

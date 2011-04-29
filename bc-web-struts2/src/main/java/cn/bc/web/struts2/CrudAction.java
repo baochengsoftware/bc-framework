@@ -37,7 +37,8 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller
-public class CrudAction<K extends Serializable, E extends Entity<K>> extends ActionSupport implements SetEntityClass<E> {
+public class CrudAction<K extends Serializable, E extends Entity<K>> extends
+		ActionSupport implements SetEntityClass<E> {
 	private static final long serialVersionUID = 1L;
 	protected Log logger = LogFactory.getLog(getClass());
 
@@ -64,11 +65,11 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends Act
 		}
 	}
 
-	protected Class<E> getEntityClass() {
+	protected Class<? extends E> getEntityClass() {
 		return this.entityClass;
 	}
 
-	protected String getEntityName() {
+	protected String getEntityConfigName() {
 		return this.getEntityClass().getSimpleName();
 	}
 
@@ -97,11 +98,24 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends Act
 	 * 
 	 * @return
 	 */
-	public E getE() {
-		return entity;
-	}
+	// public E getE() {
+	// return entity;
+	// }
 
 	public E getEntity() {
+		if (entity == null) {
+			// 这是使用泛型没有办法之举：ERROR InstantiatingNullHandler Could not create
+			// and/or set value back on to object
+			// at
+			// com.opensymphony.xwork2.spring.SpringObjectFactory.buildBean(SpringObjectFactory.java:169)
+			try {
+				entity = this.getEntityClass().newInstance();
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
 		return entity;
 	}
 
@@ -187,14 +201,17 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends Act
 		listPage.setGrid(buildGrid(entities))
 				.setCreateAction(getCreateAction())
 				.setDeleteAction(getDeleteAction())
-				.setEditAction(getEditAction()).setJs(getJs()).setCss(getCss())
-				.setTitle(getPageTitle()).setIniMethod(getIniMethod())
-				.setOption(buildListPageOption().toString()).setBeautiful(true);
+				.setEditAction(this.getEditAction()).setJs(getJs())
+				.setCss(getCss()).setTitle(this.getPageTitle())
+				.setIniMethod(getIniMethod())
+				.setOption(buildListPageOption().toString()).setBeautiful(true)
+				.addClazz("bc-content");
 		return listPage;
 	}
 
 	protected String getPageTitle() {
-		return this.getText(StringUtils.uncapitalize(getEntityName()) + ".title");
+		return this.getText(StringUtils.uncapitalize(getEntityConfigName())
+				+ ".title");
 	}
 
 	protected Grid buildGrid(List<E> entities) {
@@ -202,23 +219,27 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends Act
 	}
 
 	protected Option buildListPageOption() {
-		return new Option().addButton(new Button("关闭", "close"))
-				.addButton(new Button("编辑", "edit"))
-				.addButton(new Button("新建", "create")).setMinWidth(250)
-				.setMinHeight(200).setModal(false);
+		return new Option()
+				.addButton(new Button(getText("label.delete"), "delete"))
+				.addButton(new Button(getText("label.edit"), "edit"))
+				.addButton(new Button(getText("label.create"), "create"))
+				.setMinWidth(250).setMinHeight(200).setModal(false);
 	}
 
 	// 统一定义的值
 	protected String getEditAction() {
-		return WebUtils.rootPath + "/" + StringUtils.uncapitalize(getEntityName()) + "/edit";
+		return WebUtils.rootPath + "/"
+				+ StringUtils.uncapitalize(getEntityConfigName()) + "/edit";
 	}
 
 	protected String getDeleteAction() {
-		return WebUtils.rootPath + "/" + StringUtils.uncapitalize(getEntityName()) + "/delete";
+		return WebUtils.rootPath + "/"
+				+ StringUtils.uncapitalize(getEntityConfigName()) + "/delete";
 	}
 
 	protected String getCreateAction() {
-		return WebUtils.rootPath + "/" + StringUtils.uncapitalize(getEntityName()) + "/create";
+		return WebUtils.rootPath + "/"
+				+ StringUtils.uncapitalize(getEntityConfigName()) + "/create";
 	}
 
 	protected String getIniMethod() {

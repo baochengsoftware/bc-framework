@@ -18,19 +18,22 @@ public abstract class AbstractColumn implements Column {
 	public int getWidth() {
 		return width;
 	}
-	public void setWidth(int width) {
+	public Column setWidth(int width) {
 		this.width = width;
+		return this;
 	}
 	public String getLabel() {
 		return label;
 	}
-	public void setLabel(String label) {
+	public Column setLabel(String label) {
 		this.label = label;
+		return this;
 	}
 	public String getExpression() {
 		return expression;
 	}
-	public void setExpression(String expression) {
+	public Column setExpression(String expression) {
 		this.expression = expression;
+		return this;
 	}
 }

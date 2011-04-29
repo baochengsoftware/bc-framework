@@ -141,8 +141,7 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 		// 测试action中的service是否通过spring注入了
 		CrudAction<K, E> action = this.getProxyAction(proxy);
 		Assert.assertNotNull(action);
-		Assert.assertNull(action.getEntity());
-		Assert.assertNull(action.getE());
+		//Assert.assertNull(action.getEntity());//TODO
 		
 		//在执行action前先手工初始化一下实体对象
 		//否则报错：SEVERE:   [48:32.453] Could not create and/or set value back on to object
@@ -157,7 +156,6 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 		Assert.assertNotNull(action.getEntity());
 		Assert.assertNotNull(action.getEntity().getId());
 		Assert.assertEquals(uid,action.getEntity().getUid());
-		Assert.assertNotNull(action.getE());
 	}
 
 	// create

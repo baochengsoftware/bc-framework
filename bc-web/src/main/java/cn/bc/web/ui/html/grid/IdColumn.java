@@ -15,6 +15,7 @@ public class IdColumn extends AbstractColumn {
 	 */
 	public IdColumn(boolean canCheckedAll) {
 		this.canCheckedAll = canCheckedAll;
+		this.setExpression("id");
 	}
 
 	public boolean isCanCheckedAll() {

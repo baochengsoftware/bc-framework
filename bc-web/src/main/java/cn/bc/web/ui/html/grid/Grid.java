@@ -105,6 +105,7 @@ public class Grid extends Table {
 
 				if (column instanceof IdColumn) {
 					td.addClazz("id");// id列样式
+					td.setAttr("data-id", getValue(obj,column.getExpression()));// id的值
 					td.addChild(new Span().addClazz("ui-icon"));// 勾选标记符
 					td.addChild(new Text(String.valueOf(rc + 1)));// 行号
 				} else {
@@ -144,7 +145,7 @@ public class Grid extends Table {
 		ExpressionParser parser = (getParser() != null ? getParser() : new SpelExpressionParser());
 		Expression exp = parser.parseExpression(expression);
 		EvaluationContext context = new StandardEvaluationContext(obj);
-		return (String) exp.getValue(context);
+		return String.valueOf(exp.getValue(context));
 	}
 
 	public Grid addColumn(Column column) {

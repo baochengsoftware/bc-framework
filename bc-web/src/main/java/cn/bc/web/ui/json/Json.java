@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import cn.bc.core.util.StringUtils;
 import cn.bc.web.ui.Render;
 import cn.bc.web.ui.html.Text;
 
@@ -31,7 +32,7 @@ public class Json implements Render {
 	 * @return
 	 */
 	public static String wrapQuota(String str) {
-		return "\"" + str + "\"";
+		return StringUtils.wrapQuota(str);
 	}
 
 	protected Map<String, Render> attrs = new LinkedHashMap<String, Render>();
