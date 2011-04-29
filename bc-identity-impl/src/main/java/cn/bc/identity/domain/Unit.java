@@ -1,20 +1,13 @@
 /**
  * 
  */
-package cn.bc.identity.impl.domain;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-import cn.bc.identity.domain.Actor;
+package cn.bc.identity.domain;
 
 /**
  * 单位
  * 
  * @author dragon
  */
-//@Entity
-//@Table(name = "BC_IDENTITY_ACTOR")
 public class Unit extends ActorImpl {
 	private static final long serialVersionUID = 1L;
 

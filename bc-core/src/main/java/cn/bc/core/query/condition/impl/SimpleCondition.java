@@ -23,7 +23,7 @@ public class SimpleCondition implements Condition {
 	protected QueryOperator operator;
 	protected List<Object> values = new ArrayList<Object>(1);
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public SimpleCondition(String name, Object value, QueryOperator operator) {
 		this.name = name;
 		this.operator = operator;

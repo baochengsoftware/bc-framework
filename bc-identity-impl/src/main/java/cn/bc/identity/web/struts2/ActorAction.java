@@ -10,8 +10,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import cn.bc.identity.impl.domain.ActorImpl;
-import cn.bc.identity.impl.service.ActorService;
+import cn.bc.identity.domain.Actor;
+import cn.bc.identity.service.ActorService;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Grid;
 import cn.bc.web.ui.html.grid.TextColumn;
@@ -25,7 +25,7 @@ import cn.bc.web.ui.html.page.Option;
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller
-public class ActorAction extends CrudAction<Long, ActorImpl> {
+public class ActorAction extends CrudAction<Long, Actor> {
 	private static final long serialVersionUID = 1L;
 	private ActorService actorService;
 
@@ -39,7 +39,7 @@ public class ActorAction extends CrudAction<Long, ActorImpl> {
 		this.setCrudService(actorService);
 	}
 
-	protected Grid buildGrid(List<ActorImpl> entities) {
+	protected Grid buildGrid(List<Actor> entities) {
 		return super.buildGrid(entities)
 				.addColumn(new TextColumn("code", "编码", 80))
 				.addColumn(new TextColumn("name", "名称"))

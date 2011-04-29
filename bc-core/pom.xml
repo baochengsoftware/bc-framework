@@ -19,6 +19,7 @@
 			<groupId>org.commontemplate</groupId>
 			<artifactId>commontemplate</artifactId>
 			<scope>compile</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

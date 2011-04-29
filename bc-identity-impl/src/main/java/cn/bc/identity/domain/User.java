@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.bc.identity.impl.domain;
+package cn.bc.identity.domain;
 
 import cn.bc.identity.domain.Actor;
 

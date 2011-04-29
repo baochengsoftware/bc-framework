@@ -1,4 +1,4 @@
-package cn.bc.identity.impl.service;
+package cn.bc.identity.service;
 
 import cn.bc.core.service.DefaultCrudService;
 import cn.bc.identity.domain.Duty;

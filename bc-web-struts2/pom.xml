@@ -10,6 +10,15 @@
 	<artifactId>bc-web-struts2</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+		  <groupId>ognl</groupId>
+		  <artifactId>ognl</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>cn.bc</groupId>
 			<artifactId>bc-web</artifactId>
 			<version>${project.version}</version>
@@ -67,14 +76,6 @@
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-osgi-plugin</artifactId>
-		</dependency> -->
-
-		<!-- for test -->
-		<dependency>
-			<groupId>cn.bc</groupId>
-			<artifactId>bc-test</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>cn.bc</groupId>
@@ -82,14 +83,19 @@
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<scope>test</scope>
-		</dependency>
+
+		-->
+
+		<!-- for test -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-test</artifactId>
+			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

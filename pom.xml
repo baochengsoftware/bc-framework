@@ -14,20 +14,17 @@
 	<modules>
 		<module>bc-parent</module>
 		<module>bc-core</module>
-		
+		<module>bc-test</module>
 		<module>bc-db-jdbc</module>
 		<module>bc-orm-hibernate</module>
-
-		<module>bc-test</module>
+		
+		<module>bc-web</module>
+		<module>bc-web-struts</module>
+		<module>bc-web-struts2</module>
 		
 		<module>bc-identity</module>
 		<module>bc-identity-impl-extras</module>
 		<module>bc-identity-impl</module>
 		<module>bc-security</module>
-		
-		<module>bc-web</module>
-		<module>bc-web-struts</module>
-		<module>bc-web-struts2</module>
-		<!---->
 	</modules>
 </project>

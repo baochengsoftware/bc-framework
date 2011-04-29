@@ -18,10 +18,10 @@
 	<bean id="idGeneratorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
 		p:entityClass="cn.bc.identity.domain.IdGenerator"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="idGeneratorService" class="cn.bc.identity.impl.service.IdGeneratorServiceImpl" />
+	<bean id="idGeneratorService" class="cn.bc.identity.service.IdGeneratorServiceImpl" />
 	<aop:config>
 		<aop:pointcut id="idGeneratorServiceMethod"
-			expression="within(cn.bc.identity.impl.service.IdGeneratorServiceImpl)" />
+			expression="within(cn.bc.identity.service.IdGeneratorServiceImpl)" />
 		<aop:advisor pointcut-ref="idGeneratorServiceMethod"
 			advice-ref="idGeneratorServiceTxAdvice" />
 	</aop:config>
@@ -39,21 +39,19 @@
 
 	<!-- Actor -->
 	<bean id="actorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityClass="cn.bc.identity.domain.ActorImpl"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="actorService" class="cn.bc.identity.impl.service.ActorServiceImpl"
-		p:entityClass="cn.bc.identity.impl.domain.ActorImpl"
+	<bean id="actorService" class="cn.bc.identity.service.ActorServiceImpl"
+		p:entityClass="cn.bc.identity.domain.ActorImpl"
 		p:crudDao-ref="actorDao" />
 
 	<!-- Duty -->
 	<bean id="dutyDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="dutyService" class="cn.bc.identity.impl.service.DutyServiceImpl" p:crudDao-ref="dutyDao" />
-<!-- 	<bean id="dutyAction" class="cn.bc.identity.struts2.DutyAction" -->
-<!-- 		scope="prototype" p:dutyService-ref="dutyService" -->
-<!-- 		p:idGeneratorService-ref="idGeneratorService" /> -->
+	<bean id="dutyService" class="cn.bc.identity.service.DutyServiceImpl" p:crudDao-ref="dutyDao" />
 
-	<!-- Unit -->
+	<!-- Unit
 	<bean id="unitDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="unitService" class="cn.bc.identity.impl.service.UnitServiceImpl" p:crudDao-ref="unitDao" />
+	<bean id="unitService" class="cn.bc.identity.impl.service.UnitServiceImpl" p:crudDao-ref="unitDao" /> -->
 </beans>

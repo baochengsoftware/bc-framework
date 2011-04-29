@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -36,7 +37,7 @@ import javax.servlet.http.HttpServletResponse;
  * @since 1.0.0
  */
 public class AddHeaderFilter implements Filter {
-	Map headers = new HashMap();
+	Map<String,String> headers = new HashMap<String,String>();
 	
 	public void init(FilterConfig config) throws ServletException {
 		String headersStr = config.getInitParameter("headers");
@@ -60,8 +61,8 @@ public class AddHeaderFilter implements Filter {
 
 	private void doFilter(HttpServletRequest request, HttpServletResponse response, 
 						  FilterChain chain) throws IOException, ServletException {
-		for(Iterator it = headers.entrySet().iterator(); it.hasNext();) {
-			Map.Entry entry = (Map.Entry)it.next();
+		for(Iterator<Entry<String,String>> it = headers.entrySet().iterator(); it.hasNext();) {
+			Map.Entry<String,String> entry = (Map.Entry<String,String>)it.next();
 			response.addHeader((String)entry.getKey(), (String)entry.getValue());
 		}
 		chain.doFilter(request, response);

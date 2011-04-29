@@ -217,8 +217,8 @@ public class GzipFilter extends CanExcludeFilter {
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	protected boolean browserSupportGzip(HttpServletRequest request) {
+		@SuppressWarnings("rawtypes")
 		Enumeration e = request.getHeaders("Accept-Encoding");
 		while (e.hasMoreElements()) {
 			String name = (String) e.nextElement();

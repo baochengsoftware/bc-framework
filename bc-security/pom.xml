@@ -10,6 +10,11 @@
 	<artifactId>bc-security</artifactId>
 	<dependencies>
 		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>cn.bc</groupId>
 			<artifactId>bc-core</artifactId>
 			<version>${project.version}</version>
@@ -18,12 +23,6 @@
 			<groupId>cn.bc</groupId>
 			<artifactId>bc-identity</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

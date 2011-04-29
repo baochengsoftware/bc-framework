@@ -1,4 +1,4 @@
-package cn.bc.identity.impl.service;
+package cn.bc.identity.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

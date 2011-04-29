@@ -41,10 +41,10 @@ public abstract class CanExcludeFilter implements Filter {
 	static Log logger = LogFactory.getLog(CanExcludeFilter.class);
 
     /** 要排除处理的文件夹配置 */
-    protected List excludeDirs = new ArrayList();
+    protected List<String> excludeDirs = new ArrayList<String>();
 
     /** 要排除处理的文件配置 */
-    protected List excludeFiles = new ArrayList();
+    protected List<String> excludeFiles = new ArrayList<String>();
 
 	/* (non-Javadoc)
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)

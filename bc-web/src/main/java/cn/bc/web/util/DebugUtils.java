@@ -34,9 +34,9 @@ import org.apache.commons.logging.LogFactory;
 public class DebugUtils {
 	static Log logger = LogFactory.getLog(DebugUtils.class);
 
-	@SuppressWarnings("unchecked")
 	public static StringBuffer getDebugInfo(HttpServletRequest request,
 			HttpServletResponse response) {
+		@SuppressWarnings("rawtypes")
 		Enumeration e;
 		String name;
 		StringBuffer html = new StringBuffer();

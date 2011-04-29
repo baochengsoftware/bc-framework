@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.bc.identity.impl.domain;
+package cn.bc.identity.domain;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +15,7 @@ import javax.persistence.Table;
 
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorDetail;
+import cn.bc.identity.domain.ActorDetailImpl;
 
 /**
  * 参与者的默认实现

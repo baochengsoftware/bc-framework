@@ -14,14 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.bc.core.Entity;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorDetail;
-import cn.bc.identity.impl.domain.ActorDetailImpl;
-import cn.bc.identity.impl.domain.ActorImpl;
+import cn.bc.identity.domain.ActorDetailImpl;
+import cn.bc.identity.domain.ActorImpl;
+import cn.bc.identity.service.ActorService;
 import cn.bc.test.AbstractEntityCrudTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration("classpath:spring-test.xml")
-public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,ActorImpl> {
+public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,Actor> {
 	ActorService actorService;
 	@Autowired
 	public void setActorService(ActorService actorService) {
@@ -30,7 +31,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,ActorImpl>
 	}
 
 	@Override
-	protected ActorImpl createInstance(String config) {
+	protected Actor createInstance(String config) {
 		ActorImpl actor = new ActorImpl();
 		
 		//补充一些必填域的设置
@@ -51,7 +52,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long,ActorImpl>
 	
 	private Actor saveOneWithDetail() {
 		// 先插入一条数据
-		ActorImpl entity = this.createInstance(this.getDefaultConfig());
+		Actor entity = this.createInstance(this.getDefaultConfig());
 		ActorDetail detail = new ActorDetailImpl();
 		Calendar now = Calendar.getInstance();
 		now.set(Calendar.YEAR, 2010);

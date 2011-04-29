@@ -6,8 +6,8 @@ package cn.bc.identity.web.struts2;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.bc.identity.impl.domain.User;
-import cn.bc.identity.impl.service.ActorService;
+import cn.bc.identity.domain.User;
+import cn.bc.identity.service.ActorService;
 
 import com.opensymphony.xwork2.ActionSupport;
 

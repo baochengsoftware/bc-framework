@@ -3,20 +3,15 @@ package cn.bc.identity.web.struts2;
 import java.util.UUID;
 
 import cn.bc.core.service.CrudService;
-import cn.bc.identity.impl.domain.ActorImpl;
+import cn.bc.identity.domain.ActorImpl;
 import cn.bc.test.mock.CrudServiceMock;
 import cn.bc.web.struts2.AbstractCrudActionTest;
 
 public class ActorActionTest extends AbstractCrudActionTest<Long, ActorImpl> {
 
 	@Override
-	protected String getServiceBeanName() {
-		return "actorService";
-	}
-
-	@Override
-	public String getNamespace() {
-		return "/actor";
+	protected String getEntityConfigName() {
+		return "Actor";
 	}
 
 	public ActorImpl createEntity() {

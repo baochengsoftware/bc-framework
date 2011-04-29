@@ -5,11 +5,11 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.UUID;
 
+import junit.framework.Assert;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.StrutsSpringTestCase;
-import org.apache.struts2.dispatcher.mapper.ActionMapping;
-import org.junit.Assert;
 import org.springframework.util.StringUtils;
 
 import cn.bc.core.Entity;
@@ -70,10 +70,14 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 	}
 
 	protected String getServiceBeanName() {
-		return StringUtils.uncapitalize(getEntityName()) + "Service";
+		return StringUtils.uncapitalize(getEntityConfigName()) + "Service";
 	}
 
-	protected String getEntityName() {
+	/**
+	 * 获取实体对象的配置名称，用于构造spring配置的服务名称、struts配置的命名空间
+	 * @return
+	 */
+	protected String getEntityConfigName() {
 		return this.getEntityClass().getSimpleName();
 	}
 
@@ -89,7 +93,7 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 	}
 
 	public String getNamespace() {
-		return "/" + StringUtils.uncapitalize(getEntityName());
+		return "/" + StringUtils.uncapitalize(getEntityConfigName());
 	}
 
 	// edit
