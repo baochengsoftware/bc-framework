@@ -14,7 +14,7 @@ create table BC_IDENTITY_ACTOR_DETAIL (
 create table BC_IDENTITY_ACTOR (
     ID int NOT NULL auto_increment,
     UID varchar(36) NOT NULL COMMENT '全局标识',
-    TYPE_ int(1) NOT NULL COMMENT '类型：1-用户,2-岗位,3-部门,4-单位',
+    TYPE_ int(1) NOT NULL COMMENT '类型：1-用户,2-单位,3-部门,4-岗位',
     STATUS_ int(1) NOT NULL COMMENT '状态：0-已禁用,1-启用中,2-已删除',
     INNER_ int(1) NOT NULL COMMENT '是否为内置对象:0-否,1-是',
     CODE varchar(100) NOT NULL COMMENT '编码',
