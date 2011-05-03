@@ -23,7 +23,19 @@ import cn.bc.core.query.condition.impl.OrderCondition;
  */
 public class MixConditionTest {
 	@Test
-	public void and_orderBy() {
+	public void and1_orderBy() {
+		AndCondition and = new AndCondition();
+		and.add(new EqualsCondition("key1", "value1")).add(
+				new OrderCondition("key", Direction.Asc));
+		Assert.assertEquals("key1 = ? order by key asc", and
+				.getExpression());
+		Assert.assertNotNull(and.getValues());
+		Assert.assertTrue(and.getValues().size() == 1);
+		Assert.assertEquals("value1", and.getValues().get(0));
+	}
+	
+	@Test
+	public void and2_orderBy() {
 		AndCondition and = new AndCondition();
 		and.add(new EqualsCondition("key1", "value1")).add(
 				new EqualsCondition("key2", "value2")).add(

@@ -48,8 +48,8 @@ public abstract class MixCondition implements Condition{
 	public String getExpression() {
 		if(conditions.isEmpty()){
 			return "";
-		}else if(conditions.size() == 1){
-			return conditions.get(0).getExpression();
+		//}else if(conditions.size() == 1){
+		//	return conditions.get(0).getExpression();
 		}else{
 			StringBuffer s = new StringBuffer();
 			int i = 0;
