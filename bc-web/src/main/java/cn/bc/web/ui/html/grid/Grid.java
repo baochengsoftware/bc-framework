@@ -145,7 +145,8 @@ public class Grid extends Table {
 		ExpressionParser parser = (getParser() != null ? getParser() : new SpelExpressionParser());
 		Expression exp = parser.parseExpression(expression);
 		EvaluationContext context = new StandardEvaluationContext(obj);
-		return String.valueOf(exp.getValue(context));
+		Object o = exp.getValue(context);
+		return o != null ? String.valueOf(o) : "";
 	}
 
 	public Grid addColumn(Column column) {
