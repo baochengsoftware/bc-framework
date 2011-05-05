@@ -6,8 +6,8 @@
 		"minWidth":400,"minHeight":250,"modal":false
 	}'>
 <@s.form name="dutyForm">
-	<@s.textfield name="b.name" key="duty.name"/>
-	<@s.textfield name="b.code" key="duty.code" />
+	<@s.textfield name="b.name" key="duty.name" validate="{required:true}"/>
+	<@s.textfield name="b.code" key="duty.code" aa1="aa" />
 	
 	<@s.hidden name="b.status" />
 	<@s.hidden name="b.inner" />

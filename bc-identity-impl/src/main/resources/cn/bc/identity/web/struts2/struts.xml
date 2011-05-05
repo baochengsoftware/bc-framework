@@ -5,10 +5,12 @@
 <struts>
 	<package name="duty" extends="bc-default" namespace="/duty">
 		<action name="create" class="dutyAction" method="create">
-			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result>
+<!-- 			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result> -->
+			<result name="form">/bc/identity/duty/form.jsp</result>
 		</action>
 		<action name="edit" class="dutyAction" method="edit">
-			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result>
+			<result name="form">/bc/identity/duty/form.jsp</result>
+<!-- 			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result> -->
 		</action>
 		<action name="save" class="dutyAction" method="save"/>
 		<action name="delete" class="dutyAction" method="delete"/>
