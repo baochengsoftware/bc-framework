@@ -40,8 +40,8 @@ public class UnitAction extends AbstractActorAction {
 				.buildGrid(entities)
 				.addColumn(
 						new TextColumn("status", getText("actor.status"), 40))
-				.addColumn(new TextColumn("code", getText("actor.code"), 80))
-				.addColumn(new TextColumn("name", getText("actor.name")))
+				.addColumn(new TextColumn("code", getText("actor.code"), 80).setSortable(true).setDir(Direction.Asc))
+				.addColumn(new TextColumn("name", getText("actor.name")).setSortable(true))
 				.addColumn(new TextColumn("phone", getText("actor.phone"), 120))
 				.addColumn(new TextColumn("email", getText("actor.email"), 150));
 	}

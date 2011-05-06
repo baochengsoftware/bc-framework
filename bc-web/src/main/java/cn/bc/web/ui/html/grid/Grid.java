@@ -61,15 +61,31 @@ public class Grid extends Table {
 			// id列样式
 			if (column instanceof IdColumn) {
 				td.addClazz("id");
-				Span span = new Span();
-				span.addClazz("ui-icon ui-icon-info");// 全选反选标记符号
-				td.addChild(span);
+				td.addChild(new Span().addClazz("ui-icon ui-icon-info"));// 全选反选标记符号
 			} else {
 				if (column.getWidth() > 0) {
 					td.addStyle("width", column.getWidth() + "px");
 				}
 				td.addChild(new Text(column.getLabel()));
 			}
+			
+			//排序标记
+			if (column.isSortable()) {
+				td.addClazz("sortable");
+				switch (column.getDir()) {
+				case Asc:
+					td.addClazz("current");
+					td.addChild(new Span().addClazz("sortableIcon ui-icon ui-icon-triangle-1-n"));//正序
+					break;
+				case Desc:
+					td.addClazz("current");
+					td.addChild(new Span().addClazz("sortableIcon ui-icon ui-icon-triangle-1-s"));//逆序
+					break;
+				case None:
+					td.addChild(new Span().addClazz("sortableIcon ui-icon hide"));
+					break;
+				}
+			} 
 
 			i++;
 		}
