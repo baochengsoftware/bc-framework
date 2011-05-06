@@ -118,26 +118,26 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 		if (pks == null || pks.length == 0)
 			return;
 
-		for (Serializable pk : pks)
-			this.delete(pk);
+		// for (Serializable pk : pks)
+		// this.delete(pk);
 
-		// final List<Object> args = new ArrayList<Object>();
-		// final StringBuffer hql = new StringBuffer();
-		// hql.append("delete " + this.getEntityName() + " _alias");
-		// if (pks.length == 1) {
-		// hql.append(" where _alias." + pkName + "=?");
-		// args.add(pks[0]);
-		// } else {
-		// int i = 0;
-		// hql.append(" where _alias." + pkName + " in (");
-		// for (Serializable pk : pks) {
-		// hql.append(i == 0 ? "?" : ",?");
-		// args.add(pk);
-		// i++;
-		// }
-		// hql.append(")");
-		// }
-		// this.executeUpdate(hql.toString(), args);
+		final List<Object> args = new ArrayList<Object>();
+		final StringBuffer hql = new StringBuffer();
+		hql.append("delete " + this.getEntityName() + " _alias");
+		if (pks.length == 1) {
+			hql.append(" where _alias." + pkName + "=?");
+			args.add(pks[0]);
+		} else {
+			int i = 0;
+			hql.append(" where _alias." + pkName + " in (");
+			for (Serializable pk : pks) {
+				hql.append(i == 0 ? "?" : ",?");
+				args.add(pk);
+				i++;
+			}
+			hql.append(")");
+		}
+		this.executeUpdate(hql.toString(), args);
 	}
 
 	public T load(Serializable pk) {

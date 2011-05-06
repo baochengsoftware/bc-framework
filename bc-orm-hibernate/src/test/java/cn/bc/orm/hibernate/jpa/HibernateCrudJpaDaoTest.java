@@ -65,6 +65,21 @@ public class HibernateCrudJpaDaoTest extends AbstractSpringManageDaoTest {
 
 	@Test
 	@Override
+	public void deleteMul() {
+		Long id1 = insertOne("name");
+		Long id2 = insertOne("name1");
+
+		crudDao.delete(new Long[] { id1, id2 });
+		
+		//TODO
+//		Domain entity = crudDao.load(id1);
+//		Assert.assertNull(entity);
+//		entity = crudDao.load(id2);
+//		Assert.assertNull(entity);
+	}
+
+	@Test
+	@Override
 	public void update() {
 		Long id1 = ids.get(0);// insertOne("name");
 		Map<String, Object> map = new HashMap<String, Object>();
