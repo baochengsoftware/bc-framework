@@ -3,19 +3,22 @@
  */
 package cn.bc.identity.domain;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorDetail;
-import cn.bc.identity.domain.ActorDetailImpl;
+import cn.bc.security.domain.Role;
 
 /**
  * 参与者的默认实现
@@ -58,6 +61,23 @@ public class ActorImpl implements Actor {
 	@OneToOne(targetEntity = ActorDetailImpl.class, cascade = CascadeType.ALL, optional = true)
 	@JoinColumn(name = "DETAIL_ID", referencedColumnName = "ID")
 	private ActorDetail detail;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(name="BC_SECURITY_ROLE_ACTOR",
+        joinColumns=
+            @JoinColumn(name="AID", referencedColumnName="ID"),
+        inverseJoinColumns=
+            @JoinColumn(name="RID", referencedColumnName="ID")
+        )
+	private List<Role> roles;//拥有的角色列表
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	public Long getId() {
 		return id;

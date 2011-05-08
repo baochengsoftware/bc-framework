@@ -56,6 +56,10 @@ insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0,
     (select af.id from BC_IDENTITY_ACTOR af where af.code='B0099'));
 
 -- 插入人员数据
+insert into BC_IDENTITY_ACTOR (UID,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 1, 0, 1, 'admin','超级管理员', '000000');
+insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0, 
+    (select am.id from BC_IDENTITY_ACTOR am where am.code='B0099'), 
+    (select af.id from BC_IDENTITY_ACTOR af where af.code='admin'));
 insert into BC_IDENTITY_ACTOR (UID,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 1, 0, 1, 'zhoushaogui','周邵贵', '000001');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0, 
     (select am.id from BC_IDENTITY_ACTOR am where am.code='D0000'), 
@@ -79,3 +83,7 @@ insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0,
 
 -- 更新Actor的uid为'ACTOR-'+id
 UPDATE BC_IDENTITY_ACTOR SET UID=CONCAT('ACTOR-',id);
+
+-- 让超级管理员拥有超级管理员角色
+insert into BC_SECURITY_ROLE_ACTOR (AID,RID) 
+	select (select a.id from BC_IDENTITY_ACTOR a where a.code='admin'), r.id from BC_SECURITY_ROLE r where r.code='admin';

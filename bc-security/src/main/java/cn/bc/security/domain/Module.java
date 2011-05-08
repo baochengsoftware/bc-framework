@@ -3,6 +3,10 @@
  */
 package cn.bc.security.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import cn.bc.core.DefaultEntity;
 
 /**
@@ -10,6 +14,8 @@ import cn.bc.core.DefaultEntity;
  * 
  * @author dragon
  */
+@Entity
+@Table(name = "BC_SECURITY_MODULE")
 public class Module extends DefaultEntity {
 	private static final long serialVersionUID = 1L;
 	/**模块类型为文件夹*/
@@ -34,6 +40,7 @@ public class Module extends DefaultEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
+	@Column(name = "OPTION_")
 	public String getOption() {
 		return option;
 	}
@@ -46,6 +53,7 @@ public class Module extends DefaultEntity {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	@Column(name = "TYPE_")
 	public int getType() {
 		return type;
 	}

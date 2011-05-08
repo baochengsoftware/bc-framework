@@ -7,7 +7,7 @@
 		<version>0.1-SNAPSHOT</version>
 		<relativePath>../bc-parent/pom.xml</relativePath>
 	</parent>
-	<artifactId>bc-identity-impl</artifactId>
+	<artifactId>bc-desktop</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -26,17 +26,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.bc</groupId>
-			<artifactId>bc-identity-impl-extras</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.bc</groupId>
-			<artifactId>bc-web-struts2</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.bc</groupId>
-			<artifactId>bc-security</artifactId>
+			<artifactId>bc-identity-impl</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
