@@ -19,7 +19,7 @@
 		<!-- 初始化数据 -->
 		<concatSql file="db.mysql.data.sql"/>
 		<!-- 删表 -->
-		<concatSql file="db.mysql.drop.sql"/>
+		<concatSql2 file="db.mysql.drop.sql"/>
 	</target>
 		
 	<!-- mysql脚本 -->
@@ -29,10 +29,10 @@
 		<!-- 初始化数据 -->
 		<concatSql file="test.db.mysql.data.sql"/>
 		<!-- 删表 -->
-		<concatSql file="test.db.mysql.drop.sql"/>
+		<concatSql2 file="test.db.mysql.drop.sql"/>
 	</target>
 	
-	<!-- 合并各个模块中定义的sql脚本文件的宏 -->
+	<!-- 合并各个模块中定义的sql脚本文件的宏：create、data -->
 	<macrodef name="concatSql">
 		<!-- 要合并的sql文件名 -->
 		<attribute name="file" />
@@ -47,6 +47,26 @@
 					<include name="**/@{file}"/>
 				</fileset>
 				<fileset dir="${src.dir}/bc-identity-impl/src/@{fromDir}/resources">
+					<include name="**/@{file}"/>
+				</fileset>
+			</concat>
+		</sequential>
+	</macrodef>
+	<!-- 合并各个模块中定义的sql脚本文件的宏：drop -->
+	<macrodef name="concatSql2">
+		<!-- 要合并的sql文件名 -->
+		<attribute name="file" />
+		<!-- 要合并的sql文件来源目录：值为main或test -->
+		<attribute name="fromDir" default="main"/>
+		<sequential>
+			<concat destfile="${build.dir}/@{file}" encoding="${encoding}" fixlastline="${fixlastline}" force="${force}" >
+				<fileset dir="${src.dir}/bc-test/src/@{fromDir}/resources">
+					<include name="**/@{file}"/>
+				</fileset>
+				<fileset dir="${src.dir}/bc-identity-impl/src/@{fromDir}/resources">
+					<include name="**/@{file}"/>
+				</fileset>
+				<fileset dir="${src.dir}/bc-security/src/@{fromDir}/resources">
 					<include name="**/@{file}"/>
 				</fileset>
 			</concat>
