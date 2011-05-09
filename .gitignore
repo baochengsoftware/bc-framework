@@ -8,3 +8,6 @@ Thumbs.db
 *.log.*
 build
 bin
+db.mysql.create.sql
+db.mysql.data.sql
+db.mysql.drop.sql
