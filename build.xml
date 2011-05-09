@@ -49,6 +49,9 @@
 				<fileset dir="${src.dir}/bc-identity-impl/src/@{fromDir}/resources">
 					<include name="**/@{file}"/>
 				</fileset>
+				<fileset dir="${src.dir}/bc-desktop/src/@{fromDir}/resources">
+					<include name="**/@{file}"/>
+				</fileset>
 			</concat>
 		</sequential>
 	</macrodef>
@@ -61,6 +64,9 @@
 		<sequential>
 			<concat destfile="${build.dir}/@{file}" encoding="${encoding}" fixlastline="${fixlastline}" force="${force}" >
 				<fileset dir="${src.dir}/bc-test/src/@{fromDir}/resources">
+					<include name="**/@{file}"/>
+				</fileset>
+				<fileset dir="${src.dir}/bc-desktop/src/@{fromDir}/resources">
 					<include name="**/@{file}"/>
 				</fileset>
 				<fileset dir="${src.dir}/bc-identity-impl/src/@{fromDir}/resources">
