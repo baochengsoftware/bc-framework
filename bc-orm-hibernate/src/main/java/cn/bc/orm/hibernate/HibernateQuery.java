@@ -87,6 +87,11 @@ public class HibernateQuery<T extends Object> implements cn.bc.core.query.Query<
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Object> listWithSelect(String select) {
+		return createHibernateQuery("select " + select + " " + getHql()).list();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<T> list(int pageNo, int pageSize) {
 		org.hibernate.Query queryObject = createHibernateQuery();
 		queryObject.setFirstResult(Page.getFirstResult(pageNo, pageSize));

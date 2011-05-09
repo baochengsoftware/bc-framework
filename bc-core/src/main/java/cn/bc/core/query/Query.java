@@ -53,4 +53,10 @@ public interface Query<T extends Object> {
 	 * @return 分页数据的封装
 	 */
 	Page<T> page(int pageNo, int pageSize);
+	
+	/**
+	 * @param select 要选择的实体属性，如"id,name"，不要附带select字符串
+	 * @return 查询到的数据集
+	 */
+	List<Object> listWithSelect(String select);
 }

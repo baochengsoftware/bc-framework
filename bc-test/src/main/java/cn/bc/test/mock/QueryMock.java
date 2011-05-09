@@ -70,6 +70,11 @@ public class QueryMock<T extends Entity<Long>> implements
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public List<Object> listWithSelect(String select) {
+		return new ArrayList(entities.values());
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public List<T> list(final int pageNo, final int pageSize) {
 		return new ArrayList(entities.values());
 	}

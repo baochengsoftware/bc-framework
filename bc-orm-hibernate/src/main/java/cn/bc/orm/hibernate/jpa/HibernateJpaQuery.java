@@ -132,7 +132,7 @@ public class HibernateJpaQuery<T extends Object> implements
 						i++;
 					}
 				}
-				queryObject.setFirstResult(Page.getFirstResult(pageNo, pageSize));
+				queryObject.setFirstResult(Page.getFirstResult(pageNo, _pageSize));
 				queryObject.setMaxResults(_pageSize);
 				return (List<T>) queryObject.getResultList();
 			}
@@ -169,5 +169,24 @@ public class HibernateJpaQuery<T extends Object> implements
 		if (condition != null)
 			hql += " where " + this.condition.getExpression();
 		return hql;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Object> listWithSelect(final String select) {
+		return jpaTemplate.execute(new JpaCallback<List<Object>>() {
+			public List<Object> doInJpa(EntityManager em)
+					throws PersistenceException {
+				Query queryObject = em.createQuery("select " + select + " " + getHql());
+				jpaTemplate.prepareQuery(queryObject);
+				if (condition != null && condition.getValues() != null) {
+					int i = 0;
+					for (Object value : condition.getValues()) {
+						queryObject.setParameter(i + 1, value);// jpa的索引号从1开始
+						i++;
+					}
+				}
+				return (List<Object>) queryObject.getResultList();
+			}
+		});
 	}
 }

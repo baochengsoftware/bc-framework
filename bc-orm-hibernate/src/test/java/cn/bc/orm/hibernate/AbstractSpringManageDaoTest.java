@@ -221,6 +221,39 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	}
 
 	@Test
+	public void query_listWithSelect() {
+		String select = "id,code";
+		// 插入0条
+		cn.bc.core.query.Query<Domain> q = crudDao.createQuery();
+		q.condition(new EqualsCondition("id", new Long(0)));
+		Assert.assertNotNull(q);
+		List<Object> list = q.listWithSelect(select);
+		Assert.assertNotNull(list);
+		Assert.assertTrue(list.size() == 0);
+		
+
+		// 插入1条
+		Long id1 = insertOne("name0");
+		Assert.assertTrue(id1 > 0);
+		q = crudDao.createQuery();
+		q.condition(new EqualsCondition("id", id1));
+		list = q.listWithSelect(select);
+		Assert.assertNotNull(list);
+		Assert.assertTrue(list.size() == 1);
+		Assert.assertTrue(list.get(0).getClass().isArray());
+		Assert.assertEquals(id1,((Object[])list.get(0))[0]);
+
+		// 插入10条
+		String uuid = UUID.randomUUID().toString();
+		for (int i = 0; i < 10; i++)
+			insertOne(uuid);
+		q.condition(new EqualsCondition("name", uuid));
+		list = q.listWithSelect(select);
+		Assert.assertNotNull(list);
+		Assert.assertTrue(list.size() == 10);
+	}
+
+	@Test
 	public void query_overList() {
 		// 插入10条，然后查询超过这些数据范围的页
 		String uuid = UUID.randomUUID().toString();
