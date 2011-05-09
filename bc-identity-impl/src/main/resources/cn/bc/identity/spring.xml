@@ -45,6 +45,14 @@
 		p:entityClass="cn.bc.identity.domain.ActorImpl"
 		p:crudDao-ref="actorDao" />
 
+	<!-- ActorRelation -->
+	<bean id="actorRelationDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+		p:entityClass="cn.bc.identity.domain.ActorRelationImpl"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="actorRelationService" class="cn.bc.identity.service.ActorRelationServiceImpl"
+		p:entityClass="cn.bc.identity.domain.ActorRelationImpl"
+		p:crudDao-ref="actorRelationDao" />
+
 	<!-- Duty -->
 	<bean id="dutyDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
 		p:entityManagerFactory-ref="entityManagerFactory" />

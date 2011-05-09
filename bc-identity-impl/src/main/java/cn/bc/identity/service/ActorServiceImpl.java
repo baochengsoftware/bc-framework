@@ -1,5 +1,7 @@
 package cn.bc.identity.service;
 
+import java.util.List;
+
 import cn.bc.core.service.DefaultCrudService;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.service.ActorService;
@@ -11,4 +13,9 @@ import cn.bc.identity.service.ActorService;
  * 
  */
 public class ActorServiceImpl extends DefaultCrudService<Actor> implements ActorService {
+
+	public List<Actor> findParents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

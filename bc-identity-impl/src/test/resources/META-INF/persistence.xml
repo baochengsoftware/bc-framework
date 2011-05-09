@@ -7,15 +7,16 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<!-- 标识生成器 -->
 		<class>cn.bc.identity.domain.IdGenerator</class>
-		
-		<!-- Actor -->
-		<class>cn.bc.identity.domain.ActorImpl</class>
-		<class>cn.bc.identity.domain.ActorDetailImpl</class>
-		<class>cn.bc.identity.domain.Duty</class>
 
 		<!-- security -->
 		<class>cn.bc.security.domain.Module</class>
 		<class>cn.bc.security.domain.Role</class>
+		
+		<!-- Actor -->
+		<class>cn.bc.identity.domain.ActorImpl</class>
+		<class>cn.bc.identity.domain.ActorDetailImpl</class>
+		<class>cn.bc.identity.domain.ActorRelationImpl</class>
+		<class>cn.bc.identity.domain.Duty</class>
 
 		<!-- 排除没有在这里声明的注解类 -->
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
