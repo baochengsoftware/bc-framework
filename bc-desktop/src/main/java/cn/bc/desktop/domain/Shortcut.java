@@ -25,16 +25,16 @@ import cn.bc.security.domain.Module;
 public class Shortcut extends DefaultEntity {
 	private static final long serialVersionUID = 1L;
 	
-	private int order;//排序号
+	private String order;//排序号
 	private String name;//名称
 	private Module module;//对应的模块
 	private Actor belong;//所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)
 	
 	@Column(name = "ORDER_")
-	public int getOrder() {
+	public String getOrder() {
 		return order;
 	}
-	public void setOrder(int order) {
+	public void setOrder(String order) {
 		this.order = order;
 	}
 	public String getName() {

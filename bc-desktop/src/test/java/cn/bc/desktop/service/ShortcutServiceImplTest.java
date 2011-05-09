@@ -26,7 +26,7 @@ public class ShortcutServiceImplTest extends AbstractEntityCrudTest<Long,Shortcu
 		Shortcut entity = super.createInstance(config);
 		
 		//补充一些额外的设置
-		entity.setOrder(1);
+		entity.setOrder("01");
 		entity.setName("name");
 		
 		return entity;
