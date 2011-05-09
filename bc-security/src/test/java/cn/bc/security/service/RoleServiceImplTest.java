@@ -1,13 +1,12 @@
 package cn.bc.security.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,7 @@ public class RoleServiceImplTest extends AbstractEntityCrudTest<Long,Role> {
 		entity.setUid(null);
 		
 		//补充一些额外的设置
-		entity.setCode("code");
+		entity.setCode("test");
 		entity.setName(entity.getCode());
 		
 		return entity;
@@ -54,12 +53,15 @@ public class RoleServiceImplTest extends AbstractEntityCrudTest<Long,Role> {
 		Role role = this.createInstance(this.getDefaultConfig());
 		
 		Module module = createModule();
+		module.setCode("test1");
 		this.moduleService.save(module);
 		Assert.assertNotNull(module.getId());
-		List<Module> ms = new ArrayList<Module>();
+		Set<Module> ms = new LinkedHashSet<Module>();//使用有序的Set
 		ms.add(module);
+		Long mid = module.getId();
 		
 		module = createModule();
+		module.setCode("test2");
 		this.moduleService.save(module);
 		ms.add(module);
 		Assert.assertNotNull(module.getId());
@@ -70,7 +72,7 @@ public class RoleServiceImplTest extends AbstractEntityCrudTest<Long,Role> {
 		Assert.assertNotNull(role.getId());
 		Assert.assertNotNull(role.getModules());
 		Assert.assertEquals(2, role.getModules().size());
-		Assert.assertEquals(module.getId(), role.getModules().get(1).getId());
+		Assert.assertEquals(mid, role.getModules().iterator().next().getId());
 		return role;
 	}
 	
@@ -79,25 +81,24 @@ public class RoleServiceImplTest extends AbstractEntityCrudTest<Long,Role> {
 		module.setType(Module.TYPE_INNER_LINK);
 		module.setStatus(Entity.STATUS_ENABLED);
 		module.setInner(false);
-		module.setCode("code"); 
+		module.setCode("test"); 
 		module.setName(module.getCode());
 		return module;
 	}
 
 	@Test
-	@Rollback(false)
 	public void testLoadWithModules() {
 		// 先插入一条数据
-//		Role role = saveOneWithModules();
-//		Long id = role.getId();
-//		Long mid = role.getModules().get(0).getId();
+		Role role = saveOneWithModules();
+		Long id = role.getId();
+		Long mid = role.getModules().iterator().next().getId();
 
 		//强制重新从数据库加载，如果直接使用load，因还在同一事务内，不会重新加载
-		Role role = this.roleService.load(new Long(466));//TODO .forceLoad(id)
+		role = this.roleService.load(id);//TODO .forceLoad(id)
 		
 		Assert.assertNotNull(role);
 		Assert.assertNotNull(role.getModules());
 		Assert.assertEquals(2, role.getModules().size());
-		Assert.assertEquals(new Long(220), role.getModules().get(1).getId());
+		Assert.assertEquals(mid, role.getModules().iterator().next().getId());
 	}
 }

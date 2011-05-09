@@ -19,5 +19,10 @@
 			<artifactId>bc-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-security</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

@@ -3,7 +3,7 @@
  */
 package cn.bc.identity.domain;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import cn.bc.security.domain.Role;
@@ -69,13 +70,14 @@ public class ActorImpl implements Actor {
         inverseJoinColumns=
             @JoinColumn(name="RID", referencedColumnName="ID")
         )
-	private List<Role> roles;//拥有的角色列表
+    @OrderBy("code asc")
+	private Set<Role> roles;//拥有的角色列表
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 

@@ -3,7 +3,10 @@
  */
 package cn.bc.identity.domain;
 
+import java.util.Set;
+
 import cn.bc.core.Entity;
+import cn.bc.security.domain.Role;
 
 /**
  * 参与者
@@ -109,4 +112,15 @@ public interface Actor extends Entity<Long> {
 	 *            扩展属性
 	 */
 	void setDetail(ActorDetail detail);
+	
+	/**
+	 * @return 拥有的角色
+	 */
+	Set<Role> getRoles();
+
+	/**
+	 * 设置拥有的角色
+	 * @param roles
+	 */
+	void setRoles(Set<Role> roles);
 }
