@@ -58,6 +58,10 @@ public enum QueryOperator {
 			return "is null";
 		case IsNotNull:
 			return "is not null";
+		case In:
+			return "in";
+		case NotIn:
+			return "not in";
 		default:
 			return this.toString();
 		}

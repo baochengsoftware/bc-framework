@@ -28,7 +28,7 @@ public class SimpleCondition implements Condition {
 		this.name = name;
 		this.operator = operator;
 		if (operator == QueryOperator.In || operator == QueryOperator.NotIn) {
-			if (value instanceof Array) {
+			if (value.getClass().isArray()) {
 				for (int i = 0; i < Array.getLength(value); i++) {
 					this.values.add(Array.get(value, i));
 				}

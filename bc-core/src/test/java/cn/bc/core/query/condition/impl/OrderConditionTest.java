@@ -27,4 +27,12 @@ public class OrderConditionTest {
 		Assert.assertEquals("key desc", c.getExpression());
 		Assert.assertNull(c.getValues());
 	}
+	
+	@Test
+	public void testMutiOrder() {
+		OrderCondition c = new OrderCondition("key1",Direction.Asc);
+		c.add("key2",Direction.Asc);
+		Assert.assertEquals("key1 asc,key2 asc", c.getExpression());
+		Assert.assertNull(c.getValues());
+	}
 }
