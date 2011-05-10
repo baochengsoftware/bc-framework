@@ -38,7 +38,7 @@
 	</tx:advice>
 
 	<!-- Actor -->
-	<bean id="actorDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+	<bean id="actorDao" class="cn.bc.identity.dao.hibernate.jpa.ActorDaoImpl"
 		p:entityClass="cn.bc.identity.domain.ActorImpl"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="actorService" class="cn.bc.identity.service.ActorServiceImpl"
@@ -46,7 +46,7 @@
 		p:crudDao-ref="actorDao" />
 
 	<!-- ActorRelation -->
-	<bean id="actorRelationDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+	<bean id="actorRelationDao" class="cn.bc.identity.dao.hibernate.jpa.ActorRelationDaoImpl"
 		p:entityClass="cn.bc.identity.domain.ActorRelationImpl"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="actorRelationService" class="cn.bc.identity.service.ActorRelationServiceImpl"

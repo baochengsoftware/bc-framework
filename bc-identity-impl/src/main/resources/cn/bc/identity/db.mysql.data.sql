@@ -54,7 +54,15 @@ insert into BC_IDENTITY_ACTOR (UID,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) valu
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0, 
     (select am.id from BC_IDENTITY_ACTOR am where am.code='D0000'), 
     (select af.id from BC_IDENTITY_ACTOR af where af.code='B0099'));
-
+insert into BC_IDENTITY_ACTOR (UID,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 1, 0, 3, 'B0099-01','测试1', '0199-01');
+insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0, 
+    (select am.id from BC_IDENTITY_ACTOR am where am.code='B0099'), 
+    (select af.id from BC_IDENTITY_ACTOR af where af.code='B0099-01'));
+insert into BC_IDENTITY_ACTOR (UID,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 1, 0, 3, 'B0099-02','测试2', '0199-02');
+insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0, 
+    (select am.id from BC_IDENTITY_ACTOR am where am.code='B0099'), 
+    (select af.id from BC_IDENTITY_ACTOR af where af.code='B0099-02'));
+    
 -- 插入人员数据
 insert into BC_IDENTITY_ACTOR (UID,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 1, 0, 1, 'admin','超级管理员', '000000');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) values(0, 

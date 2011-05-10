@@ -28,7 +28,7 @@ public interface ActorRelation extends Serializable{
 	 * <li>岗位下的人员</li>
 	 * </ul>
 	 */
-	public static final Integer TYPE_DEFAULT = 0;
+	public static final Integer TYPE_BELONG = 0;
 	
 	/**
 	 * 关联类型：自定义的关系，其值请从10开始使用，0到9为底层保留的关系，方便日后平台底层的扩展

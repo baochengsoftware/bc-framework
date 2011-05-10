@@ -2,13 +2,11 @@ package cn.bc.identity.service;
 
 import java.util.List;
 
-import org.springframework.util.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.bc.core.query.condition.Direction;
-import cn.bc.core.query.condition.impl.AndCondition;
-import cn.bc.core.query.condition.impl.EqualsCondition;
-import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.core.service.DefaultCrudService;
+import cn.bc.identity.dao.ActorRelationDao;
+import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 
 /**
@@ -19,39 +17,33 @@ import cn.bc.identity.domain.ActorRelation;
  */
 public class ActorRelationServiceImpl extends DefaultCrudService<ActorRelation>
 		implements ActorRelationService {
+	private ActorRelationDao actorRelationDao;
+
+	@Autowired
+	public void setActorRelationDao(ActorRelationDao actorRelationDao) {
+		this.actorRelationDao = actorRelationDao;
+		this.setCrudDao(actorRelationDao);
+	}
 
 	public List<ActorRelation> findByMaster(Integer type, Long masterId) {
-		Assert.notNull(type);
-		Assert.notNull(masterId);
-		AndCondition condition = new AndCondition();
-		condition.add(new EqualsCondition("type", type));
-		condition.add(new EqualsCondition("master.id", masterId));
-		condition.add(new OrderCondition("order", Direction.Asc));
-		return this.createQuery().condition(condition).list();
+		return this.actorRelationDao.findByMaster(type, masterId);
 	}
 
 	public ActorRelation load(Integer type, Long masterId, Long followerId) {
-		Assert.notNull(type);
-		Assert.notNull(masterId);
-		Assert.notNull(followerId);
-		AndCondition condition = new AndCondition();
-		condition.add(new EqualsCondition("type", type));
-		condition.add(new EqualsCondition("master.id", masterId));
-		condition.add(new EqualsCondition("follower.id", followerId));
-		return this.createQuery().condition(condition).singleResult();
+		return this.actorRelationDao.load(type, masterId, followerId);
 	}
 
 	public List<ActorRelation> findByFollower(Integer type, Long followerId) {
-		Assert.notNull(type);
-		Assert.notNull(followerId);
-		AndCondition condition = new AndCondition();
-		condition.add(new EqualsCondition("type", type));
-		condition.add(new EqualsCondition("follower.id", followerId));
-		
-		OrderCondition oc = new OrderCondition("master.order", Direction.Asc);
-		oc.add("order", Direction.Asc);
-		condition.add(oc);
-		
-		return this.createQuery().condition(condition).list();
+		return this.actorRelationDao.findByFollower(type, followerId);
+	}
+
+	public List<Actor> findMaster(Long followerId, Integer[] relationTypes,
+			Integer[] masterTypes) {
+		return this.actorRelationDao.findMaster(followerId, relationTypes, masterTypes);
+	}
+
+	public List<Actor> findFollower(Long masterId, Integer[] relationTypes,
+			Integer[] followerTypes) {
+		return this.actorRelationDao.findFollower(masterId, relationTypes, followerTypes);
 	}
 }

@@ -1,17 +1,17 @@
-package cn.bc.identity.service;
+package cn.bc.identity.dao;
 
 import java.util.List;
 
-import cn.bc.core.service.CrudService;
+import cn.bc.core.dao.CrudDao;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 
 /**
- * Actor关系Service接口
+ * 参与者Dao接口
  * @author dragon
  *
  */
-public interface ActorRelationService extends CrudService<ActorRelation>{
+public interface ActorRelationDao extends CrudDao<ActorRelation>{
 	/**
 	 * 获取某个关联关系
 	 * @param type 关联类型,不能为空
