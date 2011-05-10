@@ -2,6 +2,7 @@ package cn.bc.identity.impl.service;
 
 import java.util.Calendar;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -18,6 +19,8 @@ import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorDetail;
 import cn.bc.identity.domain.ActorDetailImpl;
 import cn.bc.identity.domain.ActorImpl;
+import cn.bc.identity.domain.ActorRelation;
+import cn.bc.identity.domain.ActorRelationImpl;
 import cn.bc.identity.service.ActorRelationService;
 import cn.bc.identity.service.ActorService;
 import cn.bc.security.domain.Module;
@@ -232,5 +235,294 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 	@Test
 	public void testSaveWithRolesAndModule() {
 		saveOneWithRolesAndModule();
+	}
+
+	@Test
+	public void testFindFollower() {
+		// 单位
+		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
+		this.actorService.save(unit);
+		Assert.assertNotNull(unit.getId());
+
+		// 单位下的子单位1
+		Actor cunit = this.createActor(Actor.TYPE_UNIT, "unit1-1");
+		this.actorService.save(cunit);
+		Assert.assertNotNull(cunit.getId());
+		ActorRelation ar0 = createActorRelation(unit, cunit,
+				ActorRelation.TYPE_BELONG, null);
+		actorRelationService.save(ar0);
+
+		// 单位下的部门1
+		Actor dep1 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-b");
+		this.actorService.save(dep1);
+		Assert.assertNotNull(dep1.getId());
+		ActorRelation ar1 = createActorRelation(unit, dep1,
+				ActorRelation.TYPE_BELONG, "02");
+		actorRelationService.save(ar1);
+
+		// 单位下的部门2
+		Actor dep2 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-a");
+		this.actorService.save(dep2);
+		Assert.assertNotNull(dep2.getId());
+		ActorRelation ar2 = createActorRelation(unit, dep2,
+				ActorRelation.TYPE_BELONG, "01");
+		actorRelationService.save(ar2);
+
+		// 部门1下的子部门1
+		Actor cdep1 = this.createActor(Actor.TYPE_DEPARTMENT, "cdep1");
+		this.actorService.save(cdep1);
+		Assert.assertNotNull(cdep1.getId());
+		ActorRelation ar3 = createActorRelation(dep1, cdep1,
+				ActorRelation.TYPE_BELONG, "01");
+		actorRelationService.save(ar3);
+
+		// 反查单位1下的部门列表
+		List<Actor> children = this.actorService.findFollower(
+				unit.getId(), new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_DEPARTMENT });
+		Assert.assertNotNull(children);
+		Assert.assertEquals(2, children.size());
+		Assert.assertEquals(dep2, children.get(0));
+		Assert.assertEquals(dep1, children.get(1));
+
+		// 反查单位1下的子单位列表
+		children = this.actorService.findFollower(unit.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_UNIT });
+		Assert.assertNotNull(children);
+		Assert.assertEquals(1, children.size());
+		Assert.assertEquals(cunit, children.get(0));
+
+		// 反查单位1下的子单位+部门列表
+		children = this.actorService.findFollower(unit.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG }, new Integer[] {
+						Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
+		Assert.assertNotNull(children);
+		Assert.assertEquals(3, children.size());
+		Assert.assertEquals(cunit, children.get(0));
+		Assert.assertEquals(dep2, children.get(1));
+		Assert.assertEquals(dep1, children.get(2));
+
+		// 反查部门1下的子部门列表
+		children = this.actorService.findFollower(dep1.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_DEPARTMENT });
+		Assert.assertNotNull(children);
+		Assert.assertEquals(1, children.size());
+		Assert.assertEquals(cdep1, children.get(0));
+	}
+
+	@Test
+	public void testFindMaster() {
+		// 单位
+		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
+		this.actorService.save(unit);
+		Assert.assertNotNull(unit.getId());
+
+		// 单位下的子单位1
+		Actor cunit = this.createActor(Actor.TYPE_UNIT, "unit1-1");
+		this.actorService.save(cunit);
+		Assert.assertNotNull(cunit.getId());
+		ActorRelation ar0 = createActorRelation(unit, cunit,
+				ActorRelation.TYPE_BELONG, null);
+		actorRelationService.save(ar0);
+
+		// 单位下的部门1
+		Actor dep1 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-b");
+		this.actorService.save(dep1);
+		Assert.assertNotNull(dep1.getId());
+		ActorRelation ar1 = createActorRelation(unit, dep1,
+				ActorRelation.TYPE_BELONG, "02");
+		actorRelationService.save(ar1);
+
+		// 单位下的部门2
+		Actor dep2 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-a");
+		this.actorService.save(dep2);
+		Assert.assertNotNull(dep2.getId());
+		ActorRelation ar2 = createActorRelation(unit, dep2,
+				ActorRelation.TYPE_BELONG, "01");// 隶属单位1
+		actorRelationService.save(ar2);
+		ActorRelation ar22 = createActorRelation(cunit, dep2,
+				ActorRelation.TYPE_BELONG, null);// 同时隶属单位1下的子单位1: 矩阵式结构
+		actorRelationService.save(ar22);
+
+		// 部门1下的子部门1
+		Actor cdep1 = this.createActor(Actor.TYPE_DEPARTMENT, "cdep1");
+		this.actorService.save(cdep1);
+		Assert.assertNotNull(cdep1.getId());
+		ActorRelation ar3 = createActorRelation(dep1, cdep1,
+				ActorRelation.TYPE_BELONG, "01");
+		actorRelationService.save(ar3);
+
+		// 反查子单位1的上级单位1
+		List<Actor> parents = this.actorService.findMaster(
+				cunit.getId(), new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_UNIT });
+		Assert.assertNotNull(parents);
+		Assert.assertEquals(1, parents.size());
+		Assert.assertEquals(unit, parents.get(0));
+
+		// 反查部门1的上级单位1
+		parents = this.actorService.findMaster(dep1.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_UNIT });
+		Assert.assertNotNull(parents);
+		Assert.assertEquals(1, parents.size());
+		Assert.assertEquals(unit, parents.get(0));
+
+		// 反查部门2的上级单位+部门
+		parents = this.actorService.findMaster(dep2.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG }, new Integer[] {
+						Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
+		Assert.assertNotNull(parents);
+		Assert.assertEquals(2, parents.size());
+		Assert.assertEquals(unit, parents.get(0));
+		Assert.assertEquals(cunit, parents.get(1));
+
+		// 反查子部门1的上级部门
+		parents = this.actorService.findMaster(cdep1.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_DEPARTMENT });
+		Assert.assertNotNull(parents);
+		Assert.assertEquals(1, parents.size());
+		Assert.assertEquals(dep1, parents.get(0));
+	}
+
+	@Test
+	public void testFindTopUnit() {
+		// 单位1
+		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
+		this.actorService.save(unit);
+		Assert.assertNotNull(unit.getId());
+
+		// 单位1下的子单位1
+		Actor cunit = this.createActor(Actor.TYPE_UNIT, "unit1-1");
+		this.actorService.save(cunit);
+		Assert.assertNotNull(cunit.getId());
+		ActorRelation ar0 = createActorRelation(unit, cunit,
+				ActorRelation.TYPE_BELONG, null);
+		actorRelationService.save(ar0);
+
+		// 单位下的部门1
+		Actor dep1 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-b");
+		this.actorService.save(dep1);
+		Assert.assertNotNull(dep1.getId());
+		ActorRelation ar1 = createActorRelation(unit, dep1,
+				ActorRelation.TYPE_BELONG, "02");
+		actorRelationService.save(ar1);
+
+		// 反查
+		List<Actor> topUnits = this.actorService.findTopUnit();
+		Assert.assertNotNull(topUnits);
+		Assert.assertTrue(topUnits.size() >= 1);// 可能数据库中已经有了其他单位数据
+		Actor theTopUnit = null;
+		for (Actor topUnit : topUnits) {
+			if (topUnit == unit) {
+				theTopUnit = topUnit;
+				break;
+			}
+		}
+		Assert.assertNotNull(theTopUnit);
+		Assert.assertEquals(unit, theTopUnit);
+	}
+
+	@Test
+	public void testFindLowerOrganization() {
+		// 单位1
+		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
+		this.actorService.save(unit);
+		Assert.assertNotNull(unit.getId());
+
+		// 单位1下的子单位1
+		Actor cunit = this.createActor(Actor.TYPE_UNIT, "unit1-1");
+		this.actorService.save(cunit);
+		Assert.assertNotNull(cunit.getId());
+		ActorRelation ar0 = createActorRelation(unit, cunit,
+				ActorRelation.TYPE_BELONG, null);
+		actorRelationService.save(ar0);
+
+		// 单位下的部门1
+		Actor dep1 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-b");
+		this.actorService.save(dep1);
+		Assert.assertNotNull(dep1.getId());
+		ActorRelation ar1 = createActorRelation(unit, dep1,
+				ActorRelation.TYPE_BELONG, "02");
+		actorRelationService.save(ar1);
+
+		// 反查
+		List<Actor> lowerOrganizations = this.actorService
+				.findLowerOrganization(unit.getId());
+		Assert.assertNotNull(lowerOrganizations);
+		Assert.assertEquals(2, lowerOrganizations.size());
+		Assert.assertEquals(cunit, lowerOrganizations.get(0));
+		Assert.assertEquals(dep1, lowerOrganizations.get(1));
+	}
+
+	@Test
+	public void testFindHigherOrganization() {
+		// 单位1
+		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
+		this.actorService.save(unit);
+		Assert.assertNotNull(unit.getId());
+
+		// 单位下的部门1
+		Actor dep1 = this.createActor(Actor.TYPE_DEPARTMENT, "dep-b");
+		this.actorService.save(dep1);
+		Assert.assertNotNull(dep1.getId());
+		ActorRelation ar1 = createActorRelation(unit, dep1,
+				ActorRelation.TYPE_BELONG, "02");
+		actorRelationService.save(ar1);
+
+		// 反查
+		List<Actor> higherOrganizations = this.actorService
+				.findHigherOrganization(dep1.getId());
+		Assert.assertNotNull(higherOrganizations);
+		Assert.assertEquals(1, higherOrganizations.size());
+		Assert.assertEquals(unit, higherOrganizations.get(0));
+	}
+
+	@Test
+	public void testFindUser() {
+		// 单位1
+		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
+		this.actorService.save(unit);
+		Assert.assertNotNull(unit.getId());
+
+		// 单位下的人员1
+		Actor user1 = this.createActor(Actor.TYPE_USER, "user1");
+		this.actorService.save(user1);
+		Assert.assertNotNull(user1.getId());
+		ActorRelation ar1 = createActorRelation(unit, user1,
+				ActorRelation.TYPE_BELONG, null);
+		actorRelationService.save(ar1);
+
+		// 反查
+		List<Actor> users = this.actorService
+				.findUser(unit.getId());
+		Assert.assertNotNull(users);
+		Assert.assertEquals(1, users.size());
+		Assert.assertEquals(user1, users.get(0));
+	}
+
+	private Actor createActor(int type, String code) {
+		ActorImpl actor = new ActorImpl();
+		actor.setType(type);
+		actor.setInner(false);
+		actor.setStatus(Entity.STATUS_ENABLED);
+		actor.setUid(UUID.randomUUID().toString());
+		actor.setCode(code);
+		actor.setName("测试" + code);
+
+		return actor;
+	}
+
+	private ActorRelation createActorRelation(Actor master, Actor follower,
+			Integer type, String order) {
+		ActorRelation ar = new ActorRelationImpl();
+		ar.setMaster(master);
+		ar.setFollower(follower);
+		ar.setType(type);
+		ar.setOrder(order);
+		return ar;
 	}
 }

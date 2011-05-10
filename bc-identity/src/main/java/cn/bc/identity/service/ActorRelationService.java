@@ -3,7 +3,6 @@ package cn.bc.identity.service;
 import java.util.List;
 
 import cn.bc.core.service.CrudService;
-import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 
 /**
@@ -36,22 +35,4 @@ public interface ActorRelationService extends CrudService<ActorRelation>{
 	 * @return
 	 */
 	List<ActorRelation> findByFollower(Integer type, Long followerId);
-
-	/**
-	 * 获取从属方指定关联关系的主控方
-	 * @param followerId 从属方id
-	 * @param relationTypes 关联的类型，对应ActorRelation的type属性
-	 * @param masterTypes 主控方的类型，对应Actor的type属性
-	 * @return
-	 */
-	List<Actor> findMaster(Long followerId, Integer[] relationTypes, Integer[] masterTypes);
-	
-	/**
-	 * 获取隶属指定actor的所有actor
-	 * @param masterId 主控方id
-	 * @param relationTypes 关联的类型，对应ActorRelation的type属性
-	 * @param followerTypes 从属方的类型，对应Actor的type属性
-	 * @return
-	 */
-	List<Actor> findFollower(Long masterId, Integer[] relationTypes, Integer[] followerTypes);
 }

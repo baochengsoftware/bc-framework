@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.bc.core.service.DefaultCrudService;
 import cn.bc.identity.dao.ActorRelationDao;
-import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 
 /**
@@ -35,15 +34,5 @@ public class ActorRelationServiceImpl extends DefaultCrudService<ActorRelation>
 
 	public List<ActorRelation> findByFollower(Integer type, Long followerId) {
 		return this.actorRelationDao.findByFollower(type, followerId);
-	}
-
-	public List<Actor> findMaster(Long followerId, Integer[] relationTypes,
-			Integer[] masterTypes) {
-		return this.actorRelationDao.findMaster(followerId, relationTypes, masterTypes);
-	}
-
-	public List<Actor> findFollower(Long masterId, Integer[] relationTypes,
-			Integer[] followerTypes) {
-		return this.actorRelationDao.findFollower(masterId, relationTypes, followerTypes);
 	}
 }
