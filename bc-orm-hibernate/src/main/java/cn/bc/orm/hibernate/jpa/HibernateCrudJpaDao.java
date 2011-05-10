@@ -38,6 +38,10 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 	protected String pkName = "id";// 主键名称
 	private JpaTemplate jpaTemplate;
 
+	protected JpaTemplate getJpaTemplate() {
+		return jpaTemplate;
+	}
+
 	/**
 	 * 通过构造函数注入实体对象的类型, 因为Java的泛型无法使用T.class的缘故
 	 * 

@@ -1,1 +1,1 @@
-drop table if exists ZTEST_DOMAIN;
+drop table if exists ZTEST_EXAMPLE;

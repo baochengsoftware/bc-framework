@@ -5,7 +5,7 @@ create sequence HIBERNATE_SEQUENCE
     increment by 1
     cache 20;
 
-create table ZTEST_DOMAIN (
+create table ZTEST_EXAMPLE (
     ID   NUMBER(19) not null,
     NAME VARCHAR2(255) not null,
     CODE VARCHAR2(255),
