@@ -36,7 +36,7 @@ public interface ActorService extends CrudService<Actor>{
 	List<Actor> findTopUnit();
 
 	/**
-	 * 获取隶属关系中的所有下级组织信息
+	 * 获取隶属关系中的所有直接下级组织信息
 	 * @param higherOrganizationId 上级组织的id
 	 * @param lowerOrganizationTypes 下级组织的类型，对应Actor的type属性，默认为单位+部门+岗位
 	 * @return
@@ -44,7 +44,7 @@ public interface ActorService extends CrudService<Actor>{
 	List<Actor> findLowerOrganization(Long higherOrganizationId, Integer... lowerOrganizationTypes);
 
 	/**
-	 * 获取隶属关系中的所有上级组织信息
+	 * 获取隶属关系中的所有直接上级组织信息
 	 * @param lowerOrganizationId 下级组织的id
 	 * @param higherOrganizationTypes 上级组织的类型，对应Actor的type属性，默认为单位+部门+岗位
 	 * @return
@@ -52,9 +52,33 @@ public interface ActorService extends CrudService<Actor>{
 	List<Actor> findHigherOrganization(Long lowerOrganizationId, Integer... higherOrganizationTypes);
 
 	/**
-	 * 获取组织中的人员信息
+	 * 获取直接隶属于组织的人员信息
 	 * @param organizationId 上级组织的id
 	 * @return
 	 */
 	List<Actor> findUser(Long organizationId);
+
+	/**
+	 * 获取隶属关系中的所有上级组织信息，包括上级的上级,按祖先的级别排好序
+	 * @param lowerOrganizationId 下级组织的id
+	 * @param ancestorOrganizationTypes 上级组织的类型，对应Actor的type属性，默认为单位+部门+岗位
+	 * @return
+	 */
+	List<Actor> findAncestorOrganization(Long lowerOrganizationId, Integer... ancestorOrganizationTypes);
+
+	/**
+	 * 获取隶属关系中的所有下级组织信息，包括下级的下级
+	 * @param higherOrganizationId 上级组织的id
+	 * @param descendantOrganizationTypes 下级组织的类型，对应Actor的type属性，默认为单位+部门+岗位
+	 * @return
+	 */
+	List<Actor> findDescendantOrganization(Long higherOrganizationId, Integer... descendantOrganizationTypes);
+
+	/**
+	 * 获取隶属于组织的人员信息，包括组织的所有后代组织下的人员
+	 * @param organizationId 上级组织的id
+	 * @param descendantOrganizationTypes 下级组织的类型，对应Actor的type属性，默认为单位+部门+岗位
+	 * @return
+	 */
+	List<Actor> findDescendantUser(Long organizationId, Integer... descendantOrganizationTypes);
 }

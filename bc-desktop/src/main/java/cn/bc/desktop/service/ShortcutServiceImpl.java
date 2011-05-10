@@ -35,13 +35,13 @@ public class ShortcutServiceImpl extends DefaultCrudService<Shortcut> implements
 		this.actorService = actorService;
 	}
 
-	public List<Shortcut> findByActor(Long actorId) {
-		if (actorId == null)
+	public List<Shortcut> findByUser(Long userId) {
+		if (userId == null)
 			return null;
-		Actor actor = this.actorService.load(actorId);
+		Actor user = this.actorService.load(userId);
 
-		// 获取actor隶属的所有上级组织，包括上级的上级
-		List<Actor> parents = this.actorService.findParents();
+		// 获取actor隶属的所有上级组织，包括上级的上级，单位+部门+岗位
+		List<Actor> parents = this.actorService.findAncestorOrganization(userId);
 
 		// 汇总所有可以访问的模块列表
 		Set<Module> modules = new LinkedHashSet<Module>();
@@ -50,8 +50,8 @@ public class ShortcutServiceImpl extends DefaultCrudService<Shortcut> implements
 			if (a.getRoles() != null)
 				roles.addAll(a.getRoles());
 		}
-		if (actor.getRoles() != null)
-			roles.addAll(actor.getRoles());
+		if (user.getRoles() != null)
+			roles.addAll(user.getRoles());
 		for (Role r : roles) {
 			if (r.getModules() != null)
 				modules.addAll(r.getModules());

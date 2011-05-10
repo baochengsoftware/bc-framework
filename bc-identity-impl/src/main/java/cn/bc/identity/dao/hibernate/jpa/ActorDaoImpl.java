@@ -179,4 +179,84 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 				new Integer[] { ActorRelation.TYPE_BELONG },
 				new Integer[] { Actor.TYPE_USER });
 	}
+
+	public List<Actor> findAncestorOrganization(Long lowerOrganizationId,
+			Integer... ancestorOrganizationTypes) {
+		// 默认为单位+部门+岗位
+		if (ancestorOrganizationTypes == null)
+			ancestorOrganizationTypes = new Integer[] { Actor.TYPE_UNIT,
+					Actor.TYPE_DEPARTMENT, Actor.TYPE_GROUP };
+
+		// TODO 性能优化，以下只是使用了递归查找
+		List<Actor> ancestors = new ArrayList<Actor>();
+		this.recursiveFindHigherOrganization(ancestors, lowerOrganizationId,
+				ancestorOrganizationTypes);
+		return ancestors;
+	}
+
+	// 递归查找祖先组织
+	private void recursiveFindHigherOrganization(List<Actor> ancestors,
+			Long lowerId, Integer... ancestorOrganizationTypes) {
+		List<Actor> highers = this.findHigherOrganization(lowerId,
+				ancestorOrganizationTypes);
+		if (highers != null && !highers.isEmpty()) {
+			for (Actor higher : highers) {
+				this.recursiveFindHigherOrganization(ancestors, higher.getId(),
+						ancestorOrganizationTypes);
+				ancestors.add(higher);
+			}
+		}
+	}
+
+	public List<Actor> findDescendantOrganization(Long higherOrganizationId,
+			Integer... descendantOrganizationTypes) {
+		// 默认为单位+部门+岗位
+		if (descendantOrganizationTypes == null)
+			descendantOrganizationTypes = new Integer[] { Actor.TYPE_UNIT,
+					Actor.TYPE_DEPARTMENT, Actor.TYPE_GROUP };
+
+		// TODO 性能优化，以下只是使用了递归查找
+		List<Actor> descendants = new ArrayList<Actor>();
+		this.recursiveFindDescendantOrganization(descendants,
+				higherOrganizationId, descendantOrganizationTypes);
+		return descendants;
+	}
+
+	// 递归查找后代组织
+	private void recursiveFindDescendantOrganization(List<Actor> descendants,
+			Long higherOrganizationId, Integer[] descendantOrganizationTypes) {
+		List<Actor> lowers = this.findLowerOrganization(higherOrganizationId,
+				descendantOrganizationTypes);
+		if (lowers != null && !lowers.isEmpty()) {
+			for (Actor lower : lowers) {
+				descendants.add(lower);
+				this.recursiveFindDescendantOrganization(descendants,
+						lower.getId(), descendantOrganizationTypes);
+			}
+		}
+	}
+
+	public List<Actor> findDescendantUser(Long organizationId,
+			Integer... descendantOrganizationTypes) {
+		//查找直接隶属的人员信息
+		List<Actor> users = new ArrayList<Actor>();
+		List<Actor> _users = this.findUser(organizationId);
+		if (_users != null && !_users.isEmpty()) {
+			users.addAll(_users);
+		}
+		
+		//获取所有后代组织
+		List<Actor> descendantOrganizations = this.findDescendantOrganization(organizationId, descendantOrganizationTypes);
+		
+		//循环每个组织查找人员信息
+		if (descendantOrganizations != null && !descendantOrganizations.isEmpty()) {
+			for (Actor org : descendantOrganizations) {
+				_users = this.findUser(org.getId());
+				if (_users != null && !_users.isEmpty()) {
+					users.addAll(_users);
+				}
+			}
+		}
+		return users;
+	}
 }

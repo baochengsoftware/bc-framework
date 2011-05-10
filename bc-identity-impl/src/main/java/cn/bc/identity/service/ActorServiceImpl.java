@@ -31,7 +31,8 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 
 	public List<Actor> findFollower(Long masterId, Integer[] relationTypes,
 			Integer[] followerTypes) {
-		return this.actorDao.findFollower(masterId, relationTypes, followerTypes);
+		return this.actorDao.findFollower(masterId, relationTypes,
+				followerTypes);
 	}
 
 	public List<Actor> findTopUnit() {
@@ -40,15 +41,35 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 
 	public List<Actor> findLowerOrganization(Long higherOrganizationId,
 			Integer... lowerOrganizationTypes) {
-		return this.actorDao.findLowerOrganization(higherOrganizationId, lowerOrganizationTypes);
+		return this.actorDao.findLowerOrganization(higherOrganizationId,
+				lowerOrganizationTypes);
 	}
 
 	public List<Actor> findHigherOrganization(Long lowerOrganizationId,
 			Integer... higherOrganizationTypes) {
-		return this.actorDao.findHigherOrganization(lowerOrganizationId, higherOrganizationTypes);
+		return this.actorDao.findHigherOrganization(lowerOrganizationId,
+				higherOrganizationTypes);
 	}
 
 	public List<Actor> findUser(Long organizationId) {
 		return this.actorDao.findUser(organizationId);
+	}
+
+	public List<Actor> findAncestorOrganization(Long lowerOrganizationId,
+			Integer... ancestorOrganizationTypes) {
+		return this.actorDao.findAncestorOrganization(lowerOrganizationId,
+				ancestorOrganizationTypes);
+	}
+
+	public List<Actor> findDescendantOrganization(Long higherOrganizationId,
+			Integer... descendantOrganizationTypes) {
+		return this.actorDao.findDescendantOrganization(higherOrganizationId,
+				descendantOrganizationTypes);
+	}
+
+	public List<Actor> findDescendantUser(Long organizationId,
+			Integer... descendantOrganizationTypes) {
+		return this.actorDao.findDescendantUser(organizationId,
+				descendantOrganizationTypes);
 	}
 }

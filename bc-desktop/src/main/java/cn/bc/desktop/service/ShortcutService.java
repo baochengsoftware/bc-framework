@@ -13,9 +13,9 @@ import cn.bc.desktop.domain.Shortcut;
  */
 public interface ShortcutService extends CrudService<Shortcut> {
 	/**
-	 * 获取指定Actor可以使用的快捷方式
-	 * @param actorId 
+	 * 获取用户可以使用的快捷方式
+	 * @param userId 
 	 * @return
 	 */
-	List<Shortcut> findByActor(Long actorId);
+	List<Shortcut> findByUser(Long userId);
 }
