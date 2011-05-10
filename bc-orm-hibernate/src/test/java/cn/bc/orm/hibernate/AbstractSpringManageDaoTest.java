@@ -34,7 +34,7 @@ public abstract class AbstractSpringManageDaoTest implements InitializingBean {
 	private SimpleJdbcInsert jdbcInsert;
 
 	protected String getTableName(){
-		return "ZTEST_DOMAIN";
+		return "ZTEST_EXAMPLE";
 	}
 	// ==dependency inject
 

@@ -54,4 +54,10 @@ public interface ActorRelationDao extends CrudDao<ActorRelation>{
 	 * @return
 	 */
 	List<Actor> findFollower(Long masterId, Integer[] relationTypes, Integer[] followerTypes);
+
+	/**
+	 * 获取顶层单位信息
+	 * @return
+	 */
+	List<Actor> findTopUnit();
 }
