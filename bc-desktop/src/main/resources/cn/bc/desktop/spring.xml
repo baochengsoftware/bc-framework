@@ -15,10 +15,9 @@
 	<!-- 需要在主配置文件配置entityManagerFactory和transactionManager的实现 -->
 
 	<!-- shortcut -->
-	<bean id="shortcutDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
+	<bean id="shortcutDao" class="cn.bc.desktop.dao.hibernate.jpa.ShortcutDaoImpl"
 		p:entityClass="cn.bc.desktop.domain.Shortcut"
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="shortcutService" class="cn.bc.desktop.service.ShortcutServiceImpl"
-		p:entityClass="cn.bc.desktop.domain.Shortcut"
-		p:crudDao-ref="shortcutDao" />
+		p:entityClass="cn.bc.desktop.domain.Shortcut" />
 </beans>

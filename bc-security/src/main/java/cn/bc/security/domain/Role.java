@@ -24,7 +24,7 @@ import cn.bc.core.DefaultEntity;
 @Entity
 @Table(name = "BC_SECURITY_ROLE")
 public class Role extends DefaultEntity {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1273753941627332660L;
 
 	/**类型：默认*/
 	public static final int TYPE_DEFAULT = 0;

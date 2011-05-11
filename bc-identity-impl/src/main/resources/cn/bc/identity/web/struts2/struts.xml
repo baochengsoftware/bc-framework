@@ -3,7 +3,7 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="duty" extends="bc-default" namespace="/duty">
+	<package name="duty" extends="bc-default" namespace="/bc/duty">
 		<action name="create" class="dutyAction" method="create">
 <!-- 			<result name="form" type="freemarker">/cn/bc/identity/web/struts2/duty.ftl</result> -->
 			<result name="form">/bc/identity/duty/form.jsp</result>
@@ -28,7 +28,7 @@
 			<result name="form">/bc/identity/actor/form.jsp</result>
 		</action>
 	</package> -->
-	<package name="unit" extends="bc-default" namespace="/unit">
+	<package name="unit" extends="bc-default" namespace="/bc/unit">
 		<action name="create" class="unitAction" method="create">
 			<result name="form">/bc/identity/unit/form.jsp</result>
 		</action>

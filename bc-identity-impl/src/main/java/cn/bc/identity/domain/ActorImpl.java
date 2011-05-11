@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import cn.bc.security.domain.Role;
 
@@ -29,41 +30,29 @@ import cn.bc.security.domain.Role;
 @Entity
 @Table(name = "BC_IDENTITY_ACTOR")
 public class ActorImpl implements Actor {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5453674322680414158L;
 
 	public ActorImpl(){
 		
 	}
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ID")
 	private Long id;
-	@Column(name = "UID")
 	private String uid;
-	@Column(name = "STATUS_")
 	private int status = cn.bc.core.Entity.STATUS_DISABLED;
-	@Column(name = "INNER_")
 	private boolean inner = false;
 
-	@Column(name = "NAME")
 	private String name;
-	@Column(name = "CODE")
 	private String code;
-	@Column(name = "TYPE_")
 	private int type = Actor.TYPE_UNDEFINED;
-	@Column(name = "EMAIL")
 	private String email;
-	@Column(name = "PHONE")
 	private String phone;
-	@Column(name = "ORDER_")
 	private String order;
 
-	@OneToOne(targetEntity = ActorDetailImpl.class, cascade = CascadeType.ALL, optional = true)
-	@JoinColumn(name = "DETAIL_ID", referencedColumnName = "ID")
 	private ActorDetail detail;
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	private Set<Role> roles;//拥有的角色列表
+
+	@ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="BC_SECURITY_ROLE_ACTOR",
         joinColumns=
             @JoinColumn(name="AID", referencedColumnName="ID"),
@@ -71,8 +60,6 @@ public class ActorImpl implements Actor {
             @JoinColumn(name="RID", referencedColumnName="ID")
         )
     @OrderBy("code asc")
-	private Set<Role> roles;//拥有的角色列表
-
 	public Set<Role> getRoles() {
 		return roles;
 	}
@@ -81,6 +68,8 @@ public class ActorImpl implements Actor {
 		this.roles = roles;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Long getId() {
 		return id;
 	}
@@ -113,6 +102,7 @@ public class ActorImpl implements Actor {
 		this.code = code;
 	}
 
+	@Column(name = "TYPE_")
 	public int getType() {
 		return type;
 	}
@@ -121,6 +111,7 @@ public class ActorImpl implements Actor {
 		this.type = type;
 	}
 
+	@Column(name = "STATUS_")
 	public int getStatus() {
 		return status;
 	}
@@ -145,12 +136,13 @@ public class ActorImpl implements Actor {
 		this.phone = phone;
 	}
 
+	@OneToOne(targetEntity = ActorDetailImpl.class, cascade = CascadeType.ALL, optional = true)
+	@JoinColumn(name = "DETAIL_ID", referencedColumnName = "ID")
 	public ActorDetail getDetail() {
-		// if (this.detail == null)
-		// this.detail = new ActorDetail();
 		return detail;
 	}
 
+	@Column(name = "ORDER_")
 	public String getOrder() {
 		return order;
 	}
@@ -163,10 +155,12 @@ public class ActorImpl implements Actor {
 		this.detail = detail;
 	}
 
+	@Transient
 	public boolean isNew() {
 		return getId() == null || getId() <= 0;
 	}
 
+	@Column(name = "INNER_")
 	public boolean isInner() {
 		return inner;
 	}

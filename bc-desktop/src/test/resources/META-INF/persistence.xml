@@ -13,6 +13,7 @@
 		<!-- actor -->
 		<class>cn.bc.identity.domain.ActorImpl</class>
 		<class>cn.bc.identity.domain.ActorDetailImpl</class>
+		<class>cn.bc.identity.domain.ActorRelationImpl</class>
 		<class>cn.bc.identity.domain.Duty</class>
 
 		<!-- desktop -->

@@ -17,7 +17,7 @@ import javax.persistence.Transient;
  */
 @MappedSuperclass
 public abstract class DefaultEntity implements cn.bc.core.Entity<Long> {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7826313222480961654L;
 	private Long id;
 	private String uid;
 	private int status = cn.bc.core.Entity.STATUS_DISABLED;

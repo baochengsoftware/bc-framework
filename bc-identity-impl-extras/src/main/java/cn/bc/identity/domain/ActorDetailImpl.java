@@ -21,7 +21,7 @@ import cn.bc.identity.domain.ActorDetail;
 @Entity
 @Table(name = "BC_IDENTITY_ACTOR_DETAIL")
 public class ActorDetailImpl implements ActorDetail {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4863625345847183773L;
 
 	private static Log logger = LogFactory.getLog(ActorDetailImpl.class);
 

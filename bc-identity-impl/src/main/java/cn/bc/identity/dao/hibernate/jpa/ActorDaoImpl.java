@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.util.StringUtils;
 
+import cn.bc.core.exception.CoreException;
 import cn.bc.identity.dao.ActorDao;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
@@ -18,6 +19,20 @@ import cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao;
  */
 public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		ActorDao {
+	public Actor loadByCode(String actorCode) {
+		String hql = "from ActorImpl a where a.code=?";
+		@SuppressWarnings("rawtypes")
+		List all = this.getJpaTemplate().find(hql, actorCode);
+		if(all == null || all.isEmpty())
+			return null;
+		else if(all.size() == 1)
+			return (Actor) all.get(0);
+		else
+			throw new CoreException("return more than one result! actorCode=" + actorCode);
+
+		//return this.createQuery().condition(new EqualsCondition("code", actorCode)).singleResult();
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<Actor> findMaster(Long followerId, Integer[] relationTypes,
 			Integer[] masterTypes) {

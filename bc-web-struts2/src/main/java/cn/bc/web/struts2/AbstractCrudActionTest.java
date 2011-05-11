@@ -93,7 +93,11 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 	}
 
 	public String getNamespace() {
-		return "/" + StringUtils.uncapitalize(getEntityConfigName());
+		return getNamespacePrefix() + StringUtils.uncapitalize(getEntityConfigName());
+	}
+
+	protected String getNamespacePrefix() {
+		return "/bc/";
 	}
 
 	// edit

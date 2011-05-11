@@ -67,6 +67,20 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 		crudOperations.save(entity);
 		return entity;
 	}
+	
+	/**
+	 * 删除所有数据，用于需要时清空测试现场
+	 */
+	protected void deleteAll() {
+		List<E> all = this.crudOperations.createQuery().list();
+		Serializable[] ids = new Serializable[all.size()];
+		int i = 0;
+		for (E e : all) {
+			ids[i] = e.getId();
+			i++;
+		}
+		this.crudOperations.delete(ids);
+	}
 
 	/**
 	 * 生成一个数据库中不存在的id值

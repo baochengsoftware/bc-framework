@@ -26,5 +26,6 @@
 		<module>bc-identity-impl-extras</module>
 		<module>bc-identity-impl</module>
 		<module>bc-security</module>
+		<module>bc-desktop</module>
 	</modules>
 </project>

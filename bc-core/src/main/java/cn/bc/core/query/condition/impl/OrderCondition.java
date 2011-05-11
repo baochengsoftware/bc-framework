@@ -30,7 +30,7 @@ public class OrderCondition implements Condition {
 		this.add(name, direction);
 	}
 
-	public void add(OrderCondition orderCondition) {
+	public OrderCondition add(OrderCondition orderCondition) {
 		if (orderCondition == null)
 			throw new CoreException("orderCondition can not be null.");
 		String _orderBy = orderCondition.getExpression();
@@ -45,16 +45,17 @@ public class OrderCondition implements Condition {
 			}
 			this.orderBy = this.orderBy + _orderBy;
 		}
-		//System.out.println("this.orderBy=" + this.orderBy);
+		return this;
 	}
 
-	public void add(String name, Direction direction) {
+	public OrderCondition add(String name, Direction direction) {
 		if (this.orderBy == null) {
 			this.orderBy = "";
 		} else {
 			this.orderBy = this.orderBy + ",";
 		}
 		this.orderBy = this.orderBy + name + " " + direction.toSymbol();
+		return this;
 	}
 
 	public String getExpression() {

@@ -8,13 +8,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.orm.jpa.JpaTemplate;
+import org.springframework.util.StringUtils;
 
 import cn.bc.core.Page;
 import cn.bc.core.query.condition.Condition;
 import cn.bc.orm.hibernate.HibernateUtils;
-
 
 /**
  * 基于hibernate的查询接口实现
@@ -25,6 +27,7 @@ import cn.bc.orm.hibernate.HibernateUtils;
  */
 public class HibernateJpaQuery<T extends Object> implements
 		cn.bc.core.query.Query<T> {
+	protected final Log logger = LogFactory.getLog(getClass());
 	private JpaTemplate jpaTemplate;
 	private Condition condition;
 	private Class<T> entityClass;
@@ -103,7 +106,8 @@ public class HibernateJpaQuery<T extends Object> implements
 		return jpaTemplate.execute(new JpaCallback<List<T>>() {
 			public List<T> doInJpa(EntityManager em)
 					throws PersistenceException {
-				Query queryObject = em.createQuery(getHql());
+				String hql = getHql();
+				Query queryObject = em.createQuery(hql);
 				jpaTemplate.prepareQuery(queryObject);
 				if (condition != null && condition.getValues() != null) {
 					int i = 0;
@@ -111,6 +115,13 @@ public class HibernateJpaQuery<T extends Object> implements
 						queryObject.setParameter(i + 1, value);// jpa的索引号从1开始
 						i++;
 					}
+				}
+				if (logger.isDebugEnabled()) {
+					logger.debug("hql=" + hql);
+					logger.debug("args="
+							+ (condition != null ? StringUtils
+									.collectionToCommaDelimitedString(condition
+											.getValues()) : "null"));
 				}
 				return (List<T>) queryObject.getResultList();
 			}
@@ -123,7 +134,8 @@ public class HibernateJpaQuery<T extends Object> implements
 		return jpaTemplate.execute(new JpaCallback<List<T>>() {
 			public List<T> doInJpa(EntityManager em)
 					throws PersistenceException {
-				Query queryObject = em.createQuery(getHql());
+				String hql = getHql();
+				Query queryObject = em.createQuery(hql);
 				jpaTemplate.prepareQuery(queryObject);
 				if (condition != null && condition.getValues() != null) {
 					int i = 0;
@@ -132,16 +144,26 @@ public class HibernateJpaQuery<T extends Object> implements
 						i++;
 					}
 				}
-				queryObject.setFirstResult(Page.getFirstResult(pageNo, _pageSize));
+				queryObject.setFirstResult(Page.getFirstResult(pageNo,
+						_pageSize));
 				queryObject.setMaxResults(_pageSize);
+				if (logger.isDebugEnabled()) {
+					logger.debug("pageNo=" + pageNo);
+					logger.debug("pageSize=" + _pageSize);
+					logger.debug("hql=" + hql);
+					logger.debug("args="
+							+ (condition != null ? StringUtils
+									.collectionToCommaDelimitedString(condition
+											.getValues()) : "null"));
+				}
 				return (List<T>) queryObject.getResultList();
 			}
 		});
 	}
 
 	public Page<T> page(int pageNo, int pageSize) {
-		return new Page<T>(pageNo, pageSize, this.count(), this.list(
-				pageNo, pageSize));
+		return new Page<T>(pageNo, pageSize, this.count(), this.list(pageNo,
+				pageSize));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -176,7 +198,8 @@ public class HibernateJpaQuery<T extends Object> implements
 		return jpaTemplate.execute(new JpaCallback<List<Object>>() {
 			public List<Object> doInJpa(EntityManager em)
 					throws PersistenceException {
-				Query queryObject = em.createQuery("select " + select + " " + getHql());
+				Query queryObject = em.createQuery("select " + select + " "
+						+ getHql());
 				jpaTemplate.prepareQuery(queryObject);
 				if (condition != null && condition.getValues() != null) {
 					int i = 0;

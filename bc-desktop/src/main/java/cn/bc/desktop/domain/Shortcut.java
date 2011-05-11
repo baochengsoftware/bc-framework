@@ -25,11 +25,19 @@ import cn.bc.security.domain.Module;
 public class Shortcut extends DefaultEntity {
 	private static final long serialVersionUID = 1L;
 	
+	private boolean standalone;//是否在独立的浏览器窗口中打开
 	private String order;//排序号
-	private String name;//名称
+	private String name;//名称,为空则使用模块的名称
+	private String url;//地址,为空则使用模块的地址
 	private Module module;//对应的模块
-	private Actor belong;//所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)
+	private Actor actor;//所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)
 	
+	public boolean isStandalone() {
+		return standalone;
+	}
+	public void setStandalone(boolean standalone) {
+		this.standalone = standalone;
+	}
 	@Column(name = "ORDER_")
 	public String getOrder() {
 		return order;
@@ -44,6 +52,13 @@ public class Shortcut extends DefaultEntity {
 		this.name = name;
 	}
 	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="MID", nullable=true, updatable=false)
 	public Module getModule() {
@@ -55,10 +70,10 @@ public class Shortcut extends DefaultEntity {
 	
 	@ManyToOne(targetEntity=ActorImpl.class,fetch=FetchType.LAZY)
 	@JoinColumn(name="AID", nullable=true, updatable=false)
-	public Actor getBelong() {
-		return belong;
+	public Actor getActor() {
+		return actor;
 	}
-	public void setBelong(Actor belong) {
-		this.belong = belong;
+	public void setActor(Actor actor) {
+		this.actor = actor;
 	}
 }

@@ -109,6 +109,34 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 	}
 
 	@Test
+	public void testLoadAdmin() {
+		String actorCode = "admin";
+		Actor _user = this.actorService.loadByCode(actorCode);
+		Assert.assertNotNull(_user);
+//		Set<Role> roles = _user.getRoles();
+//		Assert.assertNotNull(roles);
+//		for(Role role:roles){
+//			System.out.println(role.getName());
+//			for(Module m:role.getModules()){
+//				System.out.println(m.getName());
+//			}
+//		}
+	}
+
+	@Test
+	public void testLoadByCode() {
+		String actorCode = "adminadminadmin";
+		// 先插入一条数据
+		Actor user = this.createActor(Actor.TYPE_USER, actorCode);
+		this.actorService.save(user);
+		Assert.assertNotNull(user.getId());
+
+		Actor _user = this.actorService.loadByCode(actorCode);
+		Assert.assertNotNull(_user);
+		Assert.assertEquals(user, _user);
+	}
+
+	@Test
 	public void testLoadWithDetail() {
 		// 先插入一条数据
 		Actor entity = saveOneWithDetail();

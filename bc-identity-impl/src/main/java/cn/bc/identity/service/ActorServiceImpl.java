@@ -24,6 +24,10 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 		this.setCrudDao(actorDao);
 	}
 
+	public Actor loadByCode(String actorCode) {
+		return this.actorDao.loadByCode(actorCode);
+	}
+
 	public List<Actor> findMaster(Long followerId, Integer[] relationTypes,
 			Integer[] masterTypes) {
 		return this.actorDao.findMaster(followerId, relationTypes, masterTypes);

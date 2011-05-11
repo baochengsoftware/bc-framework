@@ -9,7 +9,7 @@ import java.util.Collection;
 import cn.bc.core.query.QueryOperator;
 
 /**
- * in条件
+ * in条件,经常出现性能问题，尽量少用
  * 
  * @author dragon
  * 

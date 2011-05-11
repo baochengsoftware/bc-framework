@@ -5,6 +5,9 @@ package cn.bc.security.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cn.bc.core.DefaultEntity;
@@ -17,7 +20,8 @@ import cn.bc.core.DefaultEntity;
 @Entity
 @Table(name = "BC_SECURITY_MODULE")
 public class Module extends DefaultEntity {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4623393538293916992L;
+	
 	/**模块类型为文件夹*/
 	public static final int TYPE_FOLDER = 1;
 	/**模块类型为内部链接*/
@@ -66,7 +70,8 @@ public class Module extends DefaultEntity {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+	@ManyToOne(fetch=FetchType.EAGER, optional = true)
+	@JoinColumn(name = "BELONG", referencedColumnName = "ID")
 	public Module getBelong() {
 		return belong;
 	}

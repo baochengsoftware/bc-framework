@@ -34,17 +34,16 @@
 			<artifactId>bc-web-struts2</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.bc</groupId>
+			<artifactId>bc-orm-hibernate</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 
 		<!-- for test -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>cn.bc</groupId>
-			<artifactId>bc-orm-hibernate</artifactId>
-			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

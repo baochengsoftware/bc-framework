@@ -12,6 +12,13 @@ import cn.bc.identity.domain.Actor;
  */
 public interface ActorDao extends CrudDao<Actor>{
 	/**
+	 * 根据编码获取，如用户的登录名
+	 * @param actorCode actor的编码
+	 * @return
+	 */
+	Actor loadByCode(String actorCode);
+
+	/**
 	 * 获取从属方指定关联关系的主控方
 	 * @param followerId 从属方id
 	 * @param relationTypes 关联的类型，对应ActorRelation的type属性
