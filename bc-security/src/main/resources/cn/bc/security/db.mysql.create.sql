@@ -2,7 +2,7 @@
 -- 模块
 create table BC_SECURITY_MODULE (
     ID int NOT NULL auto_increment,
-    UID varchar(36) COMMENT '全局标识',
+    UID_ varchar(36) COMMENT '全局标识',
     TYPE_ int(1) NOT NULL COMMENT '类型：1-文件夹,2-内部链接,3-外部链接,4-html',
     STATUS_ int(1) NOT NULL COMMENT '状态：0-已禁用,1-启用中,2-已删除',
     INNER_ int(1) NOT NULL COMMENT '是否为内置对象:0-否,1-是',
@@ -17,7 +17,7 @@ create table BC_SECURITY_MODULE (
 -- 角色
 create table BC_SECURITY_ROLE (
     ID int NOT NULL auto_increment,
-    UID varchar(36) COMMENT '全局标识',
+    UID_ varchar(36) COMMENT '全局标识',
    	TYPE_ int(1) NOT NULL COMMENT '类型',
     STATUS_ int(1) NOT NULL COMMENT '状态：0-已禁用,1-启用中,2-已删除',
     INNER_ int(1) NOT NULL COMMENT '是否为内置对象:0-否,1-是',

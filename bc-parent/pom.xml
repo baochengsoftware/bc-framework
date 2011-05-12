@@ -71,7 +71,7 @@
 						<argLine>-Xmx256m</argLine>
 					</configuration>
 				</plugin>
-				
+
 				<!-- <plugin> <groupId>org.mortbay.jetty</groupId> <artifactId>maven-jetty-plugin</artifactId> 
 					<version>6.1.9</version> </plugin> -->
 				<plugin>
@@ -105,6 +105,32 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<configuration>
+								<tasks>
+									<!-- 下面可以传入一些Maven变量 -->
+									<property name="compile_classpath" refid="maven.compile.classpath" />
+									<property name="runtime_classpath" refid="maven.runtime.classpath" />
+									<property name="test_classpath" refid="maven.test.classpath" />
+									<property name="plugin_classpath" refid="maven.plugin.classpath" />
+
+									<ant antfile="${basedir}/build.xml">
+										<target name="build" />
+									</ant>
+								</tasks>
+							</configuration>
+							<goals>
+								<goal>run</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -121,7 +147,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 		</dependency>
-		
+
 		<!-- for test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -133,13 +159,17 @@
 			<artifactId>spring-test</artifactId>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-			  <groupId>ognl</groupId>
-			  <artifactId>ognl</artifactId>
-			  <version>3.0.1</version>
+				<groupId>ognl</groupId>
+				<artifactId>ognl</artifactId>
+				<version>3.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-logging</groupId>
@@ -439,10 +469,10 @@
 				<version>10.2.0.4.0</version>
 			</dependency>
 			<dependency>
-			    <groupId>net.sourceforge.jtds</groupId>
-			    <artifactId>jtds</artifactId>
-			    <version>1.2.5</version>
-			</dependency> 
+				<groupId>net.sourceforge.jtds</groupId>
+				<artifactId>jtds</artifactId>
+				<version>1.2.2</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -451,18 +481,21 @@
 		<jetty.port>8082</jetty.port>
 		<jetty.path>/</jetty.path>
 		<maven.test.skip>false</maven.test.skip>
-		
+
 		<spring.version>3.0.5.RELEASE</spring.version>
 		<hibernate.version>3.6.0.Final</hibernate.version>
 		<struts.version>1.3.10</struts.version>
 		<struts2.version>2.2.1</struts2.version>
 
 		<!-- 数据库连接配置 -->
-		<jndi.name>bcdemo</jndi.name>
+		<db>mysql</db>
+		<db.name>bcdemo</db.name>
+		<db.ip>localhost</db.ip>
 		<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-		<db.url><![CDATA[jdbc:mysql://localhost:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+		<db.url><![CDATA[jdbc:mysql://${db.ip}:3306/${db.name}?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 		<db.username>bcdemo</db.username>
 		<db.password>bcdemo</db.password>
+		<jndi.name>${db.name}</jndi.name>
 		<!-- 使用oracle数据库时设置为sequence的名称，用于测试中qc.core.jdbc.SimpleJdbcInsertEx插入数据并返回id值 -->
 		<db.sequence></db.sequence>
 		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
@@ -476,8 +509,9 @@
 		<profile>
 			<id>mysql</id>
 			<properties>
+				<db>mysql</db>
 				<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-				<db.url><![CDATA[jdbc:mysql://localhost:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+				<db.url><![CDATA[jdbc:mysql://${db.ip}:3306/${db.name}?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 			</properties>
 			<dependencies>
@@ -491,8 +525,9 @@
 		<profile>
 			<id>oracle</id>
 			<properties>
+				<db>oracle</db>
 				<db.driverClassName>oracle.jdbc.OracleDriver</db.driverClassName>
-				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:bcdemo]]></db.url>
+				<db.url><![CDATA[jdbc:oracle:thin:@${db.ip}:1521:${db.name}]]></db.url>
 				<db.sequence>hibernate_sequence</db.sequence>
 				<hibernate.dialect>org.hibernate.dialect.Oracle9Dialect</hibernate.dialect>
 			</properties>
@@ -506,8 +541,9 @@
 		<profile>
 			<id>mssql</id>
 			<properties>
+				<db>mssql</db>
 				<db.driverClassName>net.sourceforge.jtds.jdbc.Driver</db.driverClassName>
-				<db.url><![CDATA[jdbc:jtds:sqlserver://localhost:1433/bcdemo]]></db.url>
+				<db.url><![CDATA[jdbc:jtds:sqlserver://${db.ip}:1433;DatabaseName=${db.name}]]></db.url>
 				<hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect>
 			</properties>
 			<dependencies>

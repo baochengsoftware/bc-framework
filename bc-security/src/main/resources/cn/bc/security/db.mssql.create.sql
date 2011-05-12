@@ -2,7 +2,7 @@
 -- 模块
 create table BC_SECURITY_MODULE (
     ID numeric not null identity,
-    UID varchar(36),
+    UID_ varchar(36),
     TYPE_ tinyint not null,
     STATUS_ tinyint not null,
     INNER_ tinyint not null,
@@ -17,7 +17,7 @@ create table BC_SECURITY_MODULE (
 -- 角色
 create table BC_SECURITY_ROLE (
     ID numeric not null identity,
-    UID varchar(36),
+    UID_ varchar(36),
    	TYPE_ tinyint not null,
     STATUS_ tinyint not null,
     INNER_ tinyint not null,

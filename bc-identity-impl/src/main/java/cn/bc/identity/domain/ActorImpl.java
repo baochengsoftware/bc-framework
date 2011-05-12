@@ -78,6 +78,7 @@ public class ActorImpl implements Actor {
 		this.id = id;
 	}
 
+	@Column(name = "UID_")
 	public String getUid() {
 		return uid;
 	}

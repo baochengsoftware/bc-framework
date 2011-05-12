@@ -38,6 +38,7 @@ public abstract class DefaultEntity implements cn.bc.core.Entity<Long> {
 		return getId() == null || getId() <= 0;
 	}
 
+	@Column(name = "UID_")
 	public String getUid() {
 		return uid;
 	}

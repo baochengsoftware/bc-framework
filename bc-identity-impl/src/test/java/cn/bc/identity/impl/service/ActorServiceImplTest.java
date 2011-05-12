@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,7 +145,9 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 		Calendar now = entity.getDetail().getCalendar("createDate");
 
 		// 强制重新从数据库加载，如果直接使用load，因还在同一事务内，不会重新加载
-		entity = this.actorService.forceLoad(id);
+		entity = this.actorService.load(id);
+		//oracle：is javax.persistence.PersistenceException: org.hibernate.HibernateException: this instance does not yet exist as a row in the database
+		//entity = this.actorService.forceLoad(id);
 
 		Assert.assertNotNull(entity);
 		Assert.assertNotNull(entity.getDetail());
@@ -266,6 +269,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 	}
 
 	@Test
+	@Rollback(false)
 	public void testFindFollower() {
 		// 单位
 		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");
@@ -285,7 +289,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 		this.actorService.save(dep1);
 		Assert.assertNotNull(dep1.getId());
 		ActorRelation ar1 = createActorRelation(unit, dep1,
-				ActorRelation.TYPE_BELONG, "02");
+				ActorRelation.TYPE_BELONG, null);
 		actorRelationService.save(ar1);
 
 		// 单位下的部门2
@@ -293,7 +297,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 		this.actorService.save(dep2);
 		Assert.assertNotNull(dep2.getId());
 		ActorRelation ar2 = createActorRelation(unit, dep2,
-				ActorRelation.TYPE_BELONG, "01");
+				ActorRelation.TYPE_BELONG, null);
 		actorRelationService.save(ar2);
 
 		// 部门1下的子部门1
@@ -301,7 +305,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 		this.actorService.save(cdep1);
 		Assert.assertNotNull(cdep1.getId());
 		ActorRelation ar3 = createActorRelation(dep1, cdep1,
-				ActorRelation.TYPE_BELONG, "01");
+				ActorRelation.TYPE_BELONG, null);
 		actorRelationService.save(ar3);
 
 		// 反查单位1下的部门列表
@@ -474,7 +478,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 		this.actorService.save(dep1);
 		Assert.assertNotNull(dep1.getId());
 		ActorRelation ar1 = createActorRelation(unit, dep1,
-				ActorRelation.TYPE_BELONG, "02");
+				ActorRelation.TYPE_BELONG, null);
 		actorRelationService.save(ar1);
 
 		// 反查

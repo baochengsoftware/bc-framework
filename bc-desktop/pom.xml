@@ -55,7 +55,7 @@
 	</dependencies>
 
 	<properties>
-		<hibernate.show_sql>true</hibernate.show_sql>
+		<hibernate.show_sql>false</hibernate.show_sql>
 		<logLevel-bc.orm.hibernate>ERROR</logLevel-bc.orm.hibernate>
 	</properties>
 </project>

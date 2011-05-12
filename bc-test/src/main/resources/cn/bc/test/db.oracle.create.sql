@@ -6,7 +6,7 @@ create sequence HIBERNATE_SEQUENCE
     cache 20;
 
 create table QC_EXAMPLE (
-    ID   NUMBER(19) not null,
+    ID NUMBER(19) not null,
     NAME VARCHAR2(255) not null,
     CODE VARCHAR2(255),
     primary key (ID)

@@ -2,7 +2,7 @@
 -- 桌面快捷方式
 create table BC_DESKTOP_SHORTCUT (
     ID numeric not null identity,
-    UID varchar(36),
+    UID_ varchar(36),
     STATUS_ tinyint not null,
     INNER_ tinyint not null,
     ORDER_ varchar(100) not null,

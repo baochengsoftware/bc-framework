@@ -2,7 +2,7 @@
 -- 桌面快捷方式
 create table BC_DESKTOP_SHORTCUT (
     ID int NOT NULL auto_increment,
-    UID varchar(36) COMMENT '全局标识',
+    UID_ varchar(36) COMMENT '全局标识',
     STATUS_ int(1) NOT NULL COMMENT '状态：0-已禁用,1-启用中,2-已删除',
     INNER_ int(1) NOT NULL COMMENT '是否为内置对象:0-否,1-是',
     ORDER_ varchar(100) NOT NULL COMMENT '排序号',

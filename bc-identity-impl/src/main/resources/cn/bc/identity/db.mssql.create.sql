@@ -13,7 +13,7 @@ create table BC_IDENTITY_ACTOR_DETAIL (
 -- 参与者
 create table BC_IDENTITY_ACTOR (
     ID numeric not null identity,
-    UID varchar(36) not null,
+    UID_ varchar(36) not null,
     TYPE_ tinyint not null,
     STATUS_ tinyint not null,
     INNER_ tinyint not null,
@@ -47,7 +47,7 @@ create index IDX_AR_TF on BC_IDENTITY_ACTOR_RELATION (TYPE_, FOLLOWER_ID);
 -- 职务
 create table BC_IDENTITY_DUTY (
     ID numeric not null identity,
-    UID varchar(36),
+    UID_ varchar(36),
     STATUS_ tinyint not null,
     INNER_ tinyint not null,
     CODE varchar(100) not null,
