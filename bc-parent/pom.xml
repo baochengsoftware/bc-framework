@@ -420,13 +420,13 @@
 				<artifactId>json</artifactId>
 				<version>20090211</version>
 			</dependency>
+			<dependency>
+				<groupId>org.commontemplate</groupId>
+				<artifactId>commontemplate</artifactId>
+				<version>0.8.7</version>
+			</dependency>
 
 			<!-- database -->
-			<dependency>
-				<groupId>com.oracle</groupId>
-				<artifactId>ojdbc14</artifactId>
-				<version>10.2.0.4.0</version>
-			</dependency>
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
@@ -434,10 +434,15 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.commontemplate</groupId>
-				<artifactId>commontemplate</artifactId>
-				<version>0.8.7</version>
+				<groupId>com.oracle</groupId>
+				<artifactId>ojdbc14</artifactId>
+				<version>10.2.0.4.0</version>
 			</dependency>
+			<dependency>
+			    <groupId>net.sourceforge.jtds</groupId>
+			    <artifactId>jtds</artifactId>
+			    <version>1.2.5</version>
+			</dependency> 
 		</dependencies>
 	</dependencyManagement>
 
@@ -452,11 +457,12 @@
 		<struts.version>1.3.10</struts.version>
 		<struts2.version>2.2.1</struts2.version>
 
-		<jndi.name>bc-demo</jndi.name>
+		<!-- 数据库连接配置 -->
+		<jndi.name>bcdemo</jndi.name>
 		<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-		<db.url><![CDATA[jdbc:mysql://localhost:3306/bc-demo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
-		<db.username>root</db.username>
-		<db.password>password</db.password>
+		<db.url><![CDATA[jdbc:mysql://localhost:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
+		<db.username>bcdemo</db.username>
+		<db.password>bcdemo</db.password>
 		<!-- 使用oracle数据库时设置为sequence的名称，用于测试中qc.core.jdbc.SimpleJdbcInsertEx插入数据并返回id值 -->
 		<db.sequence></db.sequence>
 		<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
@@ -470,11 +476,8 @@
 		<profile>
 			<id>mysql</id>
 			<properties>
-				<jndi.name>bc-demo</jndi.name>
 				<db.driverClassName>com.mysql.jdbc.Driver</db.driverClassName>
-				<db.url><![CDATA[jdbc:mysql://localhost:3306/bc-demo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
-				<db.username>root</db.username>
-				<db.password>password</db.password>
+				<db.url><![CDATA[jdbc:mysql://localhost:3306/bcdemo?useUnicode=true&characterEncoding=UTF-8]]></db.url>
 				<hibernate.dialect>org.hibernate.dialect.MySQLDialect</hibernate.dialect>
 			</properties>
 			<dependencies>
@@ -488,11 +491,8 @@
 		<profile>
 			<id>oracle</id>
 			<properties>
-				<jndi.name>bc-demo</jndi.name>
 				<db.driverClassName>oracle.jdbc.OracleDriver</db.driverClassName>
-				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:bc-demo]]></db.url>
-				<db.username>bc-demo</db.username>
-				<db.password>bc-demo</db.password>
+				<db.url><![CDATA[jdbc:oracle:thin:@localhost:1521:bcdemo]]></db.url>
 				<db.sequence>hibernate_sequence</db.sequence>
 				<hibernate.dialect>org.hibernate.dialect.Oracle9Dialect</hibernate.dialect>
 			</properties>
@@ -500,6 +500,20 @@
 				<dependency>
 					<groupId>com.oracle</groupId>
 					<artifactId>ojdbc14</artifactId>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>mssql</id>
+			<properties>
+				<db.driverClassName>net.sourceforge.jtds.jdbc.Driver</db.driverClassName>
+				<db.url><![CDATA[jdbc:jtds:sqlserver://localhost:1433/bcdemo]]></db.url>
+				<hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>net.sourceforge.jtds</groupId>
+					<artifactId>jtds</artifactId>
 				</dependency>
 			</dependencies>
 		</profile>
