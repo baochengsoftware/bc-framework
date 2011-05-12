@@ -72,7 +72,7 @@ insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B0099' and af.code='huangrongji'; 
 
 -- 更新Actor的uid为'ACTOR-'+id
-UPDATE BC_IDENTITY_ACTOR SET UID=CONCAT('ACTOR-',id);
+UPDATE BC_IDENTITY_ACTOR SET UID='ACTOR-'+CAST(id AS varchar);
 
 -- 让超级管理员拥有超级管理员角色
 insert into BC_SECURITY_ROLE_ACTOR (AID,RID) 
