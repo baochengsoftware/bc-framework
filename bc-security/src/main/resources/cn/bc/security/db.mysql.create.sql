@@ -10,6 +10,7 @@ create table BC_SECURITY_MODULE (
     CODE varchar(100) NOT NULL COMMENT '编码，兼排序作用',
     NAME varchar(255) NOT NULL COMMENT '名称',
     URL varchar(255) COMMENT '地址',
+    ICONCLASS varchar(255) COMMENT '图标样式',
     OPTION_ text COMMENT '扩展参数',
     primary key (ID)
 ) COMMENT='模块';

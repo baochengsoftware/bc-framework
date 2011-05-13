@@ -9,6 +9,7 @@ create table BC_DESKTOP_SHORTCUT (
     STANDALONE tinyint not null,
     NAME varchar(255),
     URL varchar(255),
+    ICONCLASS varchar(255),
     MID numeric,
     AID numeric,
     primary key (ID)

@@ -36,8 +36,15 @@ public class Module extends DefaultEntity {
 	private int type;//模块类型，TYPE_*定义的相关常数
 	private String url;//模块地址
 	private Module belong;//所隶属的模块
-	private String option;//模块的初始化参数
+	private String iconClass;//图标样式
+	private String option;//额外配置
 	
+	public String getIconClass() {
+		return iconClass;
+	}
+	public void setIconClass(String iconClass) {
+		this.iconClass = iconClass;
+	}
 	public String getName() {
 		return name;
 	}

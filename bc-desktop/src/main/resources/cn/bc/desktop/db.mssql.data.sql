@@ -17,4 +17,6 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,A
 	select 1, 0, '7', 0, null, null, id, null from BC_SECURITY_MODULE where name='角色配置';
     
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL) 
-	values(1, 0, '8', 1, '百度搜索', 'http://www.baidu.com/');
+	values(1, 0, '90', 1, '谷歌搜索', 'http://www.google.com.hk/');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL) 
+	values(1, 0, '91', 1, '百度搜索', 'http://www.baidu.com/');

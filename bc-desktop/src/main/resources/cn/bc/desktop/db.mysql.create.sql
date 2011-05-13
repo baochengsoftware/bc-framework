@@ -9,6 +9,7 @@ create table BC_DESKTOP_SHORTCUT (
     STANDALONE int(1) NOT NULL COMMENT '是否在独立的浏览器窗口中打开',
     NAME varchar(255) COMMENT '名称,为空则使用模块的名称',
     URL varchar(255) COMMENT '地址,为空则使用模块的地址',
+    ICONCLASS varchar(255) COMMENT '图标样式',
     MID int COMMENT '对应的模块ID',
     AID int COMMENT '所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)',
     primary key (ID)

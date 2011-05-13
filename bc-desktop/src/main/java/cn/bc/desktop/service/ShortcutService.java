@@ -1,9 +1,13 @@
 package cn.bc.desktop.service;
 
 import java.util.List;
+import java.util.Set;
 
 import cn.bc.core.service.CrudService;
 import cn.bc.desktop.domain.Shortcut;
+import cn.bc.identity.domain.Actor;
+import cn.bc.security.domain.Module;
+import cn.bc.security.domain.Role;
 
 /**
  * 桌面快捷方式Service接口
@@ -37,4 +41,20 @@ public interface ShortcutService extends CrudService<Shortcut> {
 	 * @return
 	 */
 	List<Shortcut> findByActor(Long actorId);
+	
+	/**
+	 * 获取actor可以使用的快捷方式
+	 * 
+	 * @param actorId
+	 *            参与者的id,为空代表获取通用的快捷方式
+	 * @param ancestorOrganizations
+	 *            返回actor所隶属的组织
+	 * @param roles
+	 *            返回actor可使用的角色
+	 * @param modules
+	 *            返回actor可使用的模块
+	 * @return
+	 */
+	List<Shortcut> findByActor(Long actorId, Set<Actor> ancestorOrganizations,
+			Set<Role> roles, Set<Module> modules);
 }

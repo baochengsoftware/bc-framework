@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import cn.bc.core.service.DefaultCrudService;
 import cn.bc.identity.dao.ActorDao;
 import cn.bc.identity.domain.Actor;
+import cn.bc.security.domain.Module;
 
 /**
  * 参与者Service接口的实现
@@ -75,5 +76,9 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 			Integer... descendantOrganizationTypes) {
 		return this.actorDao.findDescendantUser(organizationId,
 				descendantOrganizationTypes);
+	}
+
+	public List<Module> findCanUseModules(Long actorId) {
+		return this.actorDao.findCanUseModules(actorId);
 	}
 }

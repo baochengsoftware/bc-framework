@@ -10,6 +10,7 @@ import cn.bc.identity.dao.ActorDao;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 import cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao;
+import cn.bc.security.domain.Module;
 
 /**
  * 参与者Service接口的实现
@@ -273,5 +274,10 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 			}
 		}
 		return users;
+	}
+
+	public List<Module> findCanUseModules(Long actorId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -10,6 +10,7 @@ create table BC_SECURITY_MODULE (
     CODE varchar(100) not null,
     NAME varchar(255) not null,
     URL varchar(255),
+    ICONCLASS varchar(255),
     OPTION_ text,
     primary key (ID)
 );

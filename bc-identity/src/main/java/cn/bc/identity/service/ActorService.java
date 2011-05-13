@@ -4,6 +4,7 @@ import java.util.List;
 
 import cn.bc.core.service.CrudService;
 import cn.bc.identity.domain.Actor;
+import cn.bc.security.domain.Module;
 
 /**
  * 参与者Service接口
@@ -88,4 +89,11 @@ public interface ActorService extends CrudService<Actor>{
 	 * @return
 	 */
 	List<Actor> findDescendantUser(Long organizationId, Integer... descendantOrganizationTypes);
+
+	/**
+	 * 获取actor可以使用的模块列表
+	 * @param actorId
+	 * @return
+	 */
+	List<Module> findCanUseModules(Long actorId);
 }
