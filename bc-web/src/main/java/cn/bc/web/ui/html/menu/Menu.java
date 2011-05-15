@@ -17,7 +17,7 @@ public class Menu extends Ul {
 	}
 
 	public Menu addMenuItem(MenuItem item) {
-		if(this.menuItems == null)
+		if (this.menuItems == null)
 			this.menuItems = new ArrayList<MenuItem>();
 		this.menuItems.add(item);
 		return this;
@@ -25,7 +25,8 @@ public class Menu extends Ul {
 
 	@Override
 	public StringBuffer render(StringBuffer main) {
-		this.children.clear();
+		if (children != null)
+			this.children.clear();
 		for (MenuItem item : menuItems)
 			this.addChild(item);
 		return super.render(main);

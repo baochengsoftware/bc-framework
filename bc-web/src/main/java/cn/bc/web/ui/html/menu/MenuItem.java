@@ -26,7 +26,12 @@ public class MenuItem extends Li {
 
 	@Override
 	public StringBuffer render(StringBuffer main) {
-		// TODO Auto-generated method stub
+		if (this.children != null)
+			this.children.clear();
+		if (this.a != null)
+			this.addChild(this.a);
+		if (childMenu != null)
+			this.addChild(this.childMenu);
 		return super.render(main);
 	}
 
