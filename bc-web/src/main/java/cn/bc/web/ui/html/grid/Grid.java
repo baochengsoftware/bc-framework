@@ -68,24 +68,27 @@ public class Grid extends Table {
 				}
 				td.addChild(new Text(column.getLabel()));
 			}
-			
-			//排序标记
+
+			// 排序标记
 			if (column.isSortable()) {
 				td.addClazz("sortable");
 				switch (column.getDir()) {
 				case Asc:
 					td.addClazz("current");
-					td.addChild(new Span().addClazz("sortableIcon ui-icon ui-icon-triangle-1-n"));//正序
+					td.addChild(new Span()
+							.addClazz("sortableIcon ui-icon ui-icon-triangle-1-n"));// 正序
 					break;
 				case Desc:
 					td.addClazz("current");
-					td.addChild(new Span().addClazz("sortableIcon ui-icon ui-icon-triangle-1-s"));//逆序
+					td.addChild(new Span()
+							.addClazz("sortableIcon ui-icon ui-icon-triangle-1-s"));// 逆序
 					break;
 				case None:
-					td.addChild(new Span().addClazz("sortableIcon ui-icon hide"));
+					td.addChild(new Span()
+							.addClazz("sortableIcon ui-icon hide"));
 					break;
 				}
-			} 
+			}
 
 			i++;
 		}
@@ -121,14 +124,17 @@ public class Grid extends Table {
 
 				if (column instanceof IdColumn) {
 					td.addClazz("id");// id列样式
-					td.setAttr("data-id", getValue(obj,column.getExpression()));// id的值
+					td.setAttr("data-id", getValue(obj, column.getExpression()));// id的值
+					if (((IdColumn) column).getNameExpression() != null)
+						td.setAttr("data-name",this.getName()+" - "+
+								getValue(obj,((IdColumn) column).getNameExpression()));// 标题的值
 					td.addChild(new Span().addClazz("ui-icon"));// 勾选标记符
 					td.addChild(new Text(String.valueOf(rc + 1)));// 行号
 				} else {
-					//列宽已在thead中设置，这里不再设置
+					// 列宽已在thead中设置，这里不再设置
 
-					//内容
-					td.addChild(new Text(getValue(obj,column.getExpression())));
+					// 内容
+					td.addChild(new Text(getValue(obj, column.getExpression())));
 				}
 
 				i++;
@@ -136,13 +142,14 @@ public class Grid extends Table {
 			rc++;
 		}
 	}
-	
+
 	private ExpressionParser parser;
-	public Grid setExpressionParser(ExpressionParser parser){
+
+	public Grid setExpressionParser(ExpressionParser parser) {
 		this.parser = parser;
 		return this;
 	}
-	
+
 	public ExpressionParser getParser() {
 		return parser;
 	}
@@ -153,12 +160,16 @@ public class Grid extends Table {
 
 	/**
 	 * 获取对象指定表达式的计算值的字符串表示
-	 * @param obj 对象
-	 * @param expression 表达式
+	 * 
+	 * @param obj
+	 *            对象
+	 * @param expression
+	 *            表达式
 	 * @return
 	 */
 	protected String getValue(Object obj, String expression) {
-		ExpressionParser parser = (getParser() != null ? getParser() : new SpelExpressionParser());
+		ExpressionParser parser = (getParser() != null ? getParser()
+				: new SpelExpressionParser());
 		Expression exp = parser.parseExpression(expression);
 		EvaluationContext context = new StandardEvaluationContext(obj);
 		Object o = exp.getValue(context);

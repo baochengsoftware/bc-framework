@@ -85,4 +85,8 @@ public class Module extends DefaultEntity {
 	public void setBelong(Module belong) {
 		this.belong = belong;
 	}
+	
+	public String toString() {
+		return "{id:" + getId() + ",type:" + type + ",code:" + code+ ",name:" + name + ",url:" + url + "}";
+	}
 }

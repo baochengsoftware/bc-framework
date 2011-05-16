@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
  * 
  */
 public abstract class AbstractComponent implements Component {
-	protected Log logger = LogFactory.getLog(getClass());
+	private static Log logger = LogFactory.getLog(AbstractComponent.class);
 	protected List<Render> children;
 	private Map<String, String> attrs = new LinkedHashMap<String, String>();
 	private boolean beautiful = false;
@@ -171,6 +171,15 @@ public abstract class AbstractComponent implements Component {
 			setAttr("style", cur + ";" + key + ":" + value);
 		else
 			setAttr("style", key + ":" + value);
+		return this;
+	}
+
+	public String getAction() {
+		return getAttr("data-action");
+	}
+
+	public Component setAction(String action) {
+		setAttr("data-action", action);
 		return this;
 	}
 }

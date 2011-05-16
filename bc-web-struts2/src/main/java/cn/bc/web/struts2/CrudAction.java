@@ -205,6 +205,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 				.setCss(getCss()).setTitle(this.getPageTitle())
 				.setIniMethod(getIniMethod())
 				.setOption(buildListPageOption().toString()).setBeautiful(true)
+				.setAttr("data-name",getText(StringUtils.uncapitalize(getEntityConfigName())))
 				.addClazz("bc-content");
 		return listPage;
 	}
@@ -215,7 +216,9 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	}
 
 	protected Grid buildGrid(List<E> entities) {
-		return new Grid().setData(entities).addColumn(new IdColumn(true));
+		Grid grid = new Grid().setData(entities).addColumn(IdColumn.DEFAULT());
+		grid.setName(getText(StringUtils.uncapitalize(getEntityConfigName())));
+		return grid;
 	}
 
 	protected Option buildListPageOption() {
@@ -225,20 +228,24 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 				.addButton(new Button(getText("label.create"), "create"))
 				.setMinWidth(250).setMinHeight(200).setModal(false);
 	}
-
+	
+	protected String getActionPathPrefix() {
+		return "/bc";
+	}
+	
 	// 统一定义的值
 	protected String getEditAction() {
-		return WebUtils.rootPath + "/"
+		return WebUtils.rootPath + getActionPathPrefix() + "/"
 				+ StringUtils.uncapitalize(getEntityConfigName()) + "/edit";
 	}
 
 	protected String getDeleteAction() {
-		return WebUtils.rootPath + "/"
+		return WebUtils.rootPath + getActionPathPrefix() + "/"
 				+ StringUtils.uncapitalize(getEntityConfigName()) + "/delete";
 	}
 
 	protected String getCreateAction() {
-		return WebUtils.rootPath + "/"
+		return WebUtils.rootPath + getActionPathPrefix() + "/"
 				+ StringUtils.uncapitalize(getEntityConfigName()) + "/create";
 	}
 

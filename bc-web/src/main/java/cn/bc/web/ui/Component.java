@@ -86,4 +86,15 @@ public interface Component extends Render {
 	 * @param value
 	 */
 	Component addStyle(String key,String value);
+	
+	/**
+	 * @return 组件的动作
+	 */
+	String getAction();
+	
+	/**
+	 * 设置组件的动作属性
+	 * @param action
+	 */
+	Component setAction(String action);
 }

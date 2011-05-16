@@ -23,13 +23,14 @@ public class Menu extends Ul {
 		return this;
 	}
 
-	@Override
 	public StringBuffer render(StringBuffer main) {
-		if (children != null)
+		// 清空环境
+		if (this.children != null)
 			this.children.clear();
+
+		// 构建菜单
 		for (MenuItem item : menuItems)
 			this.addChild(item);
 		return super.render(main);
 	}
-
 }
