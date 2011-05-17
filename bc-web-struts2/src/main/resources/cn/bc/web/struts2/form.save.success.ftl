@@ -1,1 +1,1 @@
-{"id":"<@s.property value="b.id"/>","msg":"<@s.text name="form.save.success"/>"}
+{"id":"<@s.property value="entity.id"/>","msg":"<@s.text name="form.save.success"/>"}
