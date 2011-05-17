@@ -20,4 +20,11 @@
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="shortcutService" class="cn.bc.desktop.service.ShortcutServiceImpl"
 		p:entityClass="cn.bc.desktop.domain.Shortcut" />
+
+	<!-- 个人配置 -->
+	<bean id="personalConfigDao" class="cn.bc.desktop.dao.hibernate.jpa.PersonalConfigDaoImpl"
+		p:entityClass="cn.bc.desktop.domain.PersonalConfig"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="personalConfigService" class="cn.bc.desktop.service.PersonalConfigServiceImpl"
+		p:entityClass="cn.bc.desktop.domain.PersonalConfig"/>
 </beans>

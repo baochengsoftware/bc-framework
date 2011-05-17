@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.orm.jpa.JpaCallback;
 import org.springframework.orm.jpa.JpaTemplate;
 import org.springframework.util.StringUtils;
@@ -168,20 +169,24 @@ public class HibernateJpaQuery<T extends Object> implements
 
 	@SuppressWarnings("unchecked")
 	public T singleResult() {
-		return jpaTemplate.execute(new JpaCallback<T>() {
-			public T doInJpa(EntityManager em) throws PersistenceException {
-				Query queryObject = em.createQuery(getHql());
-				jpaTemplate.prepareQuery(queryObject);
-				if (condition != null && condition.getValues() != null) {
-					int i = 0;
-					for (Object value : condition.getValues()) {
-						queryObject.setParameter(i + 1, value);// jpa的索引号从1开始
-						i++;
+		try {
+			return jpaTemplate.execute(new JpaCallback<T>() {
+				public T doInJpa(EntityManager em) throws PersistenceException {
+					Query queryObject = em.createQuery(getHql());
+					jpaTemplate.prepareQuery(queryObject);
+					if (condition != null && condition.getValues() != null) {
+						int i = 0;
+						for (Object value : condition.getValues()) {
+							queryObject.setParameter(i + 1, value);// jpa的索引号从1开始
+							i++;
+						}
 					}
+					return (T) queryObject.getSingleResult();
 				}
-				return (T) queryObject.getSingleResult();
-			}
-		});
+			});
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	// --private

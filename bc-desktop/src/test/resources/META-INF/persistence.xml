@@ -18,6 +18,7 @@
 
 		<!-- desktop -->
 		<class>cn.bc.desktop.domain.Shortcut</class>
+		<class>cn.bc.desktop.domain.PersonalConfig</class>
 
 		<!-- 排除没有在这里声明的注解类 -->
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>

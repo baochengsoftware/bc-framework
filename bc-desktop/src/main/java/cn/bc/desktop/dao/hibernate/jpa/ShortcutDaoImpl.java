@@ -17,7 +17,7 @@ import cn.bc.security.domain.Module;
 import cn.bc.security.domain.Role;
 
 /**
- * ShortcutService接口的实现
+ * ShortcutDao接口的实现
  * 
  * @author dragon
  * 
