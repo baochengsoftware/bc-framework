@@ -19,8 +19,8 @@ import cn.bc.identity.domain.ActorImpl;
  * @author dragon
  */
 @Entity
-@Table(name = "BC_DESKTOP_PERSONAL_CONFIG")
-public class PersonalConfig extends DefaultEntity {
+@Table(name = "BC_DESKTOP_PERSONAL")
+public class Personal extends DefaultEntity {
 	private static final long serialVersionUID = 1L;
 
 	private String font;// 字体大小

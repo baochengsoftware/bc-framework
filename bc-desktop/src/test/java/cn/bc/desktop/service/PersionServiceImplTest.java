@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.bc.core.Entity;
-import cn.bc.desktop.domain.PersonalConfig;
+import cn.bc.desktop.domain.Personal;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorImpl;
 import cn.bc.identity.service.ActorService;
@@ -21,16 +21,16 @@ import cn.bc.test.AbstractEntityCrudTest;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @ContextConfiguration("classpath:spring-test.xml")
-public class PersionConfigServiceImplTest extends
-		AbstractEntityCrudTest<Long, PersonalConfig> {
-	PersonalConfigService personalConfigService;
+public class PersionServiceImplTest extends
+		AbstractEntityCrudTest<Long, Personal> {
+	PersonalService personalService;
 	ActorService actorService;
 
 	@Autowired
-	public void setPersonalConfigService(
-			PersonalConfigService personalConfigService) {
-		this.personalConfigService = personalConfigService;
-		this.crudOperations = personalConfigService;// 赋值基类的crud操作对象
+	public void setPersonalService(
+			PersonalService personalService) {
+		this.personalService = personalService;
+		this.crudOperations = personalService;// 赋值基类的crud操作对象
 	}
 
 	@Autowired
@@ -39,15 +39,15 @@ public class PersionConfigServiceImplTest extends
 	}
 
 	@Override
-	protected PersonalConfig createInstance(String config) {
-		PersonalConfig c = super.createInstance(config);
+	protected Personal createInstance(String config) {
+		Personal c = super.createInstance(config);
 		c.setFont("14");
 		c.setTheme("base");
 		return c;
 	}
 
-	protected PersonalConfig createPersonalConfig(Actor actor) {
-		PersonalConfig c = this.createInstance(this.getDefaultConfig());
+	protected Personal createPersonal(Actor actor) {
+		Personal c = this.createInstance(this.getDefaultConfig());
 		c.setActor(actor);
 		return c;
 	}
@@ -58,13 +58,13 @@ public class PersionConfigServiceImplTest extends
 		deleteAll();
 
 		// 通用的
-		PersonalConfig personalConfig4common = this.createPersonalConfig(null);
-		this.personalConfigService.save(personalConfig4common);
-		Assert.assertNotNull(personalConfig4common.getId());
+		Personal personal4common = this.createPersonal(null);
+		this.personalService.save(personal4common);
+		Assert.assertNotNull(personal4common.getId());
 
 		// 反查
-		PersonalConfig c = this.personalConfigService.loadGlobalConfig();
-		Assert.assertEquals(personalConfig4common, c);
+		Personal c = this.personalService.loadGlobalConfig();
+		Assert.assertEquals(personal4common, c);
 	}
 
 	@Test
@@ -78,26 +78,26 @@ public class PersionConfigServiceImplTest extends
 		Assert.assertNotNull(user.getId());
 
 		// 通用的
-		PersonalConfig personalConfig4common = this.createPersonalConfig(null);
-		this.personalConfigService.save(personalConfig4common);
-		Assert.assertNotNull(personalConfig4common.getId());
+		Personal personal4common = this.createPersonal(null);
+		this.personalService.save(personal4common);
+		Assert.assertNotNull(personal4common.getId());
 
 		// 反查
-		PersonalConfig c = this.personalConfigService.loadByActor(user.getId(),true);
-		Assert.assertEquals(personalConfig4common, c);
-		c = this.personalConfigService.loadByActor(user.getId());
+		Personal c = this.personalService.loadByActor(user.getId(),true);
+		Assert.assertEquals(personal4common, c);
+		c = this.personalService.loadByActor(user.getId());
 		Assert.assertNull(c);
 
 		// 专用的
-		PersonalConfig personalConfig4user = this.createPersonalConfig(user);
-		this.personalConfigService.save(personalConfig4user);
-		Assert.assertNotNull(personalConfig4user.getId());
+		Personal personal4user = this.createPersonal(user);
+		this.personalService.save(personal4user);
+		Assert.assertNotNull(personal4user.getId());
 
 		// 反查
-		c = this.personalConfigService.loadByActor(user.getId());
-		Assert.assertEquals(personalConfig4user, c);
-		c = this.personalConfigService.loadByActor(user.getId(),true);
-		Assert.assertEquals(personalConfig4user, c);
+		c = this.personalService.loadByActor(user.getId());
+		Assert.assertEquals(personal4user, c);
+		c = this.personalService.loadByActor(user.getId(),true);
+		Assert.assertEquals(personal4user, c);
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class PersionConfigServiceImplTest extends
 		// 清空测试现场
 		deleteAll();
 
-		Assert.assertNull(this.personalConfigService.loadByActor(new Long(1)));
+		Assert.assertNull(this.personalService.loadByActor(new Long(1)));
 	}
 
 	private Actor createActor(int type, String code, String order) {

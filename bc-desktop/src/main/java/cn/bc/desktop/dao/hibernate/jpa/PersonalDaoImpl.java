@@ -2,8 +2,8 @@ package cn.bc.desktop.dao.hibernate.jpa;
 
 import cn.bc.core.query.condition.impl.EqualsCondition;
 import cn.bc.core.query.condition.impl.IsNullCondition;
-import cn.bc.desktop.dao.PersonalConfigDao;
-import cn.bc.desktop.domain.PersonalConfig;
+import cn.bc.desktop.dao.PersonalDao;
+import cn.bc.desktop.domain.Personal;
 import cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao;
 
 /**
@@ -12,19 +12,18 @@ import cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao;
  * @author dragon
  * 
  */
-public class PersonalConfigDaoImpl extends HibernateCrudJpaDao<PersonalConfig>
-		implements PersonalConfigDao {
-	public PersonalConfig loadByActor(Long actorId, boolean autoUseGlobal) {
-		PersonalConfig pc = this.createQuery()
+public class PersonalDaoImpl extends HibernateCrudJpaDao<Personal>
+		implements PersonalDao {
+	public Personal loadByActor(Long actorId, boolean autoUseGlobal) {
+		Personal pc = this.createQuery()
 				.condition(new EqualsCondition("actor.id", actorId))
 				.singleResult();// 个人配置
 		if (pc == null && autoUseGlobal)
-			pc = this.createQuery().condition(new IsNullCondition("actor"))
-					.singleResult();// 全局配置
+			pc = loadGlobalConfig();// 全局配置
 		return pc;
 	}
 
-	public PersonalConfig loadGlobalConfig() {
+	public Personal loadGlobalConfig() {
 		return this.createQuery().condition(new IsNullCondition("actor"))
 				.singleResult();
 	}

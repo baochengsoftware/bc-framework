@@ -1,7 +1,7 @@
 package cn.bc.desktop.service;
 
 import cn.bc.core.service.CrudService;
-import cn.bc.desktop.domain.PersonalConfig;
+import cn.bc.desktop.domain.Personal;
 
 /**
  * 个人设置Service接口
@@ -9,20 +9,20 @@ import cn.bc.desktop.domain.PersonalConfig;
  * @author dragon
  * 
  */
-public interface PersonalConfigService extends CrudService<PersonalConfig> {
+public interface PersonalService extends CrudService<Personal> {
 	/**
 	 * 获取全局配置信息
 	 * @param actorId
 	 * @return
 	 */
-	PersonalConfig loadGlobalConfig();
+	Personal loadGlobalConfig();
 	
 	/**
 	 * 获取actor专用的配置信息
 	 * @param actorId
 	 * @return
 	 */
-	PersonalConfig loadByActor(Long actorId);
+	Personal loadByActor(Long actorId);
 
 	/**
 	 * 获取actor可用的配置信息
@@ -30,5 +30,5 @@ public interface PersonalConfigService extends CrudService<PersonalConfig> {
 	 * @param autoUseGlobal 如果actor没有专用的配置是否使用全局配置
 	 * @return
 	 */
-	PersonalConfig loadByActor(Long actorId, boolean autoUseGlobal);
+	Personal loadByActor(Long actorId, boolean autoUseGlobal);
 }

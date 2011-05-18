@@ -3,17 +3,11 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	<package name="personalConfig" extends="bc-default" namespace="/bc/desktop/personalConfig">
-		<action name="create" class="personalConfigAction" method="create">
-			<result name="form">/bc/desktop/personalConfig/form.jsp</result>
+	<package name="personal" extends="bc-default" namespace="/bc/personal">
+		<action name="edit" class="personalAction" method="edit">
+			<result name="form">/bc/desktop/personal/form.jsp</result>
 		</action>
-		<action name="edit" class="personalConfigAction" method="edit">
-			<result name="form">/bc/desktop/personalConfig/form.jsp</result>
-		</action>
-				
-		<action name="save" class="personalConfigAction" method="save"/>
-		<action name="delete" class="personalConfigAction" method="delete"/>
-		<action name="list" class="personalConfigAction" method="list"/>
-		<action name="update" class="personalConfigAction" method="update"/>
+		<action name="save" class="personalAction" method="save"/>
+		<action name="update" class="personalAction" method="update"/>
 	</package>
 </struts>

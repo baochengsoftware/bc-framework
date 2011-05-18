@@ -1,7 +1,7 @@
 package cn.bc.desktop.dao;
 
 import cn.bc.core.dao.CrudDao;
-import cn.bc.desktop.domain.PersonalConfig;
+import cn.bc.desktop.domain.Personal;
 
 /**
  * 个人设置Dao接口
@@ -9,13 +9,13 @@ import cn.bc.desktop.domain.PersonalConfig;
  * @author dragon
  * 
  */
-public interface PersonalConfigDao extends CrudDao<PersonalConfig> {
+public interface PersonalDao extends CrudDao<Personal> {
 	/**
 	 * 获取全局配置信息
 	 * @param actorId
 	 * @return
 	 */
-	PersonalConfig loadGlobalConfig();
+	Personal loadGlobalConfig();
 	
 	/**
 	 * 获取actor可用的配置信息
@@ -23,5 +23,5 @@ public interface PersonalConfigDao extends CrudDao<PersonalConfig> {
 	 * @param autoUseGlobal 如果actor没有专用的配置是否使用全局配置
 	 * @return
 	 */
-	PersonalConfig loadByActor(Long actorId, boolean autoUseGlobal);
+	Personal loadByActor(Long actorId, boolean autoUseGlobal);
 }

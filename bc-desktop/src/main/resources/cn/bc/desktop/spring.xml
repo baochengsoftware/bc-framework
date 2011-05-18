@@ -21,10 +21,10 @@
 	<bean id="shortcutService" class="cn.bc.desktop.service.ShortcutServiceImpl"
 		p:entityClass="cn.bc.desktop.domain.Shortcut" />
 
-	<!-- 个人配置 -->
-	<bean id="personalConfigDao" class="cn.bc.desktop.dao.hibernate.jpa.PersonalConfigDaoImpl"
-		p:entityClass="cn.bc.desktop.domain.PersonalConfig"
+	<!-- 个性化设置 -->
+	<bean id="personalDao" class="cn.bc.desktop.dao.hibernate.jpa.PersonalDaoImpl"
+		p:entityClass="cn.bc.desktop.domain.Personal"
 		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="personalConfigService" class="cn.bc.desktop.service.PersonalConfigServiceImpl"
-		p:entityClass="cn.bc.desktop.domain.PersonalConfig"/>
+	<bean id="personalService" class="cn.bc.desktop.service.PersonalServiceImpl"
+		p:entityClass="cn.bc.desktop.domain.Personal"/>
 </beans>
