@@ -30,7 +30,7 @@ public class PersionServiceImplTest extends
 	public void setPersonalService(
 			PersonalService personalService) {
 		this.personalService = personalService;
-		this.crudOperations = personalService;// èµ‹å€¼åŸºç±»çš„crudæ“ä½œå¯¹è±¡
+		this.crudOperations = personalService;// ¸³Öµ»ùÀàµÄcrud²Ù×÷¶ÔÏó
 	}
 
 	@Autowired
@@ -54,22 +54,22 @@ public class PersionServiceImplTest extends
 
 	@Test
 	public void testLoadGlobal() {
-		// æ¸…ç©ºæµ‹è¯•ç°åœº
+		// Çå¿Õ²âÊÔÏÖ³¡
 		deleteAll();
 
-		// é€šç”¨çš„
+		// Í¨ÓÃµÄ
 		Personal personal4common = this.createPersonal(null);
 		this.personalService.save(personal4common);
 		Assert.assertNotNull(personal4common.getId());
 
-		// åæŸ¥
+		// ·´²é
 		Personal c = this.personalService.loadGlobalConfig();
 		Assert.assertEquals(personal4common, c);
 	}
 
 	@Test
 	public void testLoadByActor() {
-		// æ¸…ç©ºæµ‹è¯•ç°åœº
+		// Çå¿Õ²âÊÔÏÖ³¡
 		deleteAll();
 
 		// user
@@ -77,23 +77,23 @@ public class PersionServiceImplTest extends
 		this.actorService.save(user);
 		Assert.assertNotNull(user.getId());
 
-		// é€šç”¨çš„
+		// Í¨ÓÃµÄ
 		Personal personal4common = this.createPersonal(null);
 		this.personalService.save(personal4common);
 		Assert.assertNotNull(personal4common.getId());
 
-		// åæŸ¥
+		// ·´²é
 		Personal c = this.personalService.loadByActor(user.getId(),true);
 		Assert.assertEquals(personal4common, c);
 		c = this.personalService.loadByActor(user.getId());
 		Assert.assertNull(c);
 
-		// ä¸“ç”¨çš„
+		// ×¨ÓÃµÄ
 		Personal personal4user = this.createPersonal(user);
 		this.personalService.save(personal4user);
 		Assert.assertNotNull(personal4user.getId());
 
-		// åæŸ¥
+		// ·´²é
 		c = this.personalService.loadByActor(user.getId());
 		Assert.assertEquals(personal4user, c);
 		c = this.personalService.loadByActor(user.getId(),true);
@@ -102,7 +102,7 @@ public class PersionServiceImplTest extends
 
 	@Test
 	public void testLoadByActorError() {
-		// æ¸…ç©ºæµ‹è¯•ç°åœº
+		// Çå¿Õ²âÊÔÏÖ³¡
 		deleteAll();
 
 		Assert.assertNull(this.personalService.loadByActor(new Long(1)));
@@ -116,7 +116,7 @@ public class PersionServiceImplTest extends
 		actor.setUid(UUID.randomUUID().toString());
 		actor.setCode(code);
 		actor.setOrder(order);
-		actor.setName("æµ‹è¯•" + code);
+		actor.setName("²âÊÔ" + code);
 
 		return actor;
 	}

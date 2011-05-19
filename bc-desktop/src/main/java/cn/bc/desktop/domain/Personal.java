@@ -13,7 +13,7 @@ import cn.bc.core.DefaultEntity;
 import cn.bc.identity.domain.ActorImpl;
 
 /**
- * ä¸ªäººè®¾ç½®
+ * ¸öÈËÉèÖÃ
  * 
  * @author dragon
  */
@@ -22,9 +22,9 @@ import cn.bc.identity.domain.ActorImpl;
 public class Personal extends DefaultEntity {
 	private static final long serialVersionUID = 1L;
 
-	private String font;// å­—ä½“å¤§å°
-	private String theme;// ä¸»é¢˜åç§°
-	private ActorImpl actor;// æ‰€å±çš„å‚ä¸è€…
+	private String font;// ×ÖÌå´óĞ¡
+	private String theme;// Ö÷ÌâÃû³Æ
+	private ActorImpl actor;// ËùÊôµÄ²ÎÓëÕß
 
 	public String getFont() {
 		return font;
@@ -42,7 +42,7 @@ public class Personal extends DefaultEntity {
 		this.theme = theme;
 	}
 
-	//TODO struts2å±æ€§ä¸ºæ¥å£æ—¶ä¿å­˜å‡ºé”™ï¼Œæ— æ³•å®ä¾‹åŒ–
+	//TODO struts2ÊôĞÔÎª½Ó¿ÚÊ±±£´æ³ö´í£¬ÎŞ·¨ÊµÀı»¯
 	@ManyToOne(targetEntity = ActorImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "AID", nullable = true, updatable = false)
 	public ActorImpl getActor() {
