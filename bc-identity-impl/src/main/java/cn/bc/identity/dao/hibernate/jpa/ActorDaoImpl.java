@@ -1,12 +1,19 @@
 package cn.bc.identity.dao.hibernate.jpa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import cn.bc.core.exception.CoreException;
+import cn.bc.core.query.condition.Direction;
+import cn.bc.core.query.condition.impl.AndCondition;
+import cn.bc.core.query.condition.impl.EqualsCondition;
+import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.dao.ActorDao;
+import cn.bc.identity.dao.ActorRelationDao;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 import cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao;
@@ -20,18 +27,27 @@ import cn.bc.security.domain.Module;
  */
 public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		ActorDao {
+	private ActorRelationDao actorRelationDao;
+
+	@Autowired
+	public void setActorRelationDao(ActorRelationDao actorRelationDao) {
+		this.actorRelationDao = actorRelationDao;
+	}
+
 	public Actor loadByCode(String actorCode) {
 		String hql = "from ActorImpl a where a.code=?";
 		@SuppressWarnings("rawtypes")
 		List all = this.getJpaTemplate().find(hql, actorCode);
-		if(all == null || all.isEmpty())
+		if (all == null || all.isEmpty())
 			return null;
-		else if(all.size() == 1)
+		else if (all.size() == 1)
 			return (Actor) all.get(0);
 		else
-			throw new CoreException("return more than one result! actorCode=" + actorCode);
+			throw new CoreException("return more than one result! actorCode="
+					+ actorCode);
 
-		//return this.createQuery().condition(new EqualsCondition("code", actorCode)).singleResult();
+		// return this.createQuery().condition(new EqualsCondition("code",
+		// actorCode)).singleResult();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -190,6 +206,14 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		return this.getJpaTemplate().find(hql.toString(), args.toArray());
 	}
 
+	public List<Actor> findAllUnit() {
+		AndCondition c = new AndCondition();
+		c.add(new EqualsCondition("type", new Integer(Actor.TYPE_UNIT))).add(
+				new OrderCondition("order", Direction.Asc).add("code",
+						Direction.Asc));
+		return this.createQuery().condition(c).list();
+	}
+
 	public List<Actor> findUser(Long organizationId) {
 		return this.findFollower(organizationId,
 				new Integer[] { ActorRelation.TYPE_BELONG },
@@ -254,18 +278,20 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 
 	public List<Actor> findDescendantUser(Long organizationId,
 			Integer... descendantOrganizationTypes) {
-		//查找直接隶属的人员信息
+		// 查找直接隶属的人员信息
 		List<Actor> users = new ArrayList<Actor>();
 		List<Actor> _users = this.findUser(organizationId);
 		if (_users != null && !_users.isEmpty()) {
 			users.addAll(_users);
 		}
-		
-		//获取所有后代组织
-		List<Actor> descendantOrganizations = this.findDescendantOrganization(organizationId, descendantOrganizationTypes);
-		
-		//循环每个组织查找人员信息
-		if (descendantOrganizations != null && !descendantOrganizations.isEmpty()) {
+
+		// 获取所有后代组织
+		List<Actor> descendantOrganizations = this.findDescendantOrganization(
+				organizationId, descendantOrganizationTypes);
+
+		// 循环每个组织查找人员信息
+		if (descendantOrganizations != null
+				&& !descendantOrganizations.isEmpty()) {
 			for (Actor org : descendantOrganizations) {
 				_users = this.findUser(org.getId());
 				if (_users != null && !_users.isEmpty()) {
@@ -279,5 +305,23 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 	public List<Module> findCanUseModules(Long actorId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void delete(Serializable pk) {
+		// 先删除关联关系
+		if (pk != null)
+			this.actorRelationDao
+					.deleteByMasterOrFollower(new Serializable[] { pk });
+		// 再删除自身
+		super.delete(pk);
+	}
+
+	@Override
+	public void delete(Serializable[] pks) {
+		// 先删除关联关系
+		this.actorRelationDao.deleteByMasterOrFollower(pks);
+		// 再删除自身
+		super.delete(pks);
 	}
 }

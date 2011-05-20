@@ -216,8 +216,12 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	}
 
 	protected Grid buildGrid(List<E> entities) {
+		//id列
 		Grid grid = new Grid().setData(entities).addColumn(IdColumn.DEFAULT());
+		//name属性设为bean的名称
 		grid.setName(getText(StringUtils.uncapitalize(getEntityConfigName())));
+		//多选及双击行编辑
+		grid.setSingleSelect(false).setDblClickRow("bc.page.edit");
 		return grid;
 	}
 

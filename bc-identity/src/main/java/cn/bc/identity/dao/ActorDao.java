@@ -96,4 +96,10 @@ public interface ActorDao extends CrudDao<Actor>{
 	 * @return
 	 */
 	List<Module> findCanUseModules(Long actorId);
+
+	/**
+	 * 获取所有单位信息
+	 * @return
+	 */
+	List<Actor> findAllUnit();
 }

@@ -5,7 +5,7 @@ import java.util.UUID;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorImpl;
 
-public class UnitActionTest extends AbstractActorActionTest {
+public class UnitActionTestTemp extends AbstractActorActionTest {
 	@Override
 	protected String getEntityConfigName() {
 		return "Unit";

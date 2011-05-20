@@ -1,5 +1,6 @@
 package cn.bc.identity.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import cn.bc.core.dao.CrudDao;
@@ -35,4 +36,18 @@ public interface ActorRelationDao extends CrudDao<ActorRelation>{
 	 * @return
 	 */
 	List<ActorRelation> findByFollower(Integer type, Long followerId);
+	
+	/**
+	 * 获取某关联关系列表
+	 * @param mfIds 从属方或主控方的Id,不能为空
+	 * @return
+	 */
+	List<ActorRelation> findByMasterOrFollower(Serializable[] mfIds);
+	
+	/**
+	 * 删除关联关系
+	 * @param mfIds 从属方或主控方的Id,不能为空
+	 * @return
+	 */
+	void deleteByMasterOrFollower(Serializable[] mfIds);
 }

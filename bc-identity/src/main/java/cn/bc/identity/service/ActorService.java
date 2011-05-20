@@ -44,6 +44,12 @@ public interface ActorService extends CrudService<Actor>{
 	List<Actor> findTopUnit();
 
 	/**
+	 * 获取所有单位信息
+	 * @return
+	 */
+	List<Actor> findAllUnit();
+
+	/**
 	 * 获取隶属关系中的所有直接下级组织信息
 	 * @param higherOrganizationId 上级组织的id
 	 * @param lowerOrganizationTypes 下级组织的类型，对应Actor的type属性，默认为单位+部门+岗位

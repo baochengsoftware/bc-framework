@@ -18,13 +18,32 @@ import cn.bc.web.ui.html.Thead;
 import cn.bc.web.ui.html.Tr;
 
 public class Grid extends Table {
+	private boolean singleSelect;//行是否单选
+	private String dblClickRow;//双击行的处理事件
 	private List<? extends Object> data;
 	private List<Column> columns = new ArrayList<Column>();
 
 	public Grid() {
 		this.addClazz("list");
 		this.setAttr("cellspacing", "0");
+	}
 
+	public boolean isSingleSelect() {
+		return singleSelect;
+	}
+
+	public Grid setSingleSelect(boolean singleSelect) {
+		this.singleSelect = singleSelect;
+		return this;
+	}
+
+	public String getDblClickRow() {
+		return dblClickRow;
+	}
+
+	public Grid setDblClickRow(String dblClickRow) {
+		this.dblClickRow = dblClickRow;
+		return this;
 	}
 
 	public StringBuffer render(StringBuffer main) {
@@ -33,6 +52,14 @@ public class Grid extends Table {
 
 		// 构建tbody
 		buildTbody();
+		
+		if(isSingleSelect())
+			this.addClazz("singleSelect");
+		else
+			this.addClazz("multipleSelect");
+		
+		if(dblClickRow != null && dblClickRow.length() > 0)
+			this.setAttr("data-dblclickrow",getDblClickRow());
 
 		return super.render(main);
 	}

@@ -39,5 +39,8 @@
 		<action name="save" class="unitAction" method="save"/>
 		<action name="delete" class="unitAction" method="delete"/>
 		<action name="list" class="unitAction" method="list"/>
+		<action name="select" class="unitAction" method="select">
+			<result name="select">/bc/identity/unit/select.jsp</result>
+		</action>
 	</package>
 </struts>

@@ -24,6 +24,12 @@ public class OrderCondition implements Condition {
 	protected OrderCondition() {
 	}
 
+	public OrderCondition(String name) {
+		if (name == null)
+			throw new CoreException("name can not be null.");
+		this.add(name, Direction.Asc);
+	}
+
 	public OrderCondition(String name, Direction direction) {
 		if (name == null)
 			throw new CoreException("name can not be null.");

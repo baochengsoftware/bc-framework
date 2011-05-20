@@ -44,6 +44,10 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 		return this.actorDao.findTopUnit();
 	}
 
+	public List<Actor> findAllUnit() {
+		return this.actorDao.findAllUnit();
+	}
+
 	public List<Actor> findLowerOrganization(Long higherOrganizationId,
 			Integer... lowerOrganizationTypes) {
 		return this.actorDao.findLowerOrganization(higherOrganizationId,

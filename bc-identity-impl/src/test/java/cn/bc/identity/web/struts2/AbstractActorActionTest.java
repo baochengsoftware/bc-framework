@@ -8,6 +8,11 @@ import cn.bc.test.mock.CrudServiceMock;
 import cn.bc.web.struts2.AbstractCrudActionTest;
 
 public abstract class AbstractActorActionTest extends AbstractCrudActionTest<Long, ActorImpl> {
+	@Override
+	protected String getContextLocations() {
+		return "classpath:spring-test4struts.xml";
+	}
+
 	protected Class<ActorImpl> getEntityClass() {
 		return ActorImpl.class;
 	}

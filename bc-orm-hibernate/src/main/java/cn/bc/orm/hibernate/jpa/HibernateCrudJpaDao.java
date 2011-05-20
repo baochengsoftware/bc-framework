@@ -221,7 +221,7 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 		this.executeUpdate(hql.toString(), args);
 	}
 
-	private void executeUpdate(final String hql, final List<Object> args) {
+	protected void executeUpdate(final String hql, final List<Object> args) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("hql=" + hql);
 			logger.debug("args="
