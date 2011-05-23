@@ -11,6 +11,7 @@ import cn.bc.core.exception.CoreException;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
+import cn.bc.core.query.condition.impl.InCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.dao.ActorDao;
 import cn.bc.identity.dao.ActorRelationDao;
@@ -206,11 +207,18 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		return this.getJpaTemplate().find(hql.toString(), args.toArray());
 	}
 
-	public List<Actor> findAllUnit() {
+	public List<Actor> findAllUnit(Integer... statues) {
 		AndCondition c = new AndCondition();
 		c.add(new EqualsCondition("type", new Integer(Actor.TYPE_UNIT))).add(
 				new OrderCondition("order", Direction.Asc).add("code",
 						Direction.Asc));
+		if(statues != null && statues.length > 0){
+			if(statues.length == 1){
+				c.add(new EqualsCondition("status", statues[0]));
+			}else{
+				c.add(new InCondition("status", statues));
+			}
+		}
 		return this.createQuery().condition(c).list();
 	}
 

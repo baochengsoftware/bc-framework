@@ -21,7 +21,7 @@ import cn.bc.core.exception.CoreException;
 import cn.bc.core.service.CrudService;
 import cn.bc.web.ui.html.grid.Grid;
 import cn.bc.web.ui.html.grid.IdColumn;
-import cn.bc.web.ui.html.page.Button;
+import cn.bc.web.ui.html.page.ButtonOption;
 import cn.bc.web.ui.html.page.ListPage;
 import cn.bc.web.ui.html.page.Option;
 import cn.bc.web.ui.html.page.Page;
@@ -227,9 +227,9 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 
 	protected Option buildListPageOption() {
 		return new Option()
-				.addButton(new Button(getText("label.delete"), "delete"))
-				.addButton(new Button(getText("label.edit"), "edit"))
-				.addButton(new Button(getText("label.create"), "create"))
+				.addButton(new ButtonOption(getText("label.delete"), "delete"))
+				.addButton(new ButtonOption(getText("label.edit"), "edit"))
+				.addButton(new ButtonOption(getText("label.create"), "create"))
 				.setMinWidth(250).setMinHeight(200).setModal(false);
 	}
 	

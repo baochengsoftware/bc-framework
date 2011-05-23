@@ -16,12 +16,14 @@ import cn.bc.web.ui.html.Td;
 import cn.bc.web.ui.html.Text;
 import cn.bc.web.ui.html.Thead;
 import cn.bc.web.ui.html.Tr;
+import cn.bc.web.ui.html.toolbar.Toolbar;
 
 public class Grid extends Table {
 	private boolean singleSelect;//行是否单选
 	private String dblClickRow;//双击行的处理事件
 	private List<? extends Object> data;
 	private List<Column> columns = new ArrayList<Column>();
+	private Toolbar toolbar;//顶部的工具条
 
 	public Grid() {
 		this.addClazz("list");
@@ -37,6 +39,15 @@ public class Grid extends Table {
 		return this;
 	}
 
+	public Toolbar getToolbar() {
+		return toolbar;
+	}
+
+	public Grid setToolbar(Toolbar toolbar) {
+		this.toolbar = toolbar;
+		return this;
+	}
+
 	public String getDblClickRow() {
 		return dblClickRow;
 	}
@@ -47,6 +58,8 @@ public class Grid extends Table {
 	}
 
 	public StringBuffer render(StringBuffer main) {
+		this.addChild(this.toolbar);
+		
 		// 构建thead
 		buildThead();
 
@@ -88,7 +101,8 @@ public class Grid extends Table {
 			// id列样式
 			if (column instanceof IdColumn) {
 				td.addClazz("id");
-				td.addChild(new Span().addClazz("ui-icon ui-icon-info"));// 全选反选标记符号
+				if(!isSingleSelect())
+					td.addChild(new Span().addClazz("ui-icon ui-icon-info"));// 全选反选标记符号
 			} else {
 				if (column.getWidth() > 0) {
 					td.addStyle("width", column.getWidth() + "px");

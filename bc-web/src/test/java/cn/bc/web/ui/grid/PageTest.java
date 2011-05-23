@@ -2,7 +2,7 @@ package cn.bc.web.ui.grid;
 
 import org.junit.Test;
 
-import cn.bc.web.ui.html.page.Button;
+import cn.bc.web.ui.html.page.ButtonOption;
 import cn.bc.web.ui.html.page.ListPage;
 import cn.bc.web.ui.html.page.Option;
 
@@ -18,10 +18,10 @@ public class PageTest {
 				.setOption(
 						new Option()
 								.setButtons(
-										new Button[] {
-												new Button("ok", "delete"),
-												new Button("edit", "edit"),
-												new Button("create", "create") })
+										new ButtonOption[] {
+												new ButtonOption("ok", "delete"),
+												new ButtonOption("edit", "edit"),
+												new ButtonOption("create", "create") })
 								.setMinWidth(200).setMinHeight(250)
 								.setWidth(500).setHeight(400).setModal(false)
 								.toString()).setBeautiful(true);

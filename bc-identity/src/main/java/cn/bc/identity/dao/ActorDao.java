@@ -99,7 +99,8 @@ public interface ActorDao extends CrudDao<Actor>{
 
 	/**
 	 * 获取所有单位信息
+	 * @param statues 状态列表
 	 * @return
 	 */
-	List<Actor> findAllUnit();
+	List<Actor> findAllUnit(Integer... statues);
 }

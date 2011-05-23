@@ -45,9 +45,10 @@ public interface ActorService extends CrudService<Actor>{
 
 	/**
 	 * 获取所有单位信息
+	 * @param statues 状态列表
 	 * @return
 	 */
-	List<Actor> findAllUnit();
+	List<Actor> findAllUnit(Integer... statues);
 
 	/**
 	 * 获取隶属关系中的所有直接下级组织信息

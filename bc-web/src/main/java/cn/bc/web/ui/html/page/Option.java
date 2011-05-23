@@ -5,19 +5,19 @@ import cn.bc.web.ui.json.JsonArray;
 
 public class Option extends Json {
 
-	public Option setButtons(Button... buttons) {
+	public Option setButtons(ButtonOption... buttons) {
 		JsonArray jsons = (JsonArray) get("buttons");
 		if (jsons == null)
 			jsons = new JsonArray();
 		else
 			jsons.clear();
-		for (Button button : buttons)
+		for (ButtonOption button : buttons)
 			jsons.add(button);
 		put("buttons", jsons);
 		return this;
 	}
 
-	public Option addButton(Button button) {
+	public Option addButton(ButtonOption button) {
 		JsonArray jsons = (JsonArray) get("buttons");
 		if (jsons == null)
 			jsons = new JsonArray();

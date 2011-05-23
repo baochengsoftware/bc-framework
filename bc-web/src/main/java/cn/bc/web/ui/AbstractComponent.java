@@ -18,8 +18,16 @@ import org.apache.commons.logging.LogFactory;
 public abstract class AbstractComponent implements Component {
 	private static Log logger = LogFactory.getLog(AbstractComponent.class);
 	protected List<Render> children;
-	private Map<String, String> attrs = new LinkedHashMap<String, String>();
+	protected Map<String, String> attrs = new LinkedHashMap<String, String>();
 	private boolean beautiful = false;
+	
+	public AbstractComponent(){
+		this.init();
+	}
+
+	protected void init() {
+		// 初始化
+	}
 
 	/**
 	 * 是否美化生成的代码

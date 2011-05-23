@@ -8,6 +8,10 @@ import cn.bc.web.ui.html.Ul;
 public class Menu extends Ul {
 	private List<MenuItem> menuItems;
 
+	public Menu() {
+		this.addClazz("bc-menu");
+	}
+
 	public List<MenuItem> getMenuItems() {
 		return menuItems;
 	}
@@ -29,8 +33,9 @@ public class Menu extends Ul {
 			this.children.clear();
 
 		// 构建菜单
-		for (MenuItem item : menuItems)
-			this.addChild(item);
+		if (menuItems != null)
+			for (MenuItem item : menuItems)
+				this.addChild(item);
 		return super.render(main);
 	}
 }
