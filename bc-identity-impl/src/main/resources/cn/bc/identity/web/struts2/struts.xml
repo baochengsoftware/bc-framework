@@ -16,7 +16,7 @@
 		<action name="delete" class="dutyAction" method="delete"/>
 		
 		<action name="list" class="dutyAction" method="list">
-			<result name="list">/bc/identity/duty/dutes.jsp</result>
+			<result name="list">/bc/identity/duty/list.jsp</result>
 <!-- 			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result> -->
 		</action>
 	</package>
