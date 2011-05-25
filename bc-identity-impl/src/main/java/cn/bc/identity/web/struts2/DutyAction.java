@@ -35,8 +35,8 @@ public class DutyAction extends ActionSupport {
 	private DutyService dutyService;
 	private IdGeneratorService idGeneratorService;
 	private Long id;
-	private Duty b;
-	private List<Duty> bs;
+	private Duty e;//entity的简写
+	private List<Duty> es;//entities的简写
 	private String ids;
 
 	@Autowired
@@ -57,12 +57,12 @@ public class DutyAction extends ActionSupport {
 		this.ids = ids;
 	}
 
-	public Duty getB() {
-		return b;
+	public Duty getE() {
+		return e;
 	}
 
-	public void setB(Duty b) {
-		this.b = b;
+	public void setE(Duty e) {
+		this.e = e;
 	}
 
 	public Long getId() {
@@ -73,12 +73,12 @@ public class DutyAction extends ActionSupport {
 		this.id = id;
 	}
 
-	public List<Duty> getBs() {
-		return bs;
+	public List<Duty> getEs() {
+		return es;
 	}
 
-	public void setBs(List<Duty> bs) {
-		this.bs = bs;
+	public void setEs(List<Duty> es) {
+		this.es = es;
 	}
 
 	public String execute() throws Exception {
@@ -88,21 +88,21 @@ public class DutyAction extends ActionSupport {
 
 	// 新建
 	public String create() throws Exception {
-		b = this.dutyService.create();
-		b.setCode(this.idGeneratorService.next("duty.code"));
+		e = this.dutyService.create();
+		e.setCode(this.idGeneratorService.next("duty.code"));
 		return "form";
 	}
 
 	// 编辑
 	public String edit() throws Exception {
-		b = this.dutyService.load(this.getId());
+		e = this.dutyService.load(this.getId());
 		return "form";
 	}
 
 	// 保存
 	public String save() throws Exception {
-		logger.debug("do in method save:" + b);
-		this.dutyService.save(b);
+		logger.debug("do in method save:" + e);
+		this.dutyService.save(e);
 		return "saveSuccess";
 	}
 
@@ -126,7 +126,7 @@ public class DutyAction extends ActionSupport {
 	// 获取列表视图页面
 	public String list() throws Exception {
 		logger.debug("do in method list.");
-		bs = this.dutyService.createQuery().list();
+		es = this.dutyService.createQuery().list();
 		return "list";
 	}
 }
