@@ -22,9 +22,11 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONC
 	values(1, 0, '90', 1, '谷歌搜索', 'http://www.google.com.hk/', 'i0204');
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
 	values(1, 0, '91', 1, '百度搜索', 'http://www.baidu.com/', 'i0204');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
+	select 1, 0, '92', 0, null, null, id, null from BC_SECURITY_MODULE where name='分页设计';
 
 -- 插入全局配置信息
 insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID) 
-	values(1, 0, '14', 'flick', null);
+	values(1, 0, '12', 'flick', null);
 -- insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID) 
 -- 	select 1, 0, '14', 'flick', id from BC_IDENTITY_ACTOR where code='admin';

@@ -14,6 +14,8 @@ insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCL
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 2, m.id, '90-01-01','职务配置', '/bc/duty/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
+	select 1, 0, 2, m.id, '90-01-011','分页设计', '/bc/duty/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 2, m.id, '90-01-02','单位配置', '/bc/unit/list', 'icon' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 2, m.id, '90-01-03','部门配置', '/bc/department/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';

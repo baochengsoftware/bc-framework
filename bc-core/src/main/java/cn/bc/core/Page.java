@@ -16,7 +16,11 @@ public class Page<T extends Object> {
 	protected int pageSize;
 	protected int totalCount;
 	//protected int pageCount;
-	protected List<T> list;
+	protected List<T> data;
+	
+	public Page() {
+		this.pageNo = 1;
+	}
 
 	/**
 	 * 构造一页数据
@@ -27,14 +31,15 @@ public class Page<T extends Object> {
 	 *            每页容量(>=1)
 	 * @param totalCount
 	 *            总条目数(>=0)
-	 * @param list
+	 * @param data
 	 *            页包含的数据
 	 */
-	public Page(int pageNo, int pageSize, int totalCount, List<T> list) {
+	public Page(int pageNo, int pageSize, int totalCount, List<T> data) {
+		this();
 		this.pageNo = pageNo < 1 ? 1 : pageNo;
 		this.pageSize = pageSize < 1 ? 1 : pageSize;
 		this.totalCount = totalCount < 0 ? 0 : totalCount;
-		this.list = list;
+		this.data = data;
 		//this.pageCount = getPageCount();
 	}
 
@@ -43,6 +48,9 @@ public class Page<T extends Object> {
 	 */
 	public int getPageNo() {
 		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
 	}
 
 	/**
@@ -70,6 +78,9 @@ public class Page<T extends Object> {
 	public int getPageSize() {
 		return pageSize;
 	}
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
 
 	/**
 	 * @return 总条目数
@@ -77,12 +88,18 @@ public class Page<T extends Object> {
 	public int getTotalCount() {
 		return totalCount;
 	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
 
 	/**
 	 * @return 该页包含的数据
 	 */
-	public List<T> getList() {
-		return list;
+	public List<T> getData() {
+		return data;
+	}
+	public void setData(List<T> list) {
+		this.data = list;
 	}
 
 	/**

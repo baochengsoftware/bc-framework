@@ -15,9 +15,14 @@
 		<action name="save" class="dutyAction" method="save"/>
 		<action name="delete" class="dutyAction" method="delete"/>
 		
+		<action name="data" class="dutyAction" method="data">
+			<result name="data">/bc/identity/duty/data.jsp</result>
+		</action>
 		<action name="list" class="dutyAction" method="list">
 			<result name="list">/bc/identity/duty/list.jsp</result>
-<!-- 			<result name="list" type="freemarker">/cn/bc/identity/web/struts2/dutes.ftl</result> -->
+		</action>
+		<action name="paging" class="dutyAction" method="paging">
+			<result name="paging">/bc/identity/duty/paging.jsp</result>
 		</action>
 	</package>
 	<!--<package name="actor" extends="bc-default" namespace="/actor">

@@ -285,8 +285,8 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 		Assert.assertNotNull(q);
 		Page<E> page = q.page(1, 100);
 		Assert.assertNotNull(page);
-		Assert.assertNotNull(page.getList());
-		Assert.assertTrue(page.getList().isEmpty());
+		Assert.assertNotNull(page.getData());
+		Assert.assertTrue(page.getData().isEmpty());
 		Assert.assertEquals(1, page.getPageNo());
 		Assert.assertEquals(100, page.getPageSize());
 		Assert.assertEquals(0, page.getPageCount());
@@ -300,8 +300,8 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 		q.condition(new EqualsCondition(this.getTableIdName(), id));
 		page = q.page(1, 100);
 		Assert.assertNotNull(page);
-		Assert.assertNotNull(page.getList());
-		Assert.assertFalse(page.getList().isEmpty());
+		Assert.assertNotNull(page.getData());
+		Assert.assertFalse(page.getData().isEmpty());
 		Assert.assertEquals(1, page.getPageNo());
 		Assert.assertEquals(100, page.getPageSize());
 		Assert.assertEquals(1, page.getPageCount());
@@ -317,8 +317,8 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 		}
 		q.condition(new EqualsCondition("uid", uid));
 		page = q.page(1, 100);
-		Assert.assertNotNull(page.getList());
-		Assert.assertEquals(10, page.getList().size());
+		Assert.assertNotNull(page.getData());
+		Assert.assertEquals(10, page.getData().size());
 		Assert.assertEquals(1, page.getPageNo());
 		Assert.assertEquals(100, page.getPageSize());
 		Assert.assertEquals(1, page.getPageCount());
@@ -327,7 +327,7 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 
 		// 第1页
 		page = q.page(1, 5);
-		Assert.assertEquals(5, page.getList().size());
+		Assert.assertEquals(5, page.getData().size());
 		Assert.assertEquals(1, page.getPageNo());
 		Assert.assertEquals(5, page.getPageSize());
 		Assert.assertEquals(2, page.getPageCount());
@@ -336,7 +336,7 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 
 		// 第2页
 		page = q.page(2, 3);
-		Assert.assertEquals(3, page.getList().size());
+		Assert.assertEquals(3, page.getData().size());
 		Assert.assertEquals(2, page.getPageNo());
 		Assert.assertEquals(3, page.getPageSize());
 		Assert.assertEquals(4, page.getPageCount());
@@ -357,8 +357,8 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 		}
 		q.condition(new EqualsCondition("uid", uid));
 		Page<E> page = q.page(1, 5);
-		Assert.assertNotNull(page.getList());
-		Assert.assertEquals(5, page.getList().size());
+		Assert.assertNotNull(page.getData());
+		Assert.assertEquals(5, page.getData().size());
 		Assert.assertEquals(1, page.getPageNo());
 		Assert.assertEquals(5, page.getPageSize());
 		Assert.assertEquals(2, page.getPageCount());
@@ -367,7 +367,7 @@ public abstract class AbstractEntityCrudTest<K extends Serializable, E extends E
 
 		// 第1页
 		page = q.page(3, 5);
-		Assert.assertEquals(0, page.getList().size());
+		Assert.assertEquals(0, page.getData().size());
 		Assert.assertEquals(3, page.getPageNo());
 		Assert.assertEquals(5, page.getPageSize());
 		Assert.assertEquals(2, page.getPageCount());

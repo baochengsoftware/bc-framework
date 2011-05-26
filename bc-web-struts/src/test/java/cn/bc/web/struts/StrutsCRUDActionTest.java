@@ -294,8 +294,8 @@ public class StrutsCRUDActionTest extends MockStrutsTestCase {
 		verifyNoActionErrors();
 		Page<Example> page = (Page<Example>)getRequest().getAttribute("page");
 		Assert.assertNotNull(page);
-		Assert.assertNotNull(page.getList());
-		Assert.assertEquals(1, page.getList().size());
+		Assert.assertNotNull(page.getData());
+		Assert.assertEquals(1, page.getData().size());
 		Assert.assertEquals(1, page.getPageNo());
 		Assert.assertEquals(50, page.getPageSize());
 		Assert.assertEquals(1, page.getPageCount());

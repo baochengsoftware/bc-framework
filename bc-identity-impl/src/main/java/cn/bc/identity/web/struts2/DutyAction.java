@@ -12,6 +12,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.bc.core.Page;
 import cn.bc.core.exception.CoreException;
 import cn.bc.core.util.StringUtils;
 import cn.bc.identity.domain.Duty;
@@ -36,7 +37,8 @@ public class DutyAction extends ActionSupport {
 	private IdGeneratorService idGeneratorService;
 	private Long id;
 	private Duty e;//entity的简写
-	private List<Duty> es;//entities的简写
+	private List<Duty> es;//entities的简写,非分页页面用
+	private Page<Duty> page;//分页页面用
 	private String ids;
 
 	@Autowired
@@ -81,6 +83,14 @@ public class DutyAction extends ActionSupport {
 		this.es = es;
 	}
 
+	public Page<Duty> getPage() {
+		return page;
+	}
+
+	public void setPage(Page<Duty> page) {
+		this.page = page;
+	}
+
 	public String execute() throws Exception {
 		logger.debug("do in method execute.");
 		return SUCCESS;
@@ -101,14 +111,12 @@ public class DutyAction extends ActionSupport {
 
 	// 保存
 	public String save() throws Exception {
-		logger.debug("do in method save:" + e);
 		this.dutyService.save(e);
 		return "saveSuccess";
 	}
 
 	// 删除
 	public String delete() throws Exception {
-		logger.debug("do in method delete.");
 		if (this.getId() != null) {// 删除一条
 			this.dutyService.delete(this.getId());
 		} else {// 删除一批
@@ -123,10 +131,31 @@ public class DutyAction extends ActionSupport {
 		return "deleteSuccess";
 	}
 
-	// 获取列表视图页面
+	// 获取列表视图页面----无分页
 	public String list() throws Exception {
-		logger.debug("do in method list.");
 		es = this.dutyService.createQuery().list();
 		return "list";
+	}
+
+	// 获取列表视图页面----分页
+	public String paging() throws Exception {
+		if(page == null)
+			page = new Page<Duty>();
+		if(page.getPageSize() < 1)
+			page.setPageSize(Integer.parseInt(getText("app.pageSize")));
+		page = this.dutyService.createQuery().page(page.getPageNo(),page.getPageSize());
+		this.es = page.getData();
+		return "paging";
+	}
+
+	// 仅获取表格的数据信息部分
+	public String data() throws Exception {
+		if(this.page != null){//分页的处理
+			this.page = this.dutyService.createQuery().page(page.getPageNo(),page.getPageSize());
+			this.es = page.getData();
+		}else{//非分页的处理
+			this.es = this.dutyService.createQuery().list();
+		}
+		return "data";
 	}
 }

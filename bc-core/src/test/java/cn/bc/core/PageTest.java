@@ -18,7 +18,7 @@ public class PageTest {
 		Assert.assertEquals(0,page.getFirstResult());
 		Assert.assertEquals(0,Page.getFirstResult(0,0));
 		Assert.assertEquals(0,page.getPageCount());
-		Assert.assertNull(page.getList());
+		Assert.assertNull(page.getData());
 
 		page = new Page<Object>(-1,-1,-1,null);
 		Assert.assertEquals(1,page.getPageNo());
@@ -27,7 +27,7 @@ public class PageTest {
 		Assert.assertEquals(0,page.getFirstResult());
 		Assert.assertEquals(0,Page.getFirstResult(-1,-1));
 		Assert.assertEquals(0,page.getPageCount());
-		Assert.assertNull(page.getList());
+		Assert.assertNull(page.getData());
 
 		page = new Page<Object>(1,50,101,null);
 		Assert.assertEquals(1,page.getPageNo());
@@ -36,7 +36,7 @@ public class PageTest {
 		Assert.assertEquals(0,page.getFirstResult());
 		Assert.assertEquals(0,Page.getFirstResult(1,50));
 		Assert.assertEquals(3,page.getPageCount());
-		Assert.assertNull(page.getList());
+		Assert.assertNull(page.getData());
 		
 		page = new Page<Object>(2,50,100,new ArrayList<Object>());
 		Assert.assertEquals(2,page.getPageNo());
@@ -45,6 +45,6 @@ public class PageTest {
 		Assert.assertEquals(50,page.getFirstResult());
 		Assert.assertEquals(50,Page.getFirstResult(2,50));
 		Assert.assertEquals(2,page.getPageCount());
-		Assert.assertNotNull(page.getList());
+		Assert.assertNotNull(page.getData());
 	}
 }
