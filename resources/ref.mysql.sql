@@ -37,3 +37,18 @@ explain select f.* from BC_IDENTITY_ACTOR f where f.type_ in(2,3);
 explain (select f1.* from BC_IDENTITY_ACTOR f1 where f1.type_ =2) union all (select f1.* from BC_IDENTITY_ACTOR f1 where f1.type_ =3);
 
 select * from BC_IDENTITY_ACTOR;
+
+-- 创建存储过程：loop_time为循环的次数
+DELIMITER $$ 
+    DROP PROCEDURE IF EXISTS test $$ 
+    CREATE PROCEDURE test (loop_time int) 
+    BEGIN 
+        DECLARE i int default 0; 
+        WHILE i <  loop_time DO 
+        insert into bc_identity_duty (STATUS_,INNER_,CODE,NAME) values(1,0,concat('c',i),concat('n',i));
+        SET i = i + 1; 
+        END WHILE; 
+    END $$ 
+DELIMITER ; 
+-- 调用存储过程
+-- CALL test(250); 

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Controller;
 
 import cn.bc.core.Page;
 import cn.bc.core.exception.CoreException;
+import cn.bc.core.query.condition.Condition;
+import cn.bc.core.query.condition.impl.LikeCondition;
+import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.util.StringUtils;
 import cn.bc.identity.domain.Duty;
 import cn.bc.identity.service.DutyService;
@@ -36,10 +39,11 @@ public class DutyAction extends ActionSupport {
 	private DutyService dutyService;
 	private IdGeneratorService idGeneratorService;
 	private Long id;
-	private Duty e;//entity的简写
-	private List<Duty> es;//entities的简写,非分页页面用
-	private Page<Duty> page;//分页页面用
+	private Duty e;// entity的简写
+	private List<Duty> es;// entities的简写,非分页页面用
+	private Page<Duty> page;// 分页页面用
 	private String ids;
+	private String search;// 搜索框输入的文本
 
 	@Autowired
 	public void setDutyService(DutyService dutyService) {
@@ -57,6 +61,14 @@ public class DutyAction extends ActionSupport {
 
 	public void setIds(String ids) {
 		this.ids = ids;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
 	}
 
 	public Duty getE() {
@@ -133,27 +145,49 @@ public class DutyAction extends ActionSupport {
 
 	// 获取列表视图页面----无分页
 	public String list() throws Exception {
-		es = this.dutyService.createQuery().list();
+		es = this.dutyService.createQuery()
+				.condition(this.getSearchCondition()).list();
 		return "list";
 	}
 
 	// 获取列表视图页面----分页
 	public String paging() throws Exception {
-		if(page == null)
+		if (page == null)
 			page = new Page<Duty>();
-		if(page.getPageSize() < 1)
+		if (page.getPageSize() < 1)
 			page.setPageSize(Integer.parseInt(getText("app.pageSize")));
-		page = this.dutyService.createQuery().page(page.getPageNo(),page.getPageSize());
+
+		// 构建查询条件并执行查询
+		page = this.dutyService.createQuery()
+				.condition(this.getSearchCondition())
+				.page(page.getPageNo(), page.getPageSize());
 		this.es = page.getData();
 		return "paging";
 	}
 
+	/**
+	 * 构建查询条件
+	 * 
+	 * @return
+	 */
+	protected Condition getSearchCondition() {
+		if (this.search != null && this.search.length() > 0) {
+			return new OrCondition()
+					.add(new LikeCondition("code", this.search)).add(
+							new LikeCondition("name", this.search));
+		} else {
+			return null;
+		}
+	}
+
 	// 仅获取表格的数据信息部分
 	public String data() throws Exception {
-		if(this.page != null){//分页的处理
-			this.page = this.dutyService.createQuery().page(page.getPageNo(),page.getPageSize());
+		if (this.page != null) {// 分页的处理
+			this.page = this.dutyService.createQuery()
+					.condition(this.getSearchCondition())
+					.page(page.getPageNo(), page.getPageSize());
 			this.es = page.getData();
-		}else{//非分页的处理
+		} else {// 非分页的处理
 			this.es = this.dutyService.createQuery().list();
 		}
 		return "data";
