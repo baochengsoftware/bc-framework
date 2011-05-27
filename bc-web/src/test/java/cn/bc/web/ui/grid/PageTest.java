@@ -4,19 +4,19 @@ import org.junit.Test;
 
 import cn.bc.web.ui.html.page.ButtonOption;
 import cn.bc.web.ui.html.page.ListPage;
-import cn.bc.web.ui.html.page.Option;
+import cn.bc.web.ui.html.page.PageOption;
 
 public class PageTest {
 	@Test
 	public void testListPage() {
 		ListPage listPage = new ListPage();
 		listPage.setGrid(GridTest.buildTestGrid())
-				.setCreateAction("/duty/create")
-				.setDeleteAction("/duty/delete")
-				.setEditAction("/duty/edit")
+				.setCreateUrl("/duty/create")
+				.setDeleteUrl("/duty/delete")
+				.setEditUrl("/duty/edit")
 				.setJs("js1").setCss("css1").setIniMethod("iniMethod")
 				.setOption(
-						new Option()
+						new PageOption()
 								.setButtons(
 										new ButtonOption[] {
 												new ButtonOption("ok", "delete"),

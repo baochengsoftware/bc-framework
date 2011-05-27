@@ -7,6 +7,6 @@ package cn.bc.web.ui.html.page;
  * @author dragon
  * 
  */
-public class FormPage extends Page {
+public class FormPage extends HtmlPage {
 
 }

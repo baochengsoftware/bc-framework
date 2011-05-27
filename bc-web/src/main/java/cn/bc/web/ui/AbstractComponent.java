@@ -29,6 +29,15 @@ public abstract class AbstractComponent implements Component {
 		// 初始化
 	}
 
+	public String getTitle() {
+		return this.getAttr("title");
+	}
+
+	public Component setTitle(String title) {
+		this.setAttr("title",title);
+		return this;
+	}
+
 	/**
 	 * 是否美化生成的代码
 	 */
@@ -130,6 +139,8 @@ public abstract class AbstractComponent implements Component {
 	public Component setAttr(String key, String value) {
 		if (value != null)
 			attrs.put(key, value);
+		else
+			attrs.remove(key);
 		return this;
 	}
 

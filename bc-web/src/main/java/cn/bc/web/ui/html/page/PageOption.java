@@ -3,9 +3,14 @@ package cn.bc.web.ui.html.page;
 import cn.bc.web.ui.json.Json;
 import cn.bc.web.ui.json.JsonArray;
 
-public class Option extends Json {
+/**
+ * 页面data-option属性的配置，主要用于设置对话框的初始化参数
+ * @author dragon
+ *
+ */
+public class PageOption extends Json {
 
-	public Option setButtons(ButtonOption... buttons) {
+	public PageOption setButtons(ButtonOption... buttons) {
 		JsonArray jsons = (JsonArray) get("buttons");
 		if (jsons == null)
 			jsons = new JsonArray();
@@ -17,7 +22,7 @@ public class Option extends Json {
 		return this;
 	}
 
-	public Option addButton(ButtonOption button) {
+	public PageOption addButton(ButtonOption button) {
 		JsonArray jsons = (JsonArray) get("buttons");
 		if (jsons == null)
 			jsons = new JsonArray();
@@ -26,27 +31,27 @@ public class Option extends Json {
 		return this;
 	}
 
-	public Option setMinWidth(int minWidth) {
+	public PageOption setMinWidth(int minWidth) {
 		put("minWidth", minWidth);
 		return this;
 	}
 
-	public Option setMinHeight(int minHeight) {
+	public PageOption setMinHeight(int minHeight) {
 		put("minHeight", minHeight);
 		return this;
 	}
 
-	public Option setHeight(int height) {
+	public PageOption setHeight(int height) {
 		put("height", height);
 		return this;
 	}
 
-	public Option setWidth(int width) {
+	public PageOption setWidth(int width) {
 		put("width", width);
 		return this;
 	}
 
-	public Option setModal(boolean modal) {
+	public PageOption setModal(boolean modal) {
 		put("modal", modal);
 		return this;
 	}

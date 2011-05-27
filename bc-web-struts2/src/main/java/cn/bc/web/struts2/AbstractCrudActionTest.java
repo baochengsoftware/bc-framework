@@ -125,8 +125,8 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 
 		// action执行后检验参数的值
 		Assert.assertEquals(id, action.getId());
-		Assert.assertNotNull(action.getEntity());
-		Assert.assertEquals(id, action.getEntity().getId());
+		Assert.assertNotNull(action.getE());
+		Assert.assertEquals(id, action.getE().getId());
 	}
 
 	// save
@@ -150,16 +150,16 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 		//在执行action前先手工初始化一下实体对象
 		//否则报错：SEVERE:   [48:32.453] Could not create and/or set value back on to object
 		//         WARNING:  [48:32.453] Error setting expression 'entity.id' with value '[Ljava.lang.String;@1cd3dd7'
-		action.setEntity(this.getEntityClass().newInstance());
+		action.setE(this.getEntityClass().newInstance());
 
 		// 运行action并检验返回值
 		String result = proxy.execute();
 		Assert.assertEquals("saveSuccess", result);
 
 		// action执行后检验参数的值
-		Assert.assertNotNull(action.getEntity());
-		Assert.assertNotNull(action.getEntity().getId());
-		Assert.assertEquals(uid,action.getEntity().getUid());
+		Assert.assertNotNull(action.getE());
+		Assert.assertNotNull(action.getE().getId());
+		Assert.assertEquals(uid,action.getE().getUid());
 	}
 
 	// create
@@ -179,7 +179,7 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 
 		// action执行后检验参数的值
 		Assert.assertNull(action.getId());
-		Assert.assertNotNull(action.getEntity());
+		Assert.assertNotNull(action.getE());
 	}
 
 	// delete
@@ -230,6 +230,6 @@ public abstract class AbstractCrudActionTest<K extends Serializable, E extends E
 		Assert.assertEquals("list", result);
 
 		// 确认找到列表
-		Assert.assertEquals(1,action.getEntities().size());
+		Assert.assertEquals(1,action.getEs().size());
 	}
 }

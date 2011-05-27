@@ -3,8 +3,6 @@
  */
 package cn.bc.identity.web.struts2;
 
-import java.util.List;
-
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -18,11 +16,7 @@ import cn.bc.web.ui.html.grid.Grid;
 import cn.bc.web.ui.html.grid.IdColumn;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.ListPage;
-import cn.bc.web.ui.html.page.Option;
-import cn.bc.web.ui.html.toolbar.Button;
-import cn.bc.web.ui.html.toolbar.SearchButton;
-import cn.bc.web.ui.html.toolbar.SeparatorButton;
-import cn.bc.web.ui.html.toolbar.Toolbar;
+import cn.bc.web.ui.html.page.PageOption;
 
 /**
  * 单位Action
@@ -52,19 +46,13 @@ public class UnitAction extends AbstractActorAction {
 	@Override
 	public String create() throws Exception {
 		String r = super.create();
-		this.getEntity().setType(Actor.TYPE_UNIT);
+		this.getE().setType(Actor.TYPE_UNIT);
 		return r;
 	}
 
-	protected Grid buildGrid(List<Actor> entities) {
-		Toolbar toolbar = new Toolbar();
-		toolbar.addButton(new Button("ui-icon-locked",getText("label.create")).setAction("create"))
-			.addButton(new Button(null,getText("label.edit")).setAction("edit"))
-			.addButton(new SeparatorButton())
-			.addButton(new Button("ui-icon-unlocked",getText("label.delete")).setAction("delete"))
-			.addButton(new SearchButton());
+	protected Grid buildGrid() {
 		return super
-				.buildGrid(entities)
+				.buildGrid()
 				.addColumn(
 						new TextColumn("status", getText("actor.status"), 40))
 				.addColumn(
@@ -74,13 +62,12 @@ public class UnitAction extends AbstractActorAction {
 						new TextColumn("name", getText("actor.name"))
 								.setSortable(true))
 				.addColumn(new TextColumn("phone", getText("actor.phone"), 120))
-				.addColumn(new TextColumn("email", getText("actor.email"), 150))
-				.setToolbar(toolbar);
+				.addColumn(new TextColumn("email", getText("actor.email"), 150));
 	}
 
-	protected Option buildListPageOption() {
-		return super.buildListPageOption().setWidth(650).setMinWidth(500)
-				.setMinHeight(300);
+	protected PageOption buildListPageOption() {
+		return super.buildListPageOption().setWidth(450).setMinWidth(300)
+				.setHeight(400).setMinHeight(200);
 	}
 
 	private String value;
@@ -100,12 +87,6 @@ public class UnitAction extends AbstractActorAction {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public String list() throws Exception {
-		this.setEntities(this.getActorService().findAllUnit());
-		this.setPage(buildListPage(this.getEntities()));
-		return "list";
 	}
 
 	/**
@@ -133,7 +114,7 @@ public class UnitAction extends AbstractActorAction {
 				.addColumn(new TextColumn("email", getText("actor.email"), 150));
 
 		ListPage listPage = new ListPage();
-		Option option = new Option()
+		PageOption option = new PageOption()
 		.setMinWidth(250).setMinHeight(200).setModal(true);
 		listPage.setGrid(grid)
 				.setJs("/bc/identity/unit/select.js")
@@ -142,7 +123,7 @@ public class UnitAction extends AbstractActorAction {
 				.setIniMethod("bc_unit_select_init")
 				.setOption(option.toString())
 				.addClazz("bc-page");
-		this.setPage(listPage);
+		this.setHtml(listPage);
 		return "list";
 
 		// this.setEntities(this.getActorService().findAllUnit());

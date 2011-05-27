@@ -12,7 +12,7 @@ public class ButtonGroup extends Span {
 		this.addClazz("bc-buttonGroup");
 	}
 
-	public ButtonGroup addButton(Button button) {
+	public ButtonGroup addButton(ToolbarButton button) {
 		this.addChild(button);
 		return this;
 	}

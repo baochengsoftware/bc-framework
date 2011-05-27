@@ -1,6 +1,7 @@
 package cn.bc.web.ui.html.page;
 
 import cn.bc.web.ui.html.grid.Grid;
+import cn.bc.web.ui.html.toolbar.Toolbar;
 
 
 /**
@@ -9,30 +10,35 @@ import cn.bc.web.ui.html.grid.Grid;
  * @author dragon
  * 
  */
-public class ListPage extends Page {
+public class ListPage extends HtmlPage {
 	public ListPage() {
 		setType("list");
 	}
 	
-	public String getDeleteAction() {
-		return getAttr("data-action-delete");
+	public String getDeleteUrl() {
+		return getAttr("data-deleteUrl");
 	}
-	public ListPage setDeleteAction(String action) {
-		setAttr("data-action-delete", action);
+	public ListPage setDeleteUrl(String action) {
+		setAttr("data-deleteUrl", action);
 		return this;
 	}
-	public String getEditAction() {
-		return getAttr("data-action-edit");
+	public String getEditUrl() {
+		return getAttr("data-editUrl");
 	}
-	public ListPage setEditAction(String action) {
-		setAttr("data-action-edit", action);
+	public ListPage setEditUrl(String action) {
+		setAttr("data-editUrl", action);
 		return this;
 	}
-	public String getCreateAction() {
-		return getAttr("data-action-create");
+	public String getCreateUrl() {
+		return getAttr("data-createUrl");
 	}
-	public ListPage setCreateAction(String action) {
-		setAttr("data-action-create", action);
+	public ListPage setCreateUrl(String action) {
+		setAttr("data-createUrl", action);
+		return this;
+	}
+
+	public ListPage setToolbar(Toolbar toolbar) {
+		this.addChild(toolbar);
 		return this;
 	}
 

@@ -18,11 +18,15 @@ package cn.bc.web.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.ServletContextAware;
+
+import cn.bc.core.exception.CoreException;
 
 /**
  * WebUI的辅助函数库
@@ -30,10 +34,21 @@ import org.springframework.util.StringUtils;
  * @author dragon
  * @since 1.0.0
  */
-public class WebUtils {
+public class WebUtils implements ServletContextAware {
 	static Log logger = LogFactory.getLog(WebUtils.class);
+	private ServletContext servletContext = null;
 
 	private WebUtils() {
+	}
+
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
+		
+		//获取web应用访问的上下文路径:部署到根目录为"",否则为"/[appName]"
+		rootPath = this.servletContext.getRealPath("/");
+		if (null == rootPath)
+			throw new CoreException("Error occured when getting context path.");
+		logger.fatal("rootPath=" + rootPath);
 	}
 
 	public static String rootPath = "";// File.separator

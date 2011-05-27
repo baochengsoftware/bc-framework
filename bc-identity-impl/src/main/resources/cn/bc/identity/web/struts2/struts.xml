@@ -25,14 +25,6 @@
 			<result name="paging">/bc/identity/duty/paging.jsp</result>
 		</action>
 	</package>
-	<!--<package name="actor" extends="bc-default" namespace="/actor">
-		<action name="create" class="actorAction" method="create">
-			<result name="form">/bc/identity/actor/form.jsp</result>
-		</action>
-		<action name="edit" class="actorAction" method="edit">
-			<result name="form">/bc/identity/actor/form.jsp</result>
-		</action>
-	</package> -->
 	<package name="unit" extends="bc-default" namespace="/bc/unit">
 		<action name="create" class="unitAction" method="create">
 			<result name="form">/bc/identity/unit/form.jsp</result>
@@ -44,6 +36,8 @@
 		<action name="save" class="unitAction" method="save"/>
 		<action name="delete" class="unitAction" method="delete"/>
 		<action name="list" class="unitAction" method="list"/>
+		<action name="paging" class="unitAction" method="paging"/>
+		
 		<action name="select" class="unitAction" method="select">
 			<result name="select">/bc/identity/unit/select.jsp</result>
 		</action>

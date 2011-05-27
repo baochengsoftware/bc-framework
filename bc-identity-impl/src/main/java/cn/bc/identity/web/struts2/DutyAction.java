@@ -188,7 +188,8 @@ public class DutyAction extends ActionSupport {
 					.page(page.getPageNo(), page.getPageSize());
 			this.es = page.getData();
 		} else {// 非分页的处理
-			this.es = this.dutyService.createQuery().list();
+			this.es = this.dutyService.createQuery()
+					.condition(this.getSearchCondition()).list();
 		}
 		return "data";
 	}

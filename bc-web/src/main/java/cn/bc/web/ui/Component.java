@@ -97,4 +97,8 @@ public interface Component extends Render {
 	 * @param action
 	 */
 	Component setAction(String action);
+	
+	public String getTitle();
+
+	public Component setTitle(String title);
 }

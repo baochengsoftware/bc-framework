@@ -17,7 +17,7 @@ import cn.bc.identity.service.ActorService;
 import cn.bc.web.struts2.CrudAction;
 
 /**
- * ¸öÈËÉèÖÃAction
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Action
  * 
  * @author dragon
  * 
@@ -62,7 +62,7 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 	public String edit() throws Exception {
 		ActorImpl actor = (ActorImpl)getCurrentActor();
 		Personal personal = this.personalService.loadByActor(actor.getId());
-		if (personal == null) {// ´ÓÈ«¾ÖÅäÖÃ¸´ÖÆÒ»·Ý
+		if (personal == null) {// ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 			Personal common = this.personalService.loadGlobalConfig();
 			personal = new Personal();
 			personal.setStatus(Entity.STATUS_ENABLED);
@@ -72,15 +72,15 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 			personal.setActor(actor);
 		}
 		
-		this.setEntity(personal);
+		this.setE(personal);
 		return "form";
 	}
 
-	// ±£´æ¸öÈËÉèÖÃ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public String update() throws Exception {
 		Actor actor = getCurrentActor();
 		Personal personal = this.personalService.loadByActor(actor.getId());
-		if (personal == null) {// ´´½¨Ò»¸öÐÂµÄ¸öÈËÅäÖÃ
+		if (personal == null) {// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ÂµÄ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			Personal common = this.personalService.loadGlobalConfig();
 			personal = new Personal();
 			personal.setStatus(Entity.STATUS_ENABLED);
@@ -92,7 +92,7 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 				personal.setFont(font);
 			if (theme != null && theme.length() > 0)
 				personal.setTheme(theme);
-		} else {// ¸üÐÂÏÖÓÐÅäÖÃ
+		} else {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			if (font != null && font.length() > 0)
 				personal.setFont(font);
 			if (theme != null && theme.length() > 0)

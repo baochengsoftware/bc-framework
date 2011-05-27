@@ -9,6 +9,10 @@ import cn.bc.web.ui.AbstractComponent;
  * 
  */
 public class A extends AbstractComponent {
+	protected void init() {
+		this.setHref("#") ;//fix ie6,ie7
+	}
+	
 	public String getHref() {
 		return getAttr("href");
 	}
