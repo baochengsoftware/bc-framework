@@ -27,6 +27,7 @@
 		<module>bc-identity-impl</module>
 		<module>bc-security</module>
 		<module>bc-desktop</module>
+		<module>bc-report</module>
 	</modules>
 
 	<build>
