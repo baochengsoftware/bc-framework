@@ -14,7 +14,7 @@ public class PageTest {
 				.setCreateUrl("/duty/create")
 				.setDeleteUrl("/duty/delete")
 				.setEditUrl("/duty/edit")
-				.setJs("js1").setCss("css1").setIniMethod("iniMethod")
+				.addJs("js1").addCss("css1").setInitMethod("iniMethod")
 				.setOption(
 						new PageOption()
 								.setButtons(

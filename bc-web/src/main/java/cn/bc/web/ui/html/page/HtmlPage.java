@@ -26,22 +26,32 @@ public class HtmlPage extends Div {
 	public String getJs() {
 		return getAttr("data-js");
 	}
-	public HtmlPage setJs(String js) {
-		setAttr("data-js", js);
+	public HtmlPage addJs(String js) {
+		String cur = getAttr("data-js");
+		if (cur != null)
+			setAttr("data-js", cur + "," + js);
+		else
+			setAttr("data-js", js);
+
 		return this;
 	}
 	public String getCss() {
 		return getAttr("data-css");
 	}
-	public HtmlPage setCss(String css) {
-		setAttr("data-css", css);
+	public HtmlPage addCss(String css) {
+		String cur = getAttr("data-css");
+		if (cur != null)
+			setAttr("data-css", cur + "," + css);
+		else
+			setAttr("data-css", css);
+
 		return this;
 	}
-	public String getIniMethod() {
-		return getAttr("data-iniMethod");
+	public String getInitMethod() {
+		return getAttr("data-initMethod");
 	}
-	public HtmlPage setIniMethod(String iniMethod) {
-		setAttr("data-iniMethod", iniMethod);
+	public HtmlPage setInitMethod(String initMethod) {
+		setAttr("data-initMethod", initMethod);
 		return this;
 	}
 	public String getType() {

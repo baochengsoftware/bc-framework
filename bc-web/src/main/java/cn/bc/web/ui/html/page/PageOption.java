@@ -5,8 +5,9 @@ import cn.bc.web.ui.json.JsonArray;
 
 /**
  * 页面data-option属性的配置，主要用于设置对话框的初始化参数
+ * 
  * @author dragon
- *
+ * 
  */
 public class PageOption extends Json {
 
@@ -32,12 +33,18 @@ public class PageOption extends Json {
 	}
 
 	public PageOption setMinWidth(int minWidth) {
-		put("minWidth", minWidth);
+		if (minWidth > 0)
+			put("minWidth", minWidth);
+		else
+			attrs.remove("minWidth");
 		return this;
 	}
 
 	public PageOption setMinHeight(int minHeight) {
-		put("minHeight", minHeight);
+		if (minHeight > 0)
+			put("minHeight", minHeight);
+		else
+			attrs.remove("minHeight");
 		return this;
 	}
 

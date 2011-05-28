@@ -117,10 +117,10 @@ public class UnitAction extends AbstractActorAction {
 		PageOption option = new PageOption()
 		.setMinWidth(250).setMinHeight(200).setModal(true);
 		listPage.setGrid(grid)
-				.setJs("/bc/identity/unit/select.js")
-				.setCss("/bc/identity/unit/select.css")
+				.addJs("/bc/identity/unit/select.js")
+				.addCss("/bc/identity/unit/select.css")
 				.setTitle(this.getText("title.select"))
-				.setIniMethod("bc_unit_select_init")
+				.setInitMethod("bc_unit_select_init")
 				.setOption(option.toString())
 				.addClazz("bc-page");
 		this.setHtml(listPage);

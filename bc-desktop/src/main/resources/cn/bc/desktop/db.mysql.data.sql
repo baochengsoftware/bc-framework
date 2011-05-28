@@ -23,7 +23,17 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONC
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
 	values(1, 0, '91', 1, '百度搜索', 'http://www.baidu.com/', 'i0204');
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
-	select 1, 0, '92', 0, null, null, id, null from BC_SECURITY_MODULE where name='分页设计';
+	select 1, 0, '00', 0, null, null, id, null from BC_SECURITY_MODULE where name='分页设计';
+	
+-- 报表
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '81', 0, '饼图', '/bc/chart/pie', 'i0300');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '82', 0, '柱图', '/bc/chart/bar', 'i0300');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '83', 0, '动态曲线图', '/bc/chart/spline', 'i0300');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '84', 0, '综合图表', '/bc/chart/mix', 'i0300');
 
 -- 插入全局配置信息
 insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID) 

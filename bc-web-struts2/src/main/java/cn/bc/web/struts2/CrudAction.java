@@ -321,10 +321,10 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 				.setDeleteUrl(getDeleteUrl())
 				.setEditUrl(this.getEditUrl())
 				.setNamespace(getPageNamespace())
-				.setJs(getJs())
-				.setCss(getCss())
+				.addJs(getJs())
+				.addCss(getCss())
 				.setTitle(this.getPageTitle())
-				.setIniMethod(getIniMethod())
+				.setInitMethod(getIniMethod())
 				.setOption(buildListPageOption().toString())
 				.setBeautiful(true)
 				.setAttr(
@@ -344,8 +344,8 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 		listPage.setGrid(buildGrid()).setToolbar(buildToolbar())
 				.setCreateUrl(getCreateUrl()).setDeleteUrl(getDeleteUrl())
 				.setEditUrl(this.getEditUrl()).setNamespace(getPageNamespace())
-				.setJs(getJs()).setCss(getCss()).setTitle(this.getPageTitle())
-				.setIniMethod(getIniMethod())
+				.addJs(getJs()).addCss(getCss()).setTitle(this.getPageTitle())
+				.setInitMethod(getIniMethod())
 				.setOption(buildListPageOption().toString());
 		listPage.setAttr("data-name",
 				getText(StringUtils.uncapitalize(getEntityConfigName())))
