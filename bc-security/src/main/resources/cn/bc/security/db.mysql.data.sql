@@ -12,22 +12,20 @@ insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCL
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	values(1, 0, 2, null, '80','个性化设置', '/bc/personal/edit', 'icon i0001');
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-01-01','职务配置', '/bc/duty/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
+	select 1, 0, 2, m.id, '90-01-01','职务配置', '/bc/duty/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-01-011','分页设计', '/bc/duty/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
+	select 1, 0, 2, m.id, '90-01-02','单位配置', '/bc/unit/paging', 'icon' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-01-02','单位配置', '/bc/unit/list', 'icon' from BC_SECURITY_MODULE m where m.code='90-01';
+	select 1, 0, 2, m.id, '90-01-03','部门配置', '/bc/department/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-01-03','部门配置', '/bc/department/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
+	select 1, 0, 2, m.id, '90-01-04','岗位配置', '/bc/group/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-01-04','岗位配置', '/bc/group/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
-insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-01-05','人员配置', '/bc/user/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
+	select 1, 0, 2, m.id, '90-01-05','人员配置', '/bc/user/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-01';
     
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS)
+	select 1, 0, 2, m.id, '90-02-01','模块配置', '/bc/module/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-02';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-02-01','模块配置', '/bc/module/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-02';
-insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	select 1, 0, 2, m.id, '90-02-02','角色配置', '/bc/role/list', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-02';
+	select 1, 0, 2, m.id, '90-02-02','角色配置', '/bc/role/paging', 'icon i0001' from BC_SECURITY_MODULE m where m.code='90-02';
 
 -- 插入超级管理员角色数据
 insert into BC_SECURITY_ROLE (STATUS_,INNER_,TYPE_,CODE,NAME) 

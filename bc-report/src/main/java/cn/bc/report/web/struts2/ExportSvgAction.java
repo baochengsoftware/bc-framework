@@ -110,10 +110,13 @@ public class ExportSvgAction extends ActionSupport {
 
 		// 根据type重新设置filename,使其包含文件的扩展名
 		this.filename = filename + "." + ext;
-		
+
+		// 指定转换的编码,如果不指定，实测在maven的win7命令行下mvn jetty:run,下载图表时后台报错：
+		//
+		String encode = "UTF-8";
 		if ("svg".equals(ext)) {// svg格式无需转换
-			this.inputStream = new ByteArrayInputStream(this.getSvg()
-					.getBytes());
+			this.inputStream = new ByteArrayInputStream(this.getSvg().getBytes(
+					encode));
 		} else if (ext != null) {// 使用batik执行转换
 			String tempPath = WebUtils.rootPath + File.separator + "temp"
 					+ File.separator + new Date().getTime();
@@ -121,7 +124,7 @@ public class ExportSvgAction extends ActionSupport {
 			// 将svg文件保存到临时文件夹
 			File outF = new File(tempPath + ".svg");
 			FileOutputStream fops = new FileOutputStream(outF);
-			fops.write(this.getSvg().getBytes());
+			fops.write(this.getSvg().getBytes(encode));
 			fops.close();
 
 			// 添加宽度参数
@@ -147,13 +150,13 @@ public class ExportSvgAction extends ActionSupport {
 
 			// 返回转换后的文件流
 			this.inputStream = new FileInputStream(new File(outfile));
-			//this.inputStream = ServletActionContext.getServletContext()
-			//		.getResourceAsStream(outfile);
+			// this.inputStream = ServletActionContext.getServletContext()
+			// .getResourceAsStream(outfile);
 		} else {
 			// 错误的类型
 			throw new CoreException("Invalid type");
 		}
-		
+
 		return SUCCESS;
 	}
 }

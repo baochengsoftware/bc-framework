@@ -13,7 +13,7 @@ import cn.bc.core.query.condition.Direction;
  */
 public abstract class AbstractColumn implements Column {
 	protected Log logger = LogFactory.getLog(getClass());
-	private int width;
+	private int width = 100;//默认值
 	private String id;
 	private String label;
 	private String expression;

@@ -10,6 +10,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import cn.bc.web.ui.Component;
+import cn.bc.web.ui.Render;
 import cn.bc.web.ui.html.Div;
 import cn.bc.web.ui.html.Span;
 import cn.bc.web.ui.html.Table;
@@ -35,8 +36,9 @@ public class Grid extends Div {
 		return toggleSelectTitle;
 	}
 
-	public void setToggleSelectTitle(String toggleSelectTitle) {
+	public Grid setToggleSelectTitle(String toggleSelectTitle) {
 		this.toggleSelectTitle = toggleSelectTitle;
+		return this;
 	}
 
 	public boolean isSingleSelect() {
@@ -67,30 +69,32 @@ public class Grid extends Div {
 	}
 
 	public StringBuffer render(StringBuffer main) {
-		this.addChild(this.footer);
-
-		// 构建thead
-		buildThead();
-
-		// 构建tbody
-		buildTbody();
-
+		// 特殊属性处理
 		if (isSingleSelect())
 			this.addClazz("singleSelect");
 		else
 			this.addClazz("multipleSelect");
 
+		// 双击表格行的事件
 		if (dblClickRow != null && dblClickRow.length() > 0)
 			this.setAttr("data-dblclickrow", getDblClickRow());
 
+		// 构建表格头
+		buildThead();
+
+		// 构建表格列表数据
+		buildTbody();
+
+		// 构建表格的底部工具条：分页条等按钮
 		if (footer != null)
-			this.addChild(footer);
+			this.addChild(this.footer);
 
 		return super.render(main);
 	}
 
 	private void buildThead() {
 		Component header = new Div().addClazz("ui-state-default header");
+		this.addChild(header);
 		Component left = new Div().addClazz("left");
 		Component right = new Div().addClazz("right");
 		header.addChild(left).addChild(right);
@@ -117,7 +121,9 @@ public class Grid extends Div {
 		rightTable.addChild(tr);
 		Component td;
 		Column column;
-		int totalWidth = 0;
+		// table的总宽度（20为留给滚动条的余量）
+		int totalWidth = 20;
+		// 循环添加其余列（第一列为id列忽略）
 		for (int i = 1; i < columns.size(); i++) {
 			column = columns.get(i);
 			td = new Td();
@@ -135,7 +141,7 @@ public class Grid extends Div {
 				td.addStyle("width", column.getWidth() + "px");
 				totalWidth += column.getWidth();
 			}
-			Component wrapper = new Div();
+			Component wrapper = new Div().addClazz("wrapper");// td内容的包装容器：相对定位的元素
 			td.addChild(wrapper);
 			wrapper.addChild(new Text(column.getLabel()));
 
@@ -144,28 +150,34 @@ public class Grid extends Div {
 				td.addClazz("sortable");
 				switch (column.getDir()) {
 				case Asc:
-					td.addClazz("current");
-					td.addChild(wrapper.addChild(new Span()
-							.addClazz("sortableIcon ui-icon ui-icon-triangle-1-n")));// 正序
+					td.addClazz("current");// 标记当前列处于排序状态
+					wrapper.addChild(new Span()
+							.addClazz("sortableIcon ui-icon ui-icon-triangle-1-n"));// 正序
 					break;
 				case Desc:
-					td.addClazz("current");
-					td.addChild(wrapper.addChild(new Span()
-							.addClazz("sortableIcon ui-icon ui-icon-triangle-1-s")));// 逆序
+					td.addClazz("current");// 标记当前列处于排序状态
+					wrapper.addChild(new Span()
+							.addClazz("sortableIcon ui-icon ui-icon-triangle-1-s"));// 逆序
 					break;
-				case None:
-					td.addChild(wrapper.addChild(new Span()
-							.addClazz("sortableIcon ui-icon hide")));
+				default:
+					wrapper.addChild(new Span()
+							.addClazz("sortableIcon ui-icon hide"));
 					break;
 				}
 			}
 		}
 		rightTable.addStyle("width", totalWidth + "px");
+
+		// 添加一列空列
+		tr.addChild(EMPTY_TD);
 	}
+
+	/** 空的占位单元格 */
+	public static Render EMPTY_TD = new Text("<td class=\"empty\">&nbsp;</td>");
 
 	private void buildTbody() {
 		Tbody tbody = new Tbody();
-		this.addChild(tbody);
+		// this.addChild(tbody);
 		Tr tr;
 		int rc = 0;
 		for (Object obj : data) {// 每行

@@ -25,6 +25,12 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONC
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
 	select 1, 0, '00', 0, null, null, id, null from BC_SECURITY_MODULE where name='分页设计';
 	
+-- 视图设计
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '71', 0, '分页设计', '/bc/duty/paging', 'i0000');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '72', 0, '无分页设计', '/bc/duty/list', 'i0000');
+
 -- 报表
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
 	values(1, 0, '81', 0, '饼图', '/bc/chart/pie', 'i0300');

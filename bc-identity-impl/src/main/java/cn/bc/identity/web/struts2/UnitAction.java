@@ -62,7 +62,8 @@ public class UnitAction extends AbstractActorAction {
 						new TextColumn("name", getText("actor.name"))
 								.setSortable(true))
 				.addColumn(new TextColumn("phone", getText("actor.phone"), 120))
-				.addColumn(new TextColumn("email", getText("actor.email"), 150));
+				.addColumn(new TextColumn("email", getText("actor.email"), 150))
+				.setToggleSelectTitle(getText("title.toggleSelect"));
 	}
 
 	protected PageOption buildListPageOption() {
