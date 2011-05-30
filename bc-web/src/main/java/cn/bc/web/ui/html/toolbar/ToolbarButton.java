@@ -19,6 +19,7 @@ public class ToolbarButton extends Button {
 
 	protected void init() {
 		this.addClazz("bc-button ui-button ui-widget ui-state-default ui-corner-all");
+		this.setAttr("type", "button");//添加这个是为了解决ie8在文本框回车的问题
 	}
 
 	public ToolbarButton() {
