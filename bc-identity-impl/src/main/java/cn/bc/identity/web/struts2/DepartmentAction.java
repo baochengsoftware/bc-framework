@@ -28,10 +28,10 @@ import cn.bc.web.ui.html.page.PageOption;
  * 
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller("unitAction")
-public class UnitAction extends AbstractActorAction {
+@Controller
+public class DepartmentAction extends AbstractActorAction {
 	private static final long serialVersionUID = 1L;
-	private ActorImpl belong;// 隶属的上级单位
+	private ActorImpl belong;// 隶属的上级
 
 	public ActorImpl getBelong() {
 		return belong;
@@ -42,12 +42,12 @@ public class UnitAction extends AbstractActorAction {
 	}
 
 	protected String getEntityConfigName() {
-		return "Unit";
+		return "Department";
 	}
 
 	public String create() throws Exception {
 		String r = super.create();
-		this.getE().setType(Actor.TYPE_UNIT);
+		this.getE().setType(Actor.TYPE_DEPARTMENT);
 		return r;
 	}
 
@@ -92,11 +92,11 @@ public class UnitAction extends AbstractActorAction {
 		return columns;
 	}
 
-	//附加单位的查询条件
+	//附加部门的查询条件
 	private MixCondition getMyCondition() {
 		AndCondition condition = new AndCondition();
 		condition
-				.add(new EqualsCondition("type", new Integer(Actor.TYPE_UNIT)));
+				.add(new EqualsCondition("type", new Integer(Actor.TYPE_DEPARTMENT)));
 		// condition.add(new EqualsCondition("status", new
 		// Integer(Entity.STATUS_ENABLED)));
 		condition.add(new OrderCondition("order", Direction.Asc).add("code",
@@ -107,62 +107,5 @@ public class UnitAction extends AbstractActorAction {
 	//查询条件中要匹配的域
 	protected String[] getSearchFields() {
 		return new String[]{"code","name","phone","email"};
-	}
-
-	private String value;
-	private String label;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	/**
-	 * 选择单位信息
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public String select() throws Exception {
-
-		/*
-		 * Grid grid = new Grid().setData(this.getActorService().findAllUnit(
-		 * Entity.STATUS_ENABLED)); // name属性设为bean的名称
-		 * grid.setName(getText(StringUtils
-		 * .uncapitalize(getEntityConfigName()))); // 单选及双击行编辑
-		 * grid.setSingleSelect(true).setDblClickRow("bc.ui.selectUnit");
-		 * 
-		 * grid.addColumn(IdColumn.DEFAULT()) .addColumn( new TextColumn("code",
-		 * getText("actor.code"), 80) .setSortable(true).setDir(Direction.Asc))
-		 * .addColumn( new TextColumn("name", getText("actor.name"))
-		 * .setSortable(true)) .addColumn(new TextColumn("phone",
-		 * getText("actor.phone"), 120)) .addColumn(new TextColumn("email",
-		 * getText("actor.email"), 150));
-		 * 
-		 * ListPage listPage = new ListPage(); PageOption option = new
-		 * PageOption().setMinWidth(250).setMinHeight(200) .setModal(true);
-		 * listPage.setGrid(grid).addJs("/bc/identity/unit/select.js")
-		 * .addCss("/bc/identity/unit/select.css")
-		 * .setTitle(this.getText("title.select"))
-		 * .setInitMethod("bc_unit_select_init")
-		 * .setOption(option.toString()).addClazz("bc-page");
-		 * this.setHtml(listPage); return "list";
-		 * 
-		 * // this.setEntities(this.getActorService().findAllUnit()); // return
-		 * "select";
-		 */
-
-		return null;
 	}
 }

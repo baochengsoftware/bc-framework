@@ -8,8 +8,6 @@ import org.junit.Test;
 import cn.bc.core.Entity;
 import cn.bc.test.Example;
 import cn.bc.web.ui.html.grid.Grid;
-import cn.bc.web.ui.html.grid.IdColumn;
-import cn.bc.web.ui.html.grid.TextColumn;
 
 public class GridTest {
 
@@ -18,8 +16,8 @@ public class GridTest {
 		Grid grid = buildTestGrid();
 		grid.setBeautiful(true);
 
-		StringBuffer main = new StringBuffer();
-		System.out.println(grid.render(main));
+		//StringBuffer main = new StringBuffer();
+		//System.out.println(grid.render(main));
 	}
 
 	public static Grid buildTestGrid() {
@@ -33,9 +31,10 @@ public class GridTest {
 			data.add(e);
 		}
 
-		Grid grid = new Grid().addColumn(new IdColumn(true))
-				.addColumn(new TextColumn("code", "编码", 80))
-				.addColumn(new TextColumn("name", "名称")).setData(data);
-		return grid;
+//		Grid grid = new Grid().addColumn(new IdColumn(true))
+//				.addColumn(new TextColumn("code", "编码", 80))
+//				.addColumn(new TextColumn("name", "名称")).setData(data);
+//		return grid;
+		return null;
 	}
 }

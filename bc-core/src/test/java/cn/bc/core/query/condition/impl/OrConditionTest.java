@@ -39,4 +39,20 @@ public class OrConditionTest {
 		Assert.assertEquals("value1", or.getValues().get(0));
 		Assert.assertEquals("value2", or.getValues().get(1));
 	}
+
+	@Test
+	public void addLike() {
+		OrCondition or = new OrCondition();
+		or.add(new LikeCondition("key1", "value1"));
+		or.add(new LikeCondition("key2", "value2"));
+		or.add(new LikeCondition("key3", "value3"));
+		or.add(new LikeCondition("key4", "value4"));
+		Assert.assertEquals("key1 like ? or key2 like ? or key3 like ? or key4 like ?", or.getExpression());
+		Assert.assertNotNull(or.getValues());
+		Assert.assertTrue(or.getValues().size() == 4);
+		Assert.assertEquals("%value1%", or.getValues().get(0));
+		Assert.assertEquals("%value2%", or.getValues().get(1));
+		Assert.assertEquals("%value3%", or.getValues().get(2));
+		Assert.assertEquals("%value4%", or.getValues().get(3));
+	}
 }

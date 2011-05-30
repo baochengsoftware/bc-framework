@@ -6,6 +6,7 @@ package cn.bc.web.struts2;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -21,12 +22,19 @@ import cn.bc.core.Page;
 import cn.bc.core.SetEntityClass;
 import cn.bc.core.exception.CoreException;
 import cn.bc.core.query.condition.Condition;
+import cn.bc.core.query.condition.impl.LikeCondition;
+import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.service.CrudService;
 import cn.bc.web.ui.Component;
+import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.FooterButton;
 import cn.bc.web.ui.html.grid.Grid;
+import cn.bc.web.ui.html.grid.GridData;
 import cn.bc.web.ui.html.grid.GridFooter;
+import cn.bc.web.ui.html.grid.GridHeader;
 import cn.bc.web.ui.html.grid.IdColumn;
+import cn.bc.web.ui.html.grid.PageSizeGroupButton;
+import cn.bc.web.ui.html.grid.SeekGroupButton;
 import cn.bc.web.ui.html.page.HtmlPage;
 import cn.bc.web.ui.html.page.ListPage;
 import cn.bc.web.ui.html.page.PageOption;
@@ -205,10 +213,10 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	// 获取列表视图页面----无分页
 	public String list() throws Exception {
 		// 根据请求的条件查找信息
-		this.es = this.findList(this.getSearchCondition());
+		this.es = this.findList();
 
 		// 构建页面的html
-		this.setHtml(buildHtml4List(this.es));
+		this.setHtml(buildHtml4List());
 
 		// 返回全局的global-results：在cn/bc/web/struts2/struts.xml中定义的
 		return "page";
@@ -223,12 +231,11 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 			this.page.setPageSize(Integer.parseInt(getText("app.pageSize")));
 
 		// 根据请求的条件查找分页信息
-		this.page = this.findPage(this.getSearchCondition(), page.getPageNo(),
-				page.getPageSize());
+		this.page = this.findPage();
 		this.es = page.getData();
 
 		// 构建页面的html
-		this.setHtml(buildHtml4Paging(this.page));
+		this.setHtml(buildHtml4Paging());
 
 		// 返回全局的global-results：在cn/bc/web/struts2/struts.xml中定义的
 		return "page";
@@ -238,19 +245,17 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	public String data() throws Exception {
 		if (this.page != null) {// 分页的处理
 			// 根据请求的条件查找分页信息
-			this.page = this.findPage(this.getSearchCondition(),
-					this.page.getPageNo(), this.page.getPageSize());
+			this.page = this.findPage();
 			this.es = this.page.getData();
 
 			// 构建页面的html
-			this.setHtml(buildHtml4Data(this.page.getData(),
-					this.page.getPageNo(), this.page.getPageCount()));
+			this.setHtml(buildGridData());
 		} else {// 非分页的处理
 			// 根据请求的条件查找分页信息
-			this.es = this.findList(this.getSearchCondition());
+			this.es = this.findList();
 
 			// 构建页面的html
-			this.setHtml(buildHtml4Data(this.es, 0, 0));
+			this.setHtml(buildGridData());
 		}
 
 		// 返回全局的global-results：在cn/bc/web/struts2/struts.xml中定义的
@@ -258,40 +263,52 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	}
 
 	/**
-	 * 构建数据部分的html
+	 * 构建表格列头
 	 * 
-	 * @param page
 	 * @return
 	 */
-	protected Component buildHtml4Data(List<E> es, int pageNo, int pageCount) {
-		return null;
+	protected GridHeader buildGridHeader() {
+		GridHeader header = new GridHeader();
+		header.setColumns(this.buildGridColumns());
+		header.setToggleSelectTitle(getText("title.toggleSelect"));
+		return header;
+	}
+
+	/**
+	 * 构建数据部分的html
+	 * 
+	 * @return
+	 */
+	protected GridData buildGridData() {
+		GridData data = new GridData();
+		if (this.page != null) {
+			data.setPageNo(page.getPageNo());
+			data.setPageCount(page.getPageCount());
+		}
+		data.setData(this.es);
+		data.setColumns(this.buildGridColumns());
+		return data;
 	}
 
 	/**
 	 * 根据请求的条件查找列表对象
 	 * 
-	 * @param condition
-	 *            查询条件
 	 * @return
 	 */
-	protected List<E> findList(Condition condition) {
-		return this.getCrudService().createQuery().condition(condition).list();
+	protected List<E> findList() {
+		return this.getCrudService().createQuery()
+				.condition(this.getSearchCondition()).list();
 	}
 
 	/**
 	 * 根据请求的条件查找分页信息对象
 	 * 
-	 * @param condition
-	 *            查询条件
-	 * @param pageNo
-	 *            页码
-	 * @param pageSize
-	 *            每页数量
 	 * @return
 	 */
-	protected Page<E> findPage(Condition condition, int pageNo, int pageSize) {
-		return this.getCrudService().createQuery().condition(condition)
-				.page(pageNo, pageSize);
+	protected Page<E> findPage() {
+		return this.getCrudService().createQuery()
+				.condition(this.getSearchCondition())
+				.page(page.getPageNo(), page.getPageSize());
 	}
 
 	/**
@@ -300,6 +317,38 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	 * @return
 	 */
 	protected Condition getSearchCondition() {
+		if (this.getSearch() == null || this.getSearch().length() == 0)
+			return null;
+
+		// 用空格分隔多个查询条件的值的处理
+		String[] values = this.getSearch().split(" ");
+
+		// 用空格分隔多个查询条件的值的处理
+		String[] likeFields = this.getSearchFields();
+		if (likeFields == null || likeFields.length == 0)
+			return null;
+
+		// 添加模糊查询条件
+		// TODO 添加更复杂的查询处理，参考google的搜索格式
+		OrCondition or = new OrCondition();
+		for (String field : likeFields) {
+			for (String value : values) {
+				or.add(new LikeCondition(field, value));
+			}
+		}
+
+		// 用括号将多个or条件括住
+		or.setAddBracket(true);
+
+		return or;
+	}
+
+	/**
+	 * 查询条件中要匹配的域
+	 * @return
+	 */
+	protected String[] getSearchFields() {
+		logger.warn("please override the method 'getSearchFields' in your action!");
 		return null;
 	}
 
@@ -310,7 +359,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	 *            分页信息对象
 	 * @return
 	 */
-	protected HtmlPage buildHtml4Paging(Page<E> page) {
+	protected HtmlPage buildHtml4Paging() {
 		ListPage listPage = new ListPage();
 		// 工具条
 		listPage.setToolbar(buildToolbar());
@@ -339,18 +388,8 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	 * 
 	 * @return
 	 */
-	protected ListPage buildHtml4List(List<E> entities) {
-		ListPage listPage = new ListPage();
-		listPage.setGrid(buildGrid()).setToolbar(buildToolbar())
-				.setCreateUrl(getCreateUrl()).setDeleteUrl(getDeleteUrl())
-				.setEditUrl(this.getEditUrl()).setNamespace(getPageNamespace())
-				.addJs(getJs()).addCss(getCss()).setTitle(this.getPageTitle())
-				.setInitMethod(getIniMethod())
-				.setOption(buildListPageOption().toString());
-		listPage.setAttr("data-name",
-				getText(StringUtils.uncapitalize(getEntityConfigName())))
-				.addClazz("bc-page");
-		return listPage;
+	protected HtmlPage buildHtml4List() {
+		return this.buildHtml4Paging();
 	}
 
 	/** 构建视图页面的对话框初始化配置 */
@@ -383,8 +422,13 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 
 	/** 构建视图页面的表格 */
 	protected Grid buildGrid() {
+		List<Column> columns = this.buildGridColumns();
+
 		// id列
-		Grid grid = new Grid().setData(this.es).addColumn(IdColumn.DEFAULT());
+		Grid grid = new Grid();
+		grid.setGridHeader(this.buildGridHeader());
+		grid.setGridData(this.buildGridData());
+		grid.setColumns(columns);
 		// name属性设为bean的名称
 		grid.setName(getText(StringUtils.uncapitalize(getEntityConfigName())));
 		// 多选及双击行编辑
@@ -396,6 +440,12 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 		return grid;
 	}
 
+	protected List<Column> buildGridColumns() {
+		List<Column> columns = new ArrayList<Column>();
+		columns.add(IdColumn.DEFAULT());
+		return columns;
+	}
+
 	/** 构建视图页面表格底部的工具条 */
 	protected GridFooter buildGridFooter() {
 		GridFooter footer = new GridFooter();
@@ -403,6 +453,24 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 		// 刷新按钮
 		footer.addButton(new FooterButton().setIcon("ui-icon-refresh")
 				.setAction("refresh").setTitle(getText("label.refresh")));
+
+		// 分页按钮
+		if (this.page != null) {
+			footer.addButton(new SeekGroupButton().setPageNo(page.getPageNo())
+					.setPageCount(page.getPageCount()));
+			footer.addButton(new PageSizeGroupButton().setActiveValue(25)
+					.setValues(new int[] { 25, 50, 100 })
+					.setTitle(getText("label.pageSize")));
+		}
+
+		// 导出按钮
+		footer.addButton(new FooterButton()
+				.setIcon("ui-icon-arrowthickstop-1-s").setAction("export")
+				.setTitle(getText("label.export")));
+
+		// 打印按钮
+		footer.addButton(new FooterButton().setIcon("ui-icon-print")
+				.setAction("print").setTitle(getText("label.print")));
 
 		return footer;
 	}

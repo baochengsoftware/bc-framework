@@ -18,6 +18,7 @@ public abstract class MixCondition implements Condition {
 	protected List<Condition> conditions = new ArrayList<Condition>();
 	protected OrderCondition orderCondition = new OrderCondition();
 	protected String misSymbol;
+	private boolean addBracket;//是否将表达式用括号括住
 
 	public MixCondition(String misSymbol) {
 		this.misSymbol = misSymbol;
@@ -26,6 +27,14 @@ public abstract class MixCondition implements Condition {
 	public MixCondition(String misSymbol, Condition... conditions) {
 		this(misSymbol);
 		this.add(conditions);
+	}
+
+	public boolean isAddBracket() {
+		return addBracket;
+	}
+
+	public void setAddBracket(boolean addBracket) {
+		this.addBracket = addBracket;
 	}
 
 	/**
@@ -40,7 +49,7 @@ public abstract class MixCondition implements Condition {
 			for (Condition condition : conditions) {
 				if (condition instanceof OrderCondition)
 					orderCondition.add((OrderCondition) condition);
-				else
+				else if (condition != null)
 					this.conditions.add(condition);
 			}
 		}
@@ -54,12 +63,16 @@ public abstract class MixCondition implements Condition {
 			// return conditions.get(0).getExpression();
 		} else {
 			StringBuffer s = new StringBuffer();
+			if (conditions.size() > 1 && isAddBracket())
+				s.append("(");
 			int i = 0;
 			for (Condition condition : conditions) {
 				s.append((i == 0 ? "" : " " + this.misSymbol + " ")
 						+ condition.getExpression());
 				i++;
 			}
+			if (conditions.size() > 1 && isAddBracket())
+				s.append(")");
 			String order = this.orderCondition.getExpression();
 			if (order != null && order.length() > 0)
 				s.append(" order by " + order);

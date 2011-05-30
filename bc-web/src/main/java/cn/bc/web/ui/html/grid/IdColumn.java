@@ -9,12 +9,17 @@ package cn.bc.web.ui.html.grid;
 public class IdColumn extends AbstractColumn {
 	private boolean canCheckedAll;
 	private String nameExpression;
+	
+	public IdColumn(){
+		this.setWidth(0);//覆盖默认的配置，设为0相当于不设置宽度
+	}
 
 	/**
 	 * @param canCheckedAll
 	 *            是否含全选和反选功能
 	 */
 	public IdColumn(boolean canCheckedAll) {
+		this();
 		this.canCheckedAll = canCheckedAll;
 		this.setId("id");
 		this.setExpression("id");
