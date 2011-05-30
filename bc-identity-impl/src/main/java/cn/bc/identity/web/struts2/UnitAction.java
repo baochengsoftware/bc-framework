@@ -3,12 +3,15 @@
  */
 package cn.bc.identity.web.struts2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
+import cn.bc.core.Entity;
 import cn.bc.core.Page;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
@@ -18,7 +21,13 @@ import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorImpl;
 import cn.bc.web.ui.html.grid.Column;
+import cn.bc.web.ui.html.grid.Grid;
+import cn.bc.web.ui.html.grid.GridData;
+import cn.bc.web.ui.html.grid.GridHeader;
+import cn.bc.web.ui.html.grid.IdColumn;
 import cn.bc.web.ui.html.grid.TextColumn;
+import cn.bc.web.ui.html.page.ButtonOption;
+import cn.bc.web.ui.html.page.ListPage;
 import cn.bc.web.ui.html.page.PageOption;
 
 /**
@@ -56,8 +65,7 @@ public class UnitAction extends AbstractActorAction {
 		return this
 				.getCrudService()
 				.createQuery()
-				.condition(
-						this.getMyCondition().add(this.getSearchCondition()))
+				.condition(this.getMyCondition().add(this.getSearchCondition()))
 				.list();
 	}
 
@@ -66,8 +74,7 @@ public class UnitAction extends AbstractActorAction {
 		return this
 				.getCrudService()
 				.createQuery()
-				.condition(
-						this.getMyCondition().add(this.getSearchCondition()))
+				.condition(this.getMyCondition().add(this.getSearchCondition()))
 				.page(this.getPage().getPageNo(), this.getPage().getPageSize());
 	}
 
@@ -92,7 +99,7 @@ public class UnitAction extends AbstractActorAction {
 		return columns;
 	}
 
-	//附加单位的查询条件
+	// 附加单位的查询条件
 	private MixCondition getMyCondition() {
 		AndCondition condition = new AndCondition();
 		condition
@@ -103,10 +110,10 @@ public class UnitAction extends AbstractActorAction {
 				Direction.Asc));
 		return condition;
 	}
-	
-	//查询条件中要匹配的域
+
+	// 查询条件中要匹配的域
 	protected String[] getSearchFields() {
-		return new String[]{"code","name","phone","email"};
+		return new String[] { "code", "name", "phone", "email" };
 	}
 
 	private String value;
@@ -135,34 +142,40 @@ public class UnitAction extends AbstractActorAction {
 	 * @throws Exception
 	 */
 	public String select() throws Exception {
+		ListPage listPage = new ListPage();
+		PageOption option = new PageOption().setMinWidth(250).setMinHeight(200)
+				.setModal(true);
+		ButtonOption bo = new ButtonOption();
+		bo.put("text", getText("label.ok"));
+		bo.put("click", "bc.unitForm.afterSelected");
+		option.addButton(bo);
+		listPage.setOption(option.toString());
 
-		/*
-		 * Grid grid = new Grid().setData(this.getActorService().findAllUnit(
-		 * Entity.STATUS_ENABLED)); // name属性设为bean的名称
-		 * grid.setName(getText(StringUtils
-		 * .uncapitalize(getEntityConfigName()))); // 单选及双击行编辑
-		 * grid.setSingleSelect(true).setDblClickRow("bc.ui.selectUnit");
-		 * 
-		 * grid.addColumn(IdColumn.DEFAULT()) .addColumn( new TextColumn("code",
-		 * getText("actor.code"), 80) .setSortable(true).setDir(Direction.Asc))
-		 * .addColumn( new TextColumn("name", getText("actor.name"))
-		 * .setSortable(true)) .addColumn(new TextColumn("phone",
-		 * getText("actor.phone"), 120)) .addColumn(new TextColumn("email",
-		 * getText("actor.email"), 150));
-		 * 
-		 * ListPage listPage = new ListPage(); PageOption option = new
-		 * PageOption().setMinWidth(250).setMinHeight(200) .setModal(true);
-		 * listPage.setGrid(grid).addJs("/bc/identity/unit/select.js")
-		 * .addCss("/bc/identity/unit/select.css")
-		 * .setTitle(this.getText("title.select"))
-		 * .setInitMethod("bc_unit_select_init")
-		 * .setOption(option.toString()).addClazz("bc-page");
-		 * this.setHtml(listPage); return "list";
-		 * 
-		 * // this.setEntities(this.getActorService().findAllUnit()); // return
-		 * "select";
-		 */
+		Grid grid = new Grid();
+		listPage.setGrid(grid);
 
-		return null;
+		List<Column> columns = new ArrayList<Column>();
+		columns.add(IdColumn.DEFAULT());
+		columns.add(new TextColumn("code", getText("actor.code"), 80)
+				.setSortable(true).setDir(Direction.Asc));
+		columns.add(new TextColumn("name", getText("actor.name"))
+				.setSortable(true));
+
+		GridHeader header = new GridHeader();
+		grid.setGridHeader(header);
+		header.setColumns(columns);
+		grid.setGridHeader(header);
+
+		GridData data = new GridData();
+		grid.setGridData(data);
+		data.setData(this.getActorService().findAllUnit(Entity.STATUS_ENABLED));
+		data.setColumns(columns);
+
+		// name属性设为bean的名称
+		grid.setName(getText(StringUtils.uncapitalize(getEntityConfigName())));
+		// 单选及双击行编辑
+		grid.setSingleSelect(true).setDblClickRow("bc.unitForm.afterSelected");
+
+		return "page";
 	}
 }

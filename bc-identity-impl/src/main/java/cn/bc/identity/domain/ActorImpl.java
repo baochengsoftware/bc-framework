@@ -38,7 +38,7 @@ public class ActorImpl implements Actor {
 	
 	private Long id;
 	private String uid;
-	private int status = cn.bc.core.Entity.STATUS_DISABLED;
+	private int status = cn.bc.core.Entity.STATUS_ENABLED;
 	private boolean inner = false;
 
 	private String name;
