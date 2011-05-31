@@ -100,9 +100,9 @@ public class CrudDaoMock<T extends Entity<Long>> implements CrudDao<T>, SetEntit
 		return load(id);
 	}
 
-	public void save(T entity) {
+	public T save(T entity) {
 		if (entity == null) {
-			return;
+			return entity;
 		}
 
 		if (entity.getId() == null) {
@@ -114,6 +114,7 @@ public class CrudDaoMock<T extends Entity<Long>> implements CrudDao<T>, SetEntit
 				BeanUtils.copyProperties(entity,e);
 			}
 		}
+		return entity;
 	}
 
 	public void save(Collection<T> entities) {

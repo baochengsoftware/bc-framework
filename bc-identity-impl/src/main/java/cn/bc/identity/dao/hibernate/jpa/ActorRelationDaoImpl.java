@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import cn.bc.core.exception.CoreException;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
@@ -128,5 +129,22 @@ public class ActorRelationDaoImpl extends HibernateCrudJpaDao<ActorRelation>
 					+ StringUtils.collectionToCommaDelimitedString(args));
 		}
 		this.executeUpdate(hql.toString(), args);
+	}
+
+	public ActorRelation load4Belong(Long followerId) {
+		List<ActorRelation> ars = this.findByFollower(ActorRelation.TYPE_BELONG, followerId);
+		if(ars != null && !ars.isEmpty()){
+			if(ars.size() > 1){
+				throw new CoreException("no unique for load4Belong!");
+			}else{
+				return ars.get(0);
+			}
+		}else{
+			return null;
+		}
+	}
+
+	public void delete(ActorRelation actorRelation) {
+		this.getJpaTemplate().remove(actorRelation);
 	}
 }

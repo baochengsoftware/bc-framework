@@ -20,6 +20,14 @@ public interface ActorDao extends CrudDao<Actor>{
 	Actor loadByCode(String actorCode);
 
 	/**
+	 * 获取从属方的单一上级
+	 * @param followerId 从属方id
+	 * @param masterType 主控方的类型，对应Actor的type属性
+	 * @return
+	 */
+	Actor loadBelong(Long followerId, Integer masterType);
+
+	/**
 	 * 获取从属方指定关联关系的主控方
 	 * @param followerId 从属方id
 	 * @param relationTypes 关联的类型，对应ActorRelation的type属性
@@ -103,4 +111,10 @@ public interface ActorDao extends CrudDao<Actor>{
 	 * @return
 	 */
 	List<Actor> findAllUnit(Integer... statues);
+
+	/**
+	 * @param follower
+	 * @param belong
+	 */
+	void save4belong(Actor follower, Actor belong);
 }

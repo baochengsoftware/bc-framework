@@ -29,6 +29,10 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 		return this.actorDao.loadByCode(actorCode);
 	}
 
+	public Actor loadBelong(Long followerId, Integer masterType) {
+		return this.actorDao.loadBelong(followerId, masterType);
+	}
+
 	public List<Actor> findMaster(Long followerId, Integer[] relationTypes,
 			Integer[] masterTypes) {
 		return this.actorDao.findMaster(followerId, relationTypes, masterTypes);
@@ -84,5 +88,9 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 
 	public List<Module> findCanUseModules(Long actorId) {
 		return this.actorDao.findCanUseModules(actorId);
+	}
+
+	public void save4belong(Actor follower, Actor belong) {
+		this.actorDao.save4belong(follower, belong);
 	}
 }

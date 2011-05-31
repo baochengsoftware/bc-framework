@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -269,7 +268,7 @@ public class ActorServiceImplTest extends AbstractEntityCrudTest<Long, Actor> {
 	}
 
 	@Test
-	@Rollback(false)
+	//@Rollback(false)
 	public void testFindFollower() {
 		// 单位
 		Actor unit = this.createActor(Actor.TYPE_UNIT, "unit1");

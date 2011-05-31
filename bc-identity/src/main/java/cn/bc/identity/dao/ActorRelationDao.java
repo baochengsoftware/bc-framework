@@ -50,4 +50,16 @@ public interface ActorRelationDao extends CrudDao<ActorRelation>{
 	 * @return
 	 */
 	void deleteByMasterOrFollower(Serializable[] mfIds);
+
+	/**获取单一的隶属上级
+	 * @param followerId 下级的id
+	 * @return
+	 */
+	ActorRelation load4Belong(Long followerId);
+	
+	/**
+	 * CRUD'D:删除对象
+	 * @param actorRelation 对象
+	 */
+	void delete(ActorRelation actorRelation);
 }

@@ -43,7 +43,7 @@ public interface CrudOperations<T extends Object> {
 	 * 如果对象未持久化则为C，否则就是U了
 	 * @param entity 要保存的对象
 	 */
-	void save(T entity);
+	T save(T entity);
 	
 	/**
 	 * CRUD'CU:保存对象集,

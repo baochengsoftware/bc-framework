@@ -155,19 +155,21 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 	}
 
 	@SuppressWarnings("rawtypes")
-	public void save(T entity) {
+	public T save(T entity) {
 		if (null != entity) {
 			if (entity instanceof cn.bc.core.Entity) {
 				if (((cn.bc.core.Entity) entity).isNew()) {
 					this.jpaTemplate.persist(entity);
 				} else {
-					this.jpaTemplate.merge(entity);
+					//执行完merge后entity还是detached, merge后返回的新对象才是Persistent
+					entity = this.jpaTemplate.merge(entity);
 				}
 			} else {
 				this.jpaTemplate.persist(entity);// may be error if had set the
 													// id!
 			}
 		}
+		return entity;
 	}
 
 	public void save(Collection<T> entities) {

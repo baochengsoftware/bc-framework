@@ -17,6 +17,7 @@ import cn.bc.identity.dao.ActorDao;
 import cn.bc.identity.dao.ActorRelationDao;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
+import cn.bc.identity.domain.ActorRelationImpl;
 import cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao;
 import cn.bc.security.domain.Module;
 
@@ -49,6 +50,21 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 
 		// return this.createQuery().condition(new EqualsCondition("code",
 		// actorCode)).singleResult();
+	}
+
+	public Actor loadBelong(Long followerId, Integer masterType) {
+		List<Actor> ms = this.findMaster(followerId,
+				new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { masterType });
+		if (ms != null && !ms.isEmpty()) {
+			if (ms.size() > 1) {
+				throw new CoreException("no unique for loadBelong!");
+			} else {
+				return ms.get(0);
+			}
+		} else {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -212,10 +228,10 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		c.add(new EqualsCondition("type", new Integer(Actor.TYPE_UNIT))).add(
 				new OrderCondition("order", Direction.Asc).add("code",
 						Direction.Asc));
-		if(statues != null && statues.length > 0){
-			if(statues.length == 1){
+		if (statues != null && statues.length > 0) {
+			if (statues.length == 1) {
 				c.add(new EqualsCondition("status", statues[0]));
-			}else{
+			} else {
 				c.add(new InCondition("status", statues));
 			}
 		}
@@ -331,5 +347,32 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		this.actorRelationDao.deleteByMasterOrFollower(pks);
 		// 再删除自身
 		super.delete(pks);
+	}
+
+	public void save4belong(Actor follower, Actor belong) {
+		follower = this.save(follower);
+
+		// 处理与上级的隶属
+		ActorRelation curAr;
+		curAr = this.actorRelationDao.load4Belong(follower.getId());
+		if (belong != null && !belong.isNew()) {
+			belong = this.load(belong.getId());// 重新加载一下belong
+			if (curAr != null && !curAr.getMaster().getId().equals(belong.getId())) {
+				// 删除原来的隶属关系（因为使用的是联合主键）
+				this.actorRelationDao.delete(curAr);
+			}
+			if (curAr == null || !curAr.getMaster().getId().equals(belong.getId())) {
+				// 创建新的隶属关系
+				curAr = new ActorRelationImpl();
+				curAr.setFollower(follower);
+				curAr.setMaster(belong);
+				curAr.setType(ActorRelation.TYPE_BELONG);
+				this.actorRelationDao.save(curAr);
+			}
+		} else {
+			// 删除存在的隶属关系
+			if (curAr != null)
+				this.actorRelationDao.delete(curAr);
+		}
 	}
 }

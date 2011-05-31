@@ -103,6 +103,7 @@ public class ActorRelationServiceImplTest {
 	}
 
 	@Test
+	//@Rollback(false)
 	public void testSave() {
 		saveOne();
 	}

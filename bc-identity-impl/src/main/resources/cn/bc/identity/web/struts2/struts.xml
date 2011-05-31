@@ -38,10 +38,6 @@
 		<action name="list" class="unitAction" method="list"/>
 		<action name="paging" class="unitAction" method="paging"/>
 		<action name="data" class="unitAction" method="data"/>
-		
-		<action name="select" class="unitAction" method="select">
-			<result name="select">/bc/identity/unit/select.jsp</result>
-		</action>
 	</package>
 	<package name="department" extends="bc-default" namespace="/bc/department">
 		<action name="create" class="departmentAction" method="create">
@@ -56,10 +52,6 @@
 		<action name="list" class="departmentAction" method="list"/>
 		<action name="paging" class="departmentAction" method="paging"/>
 		<action name="data" class="departmentAction" method="data"/>
-		
-		<action name="select" class="departmentAction" method="select">
-			<result name="select">/bc/identity/department/select.jsp</result>
-		</action>
 	</package>
 	<package name="group" extends="bc-default" namespace="/bc/group">
 		<action name="create" class="groupAction" method="create">
@@ -74,10 +66,6 @@
 		<action name="list" class="groupAction" method="list"/>
 		<action name="paging" class="groupAction" method="paging"/>
 		<action name="data" class="groupAction" method="data"/>
-		
-		<action name="select" class="groupAction" method="select">
-			<result name="select">/bc/identity/group/select.jsp</result>
-		</action>
 	</package>
 	<package name="user" extends="bc-default" namespace="/bc/user">
 		<action name="create" class="userAction" method="create">
@@ -92,9 +80,10 @@
 		<action name="list" class="userAction" method="list"/>
 		<action name="paging" class="userAction" method="paging"/>
 		<action name="data" class="userAction" method="data"/>
-		
-		<action name="select" class="userAction" method="select">
-			<result name="select">/bc/identity/user/select.jsp</result>
+	</package>
+	<package name="selectUnit" extends="bc-default" namespace="/bc">
+		<action name="selectUnit" class="selectUnitAction">
+			<result>/bc/identity/unit/select.jsp</result>
 		</action>
 	</package>
 </struts>

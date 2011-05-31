@@ -29,7 +29,7 @@ public interface ActorRelationService extends CrudService<ActorRelation>{
 	List<ActorRelation> findByMaster(Integer type, Long masterId);
 	
 	/**
-	 * 获取主控方某类型的关联关系列表
+	 * 获取从属方某类型的关联关系列表
 	 * @param type 关联类型,不能为空
 	 * @param followerId 从属方Id,不能为空
 	 * @return

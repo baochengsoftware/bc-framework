@@ -125,8 +125,8 @@ public class DefaultCrudService<T extends Object> implements CrudService<T>,
 		return this.crudDao.create();
 	}
 
-	public void save(T entity) {
-		this.crudDao.save(entity);
+	public T save(T entity) {
+		return this.crudDao.save(entity);
 	}
 
 	public void save(Collection<T> entities) {

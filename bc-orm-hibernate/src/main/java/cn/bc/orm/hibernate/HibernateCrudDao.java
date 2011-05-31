@@ -152,9 +152,10 @@ public class HibernateCrudDao<T extends Object> implements CrudDao<T>,SetEntityC
 		return e;
 	}
 
-	public void save(T entity) {
+	public T save(T entity) {
 		if (null != entity)
 			this.getHibernateTemplate().saveOrUpdate(entity);
+		return entity;
 	}
 
 	public void save(Collection<T> entities) {
