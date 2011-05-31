@@ -33,7 +33,7 @@ import cn.bc.web.ui.html.page.PageOption;
 @Controller
 public class ModuleAction extends CrudAction<Long, Module> {
 	private static final long serialVersionUID = 1L;
-	private ModuleService moduleService;
+	//private ModuleService moduleService;
 	private List<KeyValue> types;// 可选的模块类型
 
 	// 模块类型列表
@@ -46,7 +46,7 @@ public class ModuleAction extends CrudAction<Long, Module> {
 
 	@Autowired
 	public void setModuleService(ModuleService moduleService) {
-		this.moduleService = moduleService;
+		//this.moduleService = moduleService;
 		this.setCrudService(moduleService);
 	}
 
