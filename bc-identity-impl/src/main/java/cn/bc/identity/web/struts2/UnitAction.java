@@ -16,7 +16,6 @@ import cn.bc.core.query.condition.impl.EqualsCondition;
 import cn.bc.core.query.condition.impl.MixCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorImpl;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
@@ -28,18 +27,9 @@ import cn.bc.web.ui.html.page.PageOption;
  * 
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-@Controller("unitAction")
+@Controller
 public class UnitAction extends AbstractActorAction {
 	private static final long serialVersionUID = 1L;
-	private ActorImpl belong;// 隶属的上级单位
-
-	public ActorImpl getBelong() {
-		return belong;
-	}
-
-	public void setBelong(ActorImpl belong) {
-		this.belong = belong;
-	}
 
 	protected String getEntityConfigName() {
 		return "Unit";
@@ -87,7 +77,7 @@ public class UnitAction extends AbstractActorAction {
 		columns.add(new TextColumn("name", getText("actor.name"))
 				.setSortable(true));
 		columns.add(new TextColumn("phone", getText("actor.phone"), 120));
-		//columns.add(new TextColumn("email", getText("actor.email"), 150));
+		// columns.add(new TextColumn("email", getText("actor.email"), 150));
 
 		return columns;
 	}
@@ -104,25 +94,7 @@ public class UnitAction extends AbstractActorAction {
 		return condition;
 	}
 
-	// 查询条件中要匹配的域
-	protected String[] getSearchFields() {
-		return new String[] { "code", "name", "phone", "email" };
-	}
-
-	@Override
-	public String edit() throws Exception {
-		this.setE(this.getCrudService().load(this.getId()));
-
-		// 加载上级信息
-		this.belong = (ActorImpl) this.getActorService().loadBelong(
-				this.getId(), Actor.TYPE_UNIT);
-
-		return "form";
-	}
-
-	@Override
-	public String save() throws Exception {
-		this.getActorService().save4belong(this.getE(), belong);
-		return "saveSuccess";
+	protected Integer[] getBelongTypes() {
+		return new Integer[] { Actor.TYPE_UNIT };
 	}
 }

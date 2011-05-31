@@ -52,10 +52,9 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		// actorCode)).singleResult();
 	}
 
-	public Actor loadBelong(Long followerId, Integer masterType) {
+	public Actor loadBelong(Long followerId, Integer[] masterTypes) {
 		List<Actor> ms = this.findMaster(followerId,
-				new Integer[] { ActorRelation.TYPE_BELONG },
-				new Integer[] { masterType });
+				new Integer[] { ActorRelation.TYPE_BELONG }, masterTypes);
 		if (ms != null && !ms.isEmpty()) {
 			if (ms.size() > 1) {
 				throw new CoreException("no unique for loadBelong!");
@@ -357,11 +356,13 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		curAr = this.actorRelationDao.load4Belong(follower.getId());
 		if (belong != null && !belong.isNew()) {
 			belong = this.load(belong.getId());// 重新加载一下belong
-			if (curAr != null && !curAr.getMaster().getId().equals(belong.getId())) {
+			if (curAr != null
+					&& !curAr.getMaster().getId().equals(belong.getId())) {
 				// 删除原来的隶属关系（因为使用的是联合主键）
 				this.actorRelationDao.delete(curAr);
 			}
-			if (curAr == null || !curAr.getMaster().getId().equals(belong.getId())) {
+			if (curAr == null
+					|| !curAr.getMaster().getId().equals(belong.getId())) {
 				// 创建新的隶属关系
 				curAr = new ActorRelationImpl();
 				curAr.setFollower(follower);
@@ -374,5 +375,56 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 			if (curAr != null)
 				this.actorRelationDao.delete(curAr);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Actor> find(Integer[] actorTypes, Integer[] actorStatues) {
+		ArrayList<Object> args = new ArrayList<Object>();
+		StringBuffer hql = new StringBuffer();
+		hql.append("from ActorImpl a");
+
+		boolean isWhere = true;
+		// 类型
+		if (actorTypes != null && actorTypes.length > 0) {
+			isWhere = false;
+			if (actorTypes.length == 1) {
+				hql.append(" where a.type=?");
+				args.add(actorTypes[0]);
+			} else {
+				hql.append(" where a.type in (?");
+				args.add(actorTypes[0]);
+				for (int i = 1; i < actorTypes.length; i++) {
+					hql.append(",?");
+					args.add(actorTypes[i]);
+				}
+				hql.append(")");
+			}
+		}
+
+		// 状态
+		if (actorStatues != null && actorStatues.length > 0) {
+			if (actorStatues.length == 1) {
+				hql.append(" " + (isWhere ? "where" : "and") + " a.status=?");
+				args.add(actorStatues[0]);
+			} else {
+				hql.append(" " + (isWhere ? "where" : "and")
+						+ " a.status in (?");
+				args.add(actorStatues[0]);
+				for (int i = 1; i < actorStatues.length; i++) {
+					hql.append(",?");
+					args.add(actorStatues[i]);
+				}
+				hql.append(")");
+			}
+		}
+
+		// 排序
+		hql.append(" order by a.order");
+		if (logger.isDebugEnabled()) {
+			logger.debug("hql=" + hql.toString());
+			logger.debug("args="
+					+ StringUtils.collectionToCommaDelimitedString(args));
+		}
+		return this.getJpaTemplate().find(hql.toString(), args.toArray());
 	}
 }

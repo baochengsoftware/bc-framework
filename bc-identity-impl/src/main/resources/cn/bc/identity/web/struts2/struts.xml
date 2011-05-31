@@ -81,9 +81,15 @@
 		<action name="paging" class="userAction" method="paging"/>
 		<action name="data" class="userAction" method="data"/>
 	</package>
+	
 	<package name="selectUnit" extends="bc-default" namespace="/bc">
 		<action name="selectUnit" class="selectUnitAction">
 			<result>/bc/identity/unit/select.jsp</result>
+		</action>
+	</package>
+	<package name="selectUnitOrDepartment" extends="bc-default" namespace="/bc">
+		<action name="selectUnitOrDepartment" class="selectUnitOrDepartmentAction">
+			<result>/bc/identity/department/select2.jsp</result>
 		</action>
 	</package>
 </struts>

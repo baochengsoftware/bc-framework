@@ -16,7 +16,6 @@ import cn.bc.core.query.condition.impl.EqualsCondition;
 import cn.bc.core.query.condition.impl.MixCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorImpl;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
@@ -31,15 +30,6 @@ import cn.bc.web.ui.html.page.PageOption;
 @Controller
 public class GroupAction extends AbstractActorAction {
 	private static final long serialVersionUID = 1L;
-	private ActorImpl belong;// 隶属的上级
-
-	public ActorImpl getBelong() {
-		return belong;
-	}
-
-	public void setBelong(ActorImpl belong) {
-		this.belong = belong;
-	}
 
 	protected String getEntityConfigName() {
 		return "Group";
@@ -56,8 +46,7 @@ public class GroupAction extends AbstractActorAction {
 		return this
 				.getCrudService()
 				.createQuery()
-				.condition(
-						this.getMyCondition().add(this.getSearchCondition()))
+				.condition(this.getMyCondition().add(this.getSearchCondition()))
 				.list();
 	}
 
@@ -66,14 +55,13 @@ public class GroupAction extends AbstractActorAction {
 		return this
 				.getCrudService()
 				.createQuery()
-				.condition(
-						this.getMyCondition().add(this.getSearchCondition()))
+				.condition(this.getMyCondition().add(this.getSearchCondition()))
 				.page(this.getPage().getPageNo(), this.getPage().getPageSize());
 	}
 
 	// 设置页面的尺寸
 	protected PageOption buildListPageOption() {
-		return super.buildListPageOption().setWidth(620).setMinWidth(450)
+		return super.buildListPageOption().setWidth(500).setMinWidth(450)
 				.setHeight(400).setMinHeight(200);
 	}
 
@@ -82,17 +70,19 @@ public class GroupAction extends AbstractActorAction {
 		List<Column> columns = super.buildGridColumns();
 
 		columns.add(new TextColumn("status", getText("actor.status"), 40));
-		columns.add(new TextColumn("code", getText("actor.code"), 80)
+		columns.add(new TextColumn("order", getText("actor.order"), 80)
 				.setSortable(true).setDir(Direction.Asc));
+		columns.add(new TextColumn("code", getText("actor.code"), 80)
+				.setSortable(true));
 		columns.add(new TextColumn("name", getText("actor.name"))
 				.setSortable(true));
-		columns.add(new TextColumn("phone", getText("actor.phone"), 120));
-		columns.add(new TextColumn("email", getText("actor.email"), 150));
+		//columns.add(new TextColumn("phone", getText("actor.phone"), 120));
+		//columns.add(new TextColumn("email", getText("actor.email"), 150));
 
 		return columns;
 	}
 
-	//附加部门的查询条件
+	// 附加岗位的查询条件
 	private MixCondition getMyCondition() {
 		AndCondition condition = new AndCondition();
 		condition
@@ -103,9 +93,8 @@ public class GroupAction extends AbstractActorAction {
 				Direction.Asc));
 		return condition;
 	}
-	
-	//查询条件中要匹配的域
-	protected String[] getSearchFields() {
-		return new String[]{"code","name","phone","email"};
+
+	protected Integer[] getBelongTypes() {
+		return new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT };
 	}
 }
