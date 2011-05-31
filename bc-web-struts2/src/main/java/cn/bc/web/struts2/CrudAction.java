@@ -297,7 +297,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	 */
 	protected List<E> findList() {
 		return this.getCrudService().createQuery()
-				.condition(this.getSearchCondition()).list();
+				.condition(this.getCondition()).list();
 	}
 
 	/**
@@ -307,8 +307,13 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	 */
 	protected Page<E> findPage() {
 		return this.getCrudService().createQuery()
-				.condition(this.getSearchCondition())
+				.condition(this.getCondition())
 				.page(page.getPageNo(), page.getPageSize());
+	}
+
+	// 页面条件
+	protected Condition getCondition() {
+		return getSearchCondition();
 	}
 
 	/**
@@ -316,7 +321,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	 * 
 	 * @return
 	 */
-	protected Condition getSearchCondition() {
+	protected OrCondition getSearchCondition() {
 		if (this.getSearch() == null || this.getSearch().length() == 0)
 			return null;
 

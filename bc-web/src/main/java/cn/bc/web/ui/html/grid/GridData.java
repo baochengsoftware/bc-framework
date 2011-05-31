@@ -3,7 +3,10 @@ package cn.bc.web.ui.html.grid;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.EvaluationException;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -24,6 +27,7 @@ import cn.bc.web.ui.html.Tr;
  * 
  */
 public class GridData extends Div {
+	private static final Log logger = LogFactory.getLog(GridData.class);
 	private List<? extends Object> data;
 	private List<Column> columns = new ArrayList<Column>();
 	private int pageNo;
@@ -50,8 +54,13 @@ public class GridData extends Div {
 			parser = new SpelExpressionParser();
 		Expression exp = parser.parseExpression(expression);
 		EvaluationContext context = new StandardEvaluationContext(obj);
-		Object o = exp.getValue(context);
-		return o != null ? String.valueOf(o) : "";
+		try {
+			Object o = exp.getValue(context);
+			return o != null ? String.valueOf(o) : "";
+		} catch (EvaluationException e) {
+			logger.warn(e.getMessage());
+			return "";
+		}
 	}
 
 	public GridData() {

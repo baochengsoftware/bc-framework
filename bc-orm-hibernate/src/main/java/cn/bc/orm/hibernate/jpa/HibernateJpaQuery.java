@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 
 import cn.bc.core.Page;
 import cn.bc.core.query.condition.Condition;
+import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.orm.hibernate.HibernateUtils;
 
 /**
@@ -193,8 +194,13 @@ public class HibernateJpaQuery<T extends Object> implements
 
 	protected String getHql() {
 		String hql = "from " + this.getEntityClass().getSimpleName();
-		if (condition != null)
-			hql += " where " + this.condition.getExpression();
+		if (condition != null){
+			if (condition instanceof OrderCondition){
+				hql += " order by " + this.condition.getExpression();
+			}else{
+				hql += " where " + this.condition.getExpression();
+			}
+		}
 		return hql;
 	}
 
