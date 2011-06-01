@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="work" extends="bc-default" namespace="/bc/work">
+		<action name="create" class="workAction" method="create">
+			<result name="form">/bc/work/form.jsp</result>
+		</action>
+		<action name="edit" class="workAction" method="edit">
+			<result name="form">/bc/work/form.jsp</result>
+		</action>
+				
+		<action name="save" class="workAction" method="save"/>
+		<action name="delete" class="workAction" method="delete"/>
+		<action name="list" class="workAction" method="list"/>
+		<action name="paging" class="workAction" method="paging"/>
+		<action name="data" class="workAction" method="data"/>
+	</package>
+</struts>

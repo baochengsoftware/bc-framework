@@ -2,6 +2,8 @@
 
 -- 插入分类模块数据
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
+	values(1, 0, 1, null, '10','工作事务', null, 'icon');
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	values(1, 0, 1, null, '90','系统配置', null, 'icon');
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 1, m.id, '90-01','组织架构', null, 'icon' from BC_SECURITY_MODULE m where m.code='90';
@@ -11,6 +13,12 @@ insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCL
 -- 插入链接模块数据
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	values(1, 0, 2, null, '80','个性化设置', '/bc/personal/edit', 'i0504');
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
+	select 1, 0, 2, m.id, '10-01','待办事务', '/bc/work/todo', 'i0603' from BC_SECURITY_MODULE m where m.code='10';
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
+	select 1, 0, 2, m.id, '10-02','已办事务', '/bc/work/done', 'i0603' from BC_SECURITY_MODULE m where m.code='10';
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
+	select 1, 0, 2, m.id, '90-09','消息记录', '/bc/message/paging', 'i0603' from BC_SECURITY_MODULE m where m.code='90';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 2, m.id, '90-01-01','职务配置', '/bc/duty/paging', 'i0603' from BC_SECURITY_MODULE m where m.code='90-01';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 

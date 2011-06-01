@@ -1,0 +1,18 @@
+-- 消息模块
+create table BC_WORK (
+    ID int NOT NULL auto_increment,
+    UID_ varchar(36) COMMENT '全局标识',
+    STATUS_ int(1) NOT NULL default 0 COMMENT '状态',
+    INNER_ int(1) NOT NULL default 0 COMMENT '未用',
+    TYPE_ int(1) NOT NULL default 0 COMMENT '消息类型',
+    SENDER_ID int NOT NULL COMMENT '发送者',
+    SEND_TIME datetime NOT NULL COMMENT '发送时间',
+    RECEIVER_ID int NOT NULL COMMENT '接收者',
+    TITLE varchar(255) NOT NULL COMMENT '标题',
+    CONTENT text COMMENT '内容',
+    primary key (ID)
+) COMMENT='工作事项';
+ALTER TABLE BC_WORK ADD CONSTRAINT FK_WORK_SENDER FOREIGN KEY (SENDER_ID) 
+	REFERENCES BC_IDENTITY_ACTOR (ID);
+ALTER TABLE BC_WORK ADD CONSTRAINT FK_WORK_REVEIVER FOREIGN KEY (RECEIVER_ID) 
+	REFERENCES BC_IDENTITY_ACTOR (ID);
