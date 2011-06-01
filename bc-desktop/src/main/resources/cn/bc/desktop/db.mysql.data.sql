@@ -16,33 +16,31 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,A
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
 	select 1, 0, '07', 0, null, null, id, null from BC_SECURITY_MODULE where name='角色配置';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
-	select 1, 0, '80', 0, null, null, id, null from BC_SECURITY_MODULE where name='个性化设置';
-    
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '90', 1, '谷歌搜索', 'http://www.google.com.hk/', 'i0204');
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '91', 1, '百度搜索', 'http://www.baidu.com/', 'i0204');
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
-	select 1, 0, '00', 0, null, null, id, null from BC_SECURITY_MODULE where name='分页设计';
-	
--- 视图设计
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '71', 0, '分页设计', '/bc/duty/paging', 'i0000');
-insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '72', 0, '无分页设计', '/bc/duty/list', 'i0000');
+	select 1, 0, '50', 0, null, null, id, null from BC_SECURITY_MODULE where name='个性化设置';
 
 -- 报表
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '81', 0, '饼图', '/bc/chart/pie', 'i0300');
+	values(1, 0, '71', 0, '饼图', '/bc/chart/pie', 'i0501');
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '82', 0, '柱图', '/bc/chart/bar', 'i0300');
+	values(1, 0, '72', 0, '柱图', '/bc/chart/bar', 'i0500');
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '83', 0, '动态曲线图', '/bc/chart/spline', 'i0300');
+	values(1, 0, '73', 0, '动态曲线图', '/bc/chart/spline', 'i0502');
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
-	values(1, 0, '84', 0, '综合图表', '/bc/chart/mix', 'i0300');
+	values(1, 0, '74', 0, '综合图表', '/bc/chart/mix', 'i0503');
+    
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '75', 1, '谷歌搜索', 'http://www.google.com.hk/', 'i0505');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '76', 1, '百度搜索', 'http://www.baidu.com/', 'i0506');
+	
+-- 视图设计
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '77', 0, '分页设计', '/bc/duty/paging', 'i0604');
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,ICONCLASS) 
+	values(1, 0, '78', 0, '无分页设计', '/bc/duty/list', 'i0604');
 
 -- 插入全局配置信息
 insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID) 
-	values(1, 0, '12', 'flick', null);
+	values(1, 0, '12', 'humanity', null);
 -- insert into BC_DESKTOP_PERSONAL (STATUS_,INNER_,FONT,THEME,AID) 
 -- 	select 1, 0, '14', 'flick', id from BC_IDENTITY_ACTOR where code='admin';

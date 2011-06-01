@@ -287,6 +287,8 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 		}
 		data.setData(this.es);
 		data.setColumns(this.buildGridColumns());
+		data.setRowLabelExpression("name");
+		data.setName(getText(StringUtils.uncapitalize(getEntityConfigName())));
 		return data;
 	}
 
