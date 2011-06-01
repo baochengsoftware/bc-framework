@@ -92,4 +92,10 @@
 			<result>/bc/identity/department/select2.jsp</result>
 		</action>
 	</package>
+	<package name="authData" extends="bc-default" namespace="/bc/auth">
+		<action name="setPassword" class="authDataAction" method="setPassword">
+			<result name="form">/bc/identity/user/password.jsp</result>
+		</action>
+		<action name="updatePassword" class="authDataAction" method="updatePassword"/>
+	</package>
 </struts>

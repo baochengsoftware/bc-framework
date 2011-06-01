@@ -348,7 +348,7 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 		super.delete(pks);
 	}
 
-	public void save4belong(Actor follower, Actor belong) {
+	public Actor save4belong(Actor follower, Actor belong) {
 		follower = this.save(follower);
 
 		// 处理与上级的隶属
@@ -375,6 +375,8 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 			if (curAr != null)
 				this.actorRelationDao.delete(curAr);
 		}
+		
+		return follower;
 	}
 
 	@SuppressWarnings("unchecked")

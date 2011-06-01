@@ -92,6 +92,11 @@ public class Json implements Render {
 		return this;
 	}
 
+	public Json put(String key, Long value) {
+		attrs.put(key, new Text(String.valueOf(value)));
+		return this;
+	}
+
 	public Json put(String key, boolean value) {
 		attrs.put(key, new Text(String.valueOf(value)));
 		return this;

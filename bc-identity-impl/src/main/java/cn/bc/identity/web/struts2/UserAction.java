@@ -5,21 +5,25 @@ package cn.bc.identity.web.struts2;
 
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
-import cn.bc.core.Page;
+import cn.bc.core.query.condition.Condition;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
-import cn.bc.core.query.condition.impl.MixCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorImpl;
+import cn.bc.identity.service.UserService;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
+import cn.bc.web.ui.html.toolbar.Toolbar;
+import cn.bc.web.ui.html.toolbar.ToolbarButton;
 
 /**
  * 用户Action
@@ -32,6 +36,13 @@ import cn.bc.web.ui.html.page.PageOption;
 public class UserAction extends AbstractActorAction {
 	private static final long serialVersionUID = 1L;
 	private List<ActorImpl> groups;// 所在的岗位
+	private UserService userService;
+
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+		this.setActorService(userService);
+	}
 
 	public List<ActorImpl> getGroups() {
 		return groups;
@@ -51,28 +62,24 @@ public class UserAction extends AbstractActorAction {
 		return r;
 	}
 
-	// 复写非分页数据的获取
-	protected List<Actor> findList() {
-		return this
-				.getCrudService()
-				.createQuery()
-				.condition(this.getMyCondition().add(this.getSearchCondition()))
-				.list();
-	}
-
-	// 复写分页数据的获取
-	protected Page<Actor> findPage() {
-		return this
-				.getCrudService()
-				.createQuery()
-				.condition(this.getMyCondition().add(this.getSearchCondition()))
-				.page(this.getPage().getPageNo(), this.getPage().getPageSize());
-	}
-
 	// 设置页面的尺寸
 	protected PageOption buildListPageOption() {
 		return super.buildListPageOption().setWidth(700).setMinWidth(450)
 				.setHeight(500).setMinHeight(200);
+	}
+
+	@Override
+	protected Toolbar buildToolbar() {
+		return super.buildToolbar().addButton(
+				new ToolbarButton().setIcon("ui-icon-document")
+						.setText(getText("user.password.reset"))
+						.setClick("bc.userList.setPassword"));
+	}
+
+	@Override
+	protected String getJs() {
+		String cp = ServletActionContext.getRequest().getContextPath();
+		return cp + "/bc/identity/user/list.js";
 	}
 
 	// 设置表格的列
@@ -93,7 +100,7 @@ public class UserAction extends AbstractActorAction {
 	}
 
 	// 附加用户查询条件
-	private MixCondition getMyCondition() {
+	protected Condition getCondition() {
 		AndCondition condition = new AndCondition();
 		condition
 				.add(new EqualsCondition("type", new Integer(Actor.TYPE_USER)));
@@ -110,7 +117,7 @@ public class UserAction extends AbstractActorAction {
 
 	@Override
 	public String save() throws Exception {
-		this.getActorService().save4belong(this.getE(), this.getBelong());
+		this.userService.save4belong(this.getE(), this.getBelong());
 		return "saveSuccess";
 	}
 

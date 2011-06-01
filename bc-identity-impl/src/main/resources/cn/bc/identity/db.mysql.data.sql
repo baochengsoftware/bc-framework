@@ -70,6 +70,10 @@ insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID)
 insert into BC_IDENTITY_ACTOR (UID_,STATUS_,INNER_,TYPE_,CODE, NAME, ORDER_) values('uid', 1, 0, 1, 'huangrongji','黄荣基', '009901');
 insert into BC_IDENTITY_ACTOR_RELATION (TYPE_,MASTER_ID,FOLLOWER_ID) 
     select 0,am.id,af.id from BC_IDENTITY_ACTOR am,BC_IDENTITY_ACTOR af where am.code='B0099' and af.code='huangrongji'; 
+    
+-- 插入人员的认证数据(密码默认为888888的md5值)
+insert into BC_IDENTITY_AUTH (ID,PASSWORD) 
+    select a.id,'21218cca77804d2ba1922c33e0151105' from BC_IDENTITY_ACTOR a where a.type_=1; 
 
 -- 更新Actor的uid为'ACTOR-'+id
 UPDATE BC_IDENTITY_ACTOR SET UID_=CONCAT('ACTOR-',id);

@@ -250,7 +250,7 @@ public class HibernateCrudJpaDao<T extends Object> implements CrudDao<T>,
 	 *            查询语句中的参数
 	 * @return 构建好的查询对象
 	 */
-	protected javax.persistence.Query createQuery(EntityManager em, String hql,
+	public static javax.persistence.Query createQuery(EntityManager em, String hql,
 			Object[] args) {
 		javax.persistence.Query queryObj = em.createQuery(hql);
 		if (null != args && args.length > 0) {

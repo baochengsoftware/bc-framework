@@ -25,6 +25,10 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 		this.setCrudDao(actorDao);
 	}
 
+	public ActorDao getActorDao() {
+		return actorDao;
+	}
+
 	public Actor loadByCode(String actorCode) {
 		return this.actorDao.loadByCode(actorCode);
 	}
@@ -90,8 +94,8 @@ public class ActorServiceImpl extends DefaultCrudService<Actor> implements
 		return this.actorDao.findCanUseModules(actorId);
 	}
 
-	public void save4belong(Actor follower, Actor belong) {
-		this.actorDao.save4belong(follower, belong);
+	public Actor save4belong(Actor follower, Actor belong) {
+		return this.actorDao.save4belong(follower, belong);
 	}
 
 	public List<Actor> find(Integer[] actorTypes, Integer[] actorStatues) {

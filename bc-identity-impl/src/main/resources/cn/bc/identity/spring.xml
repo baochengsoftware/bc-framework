@@ -37,6 +37,10 @@
 		</tx:attributes>
 	</tx:advice>
 
+	<!-- AuthData -->
+	<bean id="authDataDao" class="cn.bc.identity.dao.hibernate.jpa.AuthDataDaoImpl"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+
 	<!-- Actor -->
 	<bean id="actorDao" class="cn.bc.identity.dao.hibernate.jpa.ActorDaoImpl"
 		p:entityClass="cn.bc.identity.domain.ActorImpl"
@@ -58,8 +62,7 @@
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="dutyService" class="cn.bc.identity.service.DutyServiceImpl" p:crudDao-ref="dutyDao" />
 
-	<!-- Unit
-	<bean id="unitDao" class="cn.bc.orm.hibernate.jpa.HibernateCrudJpaDao"
-		p:entityManagerFactory-ref="entityManagerFactory" />
-	<bean id="unitService" class="cn.bc.identity.impl.service.UnitServiceImpl" p:crudDao-ref="unitDao" /> -->
+	<!-- User -->
+	<bean id="userService" class="cn.bc.identity.service.UserServiceImpl" 
+		p:crudDao-ref="actorDao" p:authDataDao-ref="authDataDao" />
 </beans>

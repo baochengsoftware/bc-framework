@@ -116,7 +116,7 @@ public interface ActorDao extends CrudDao<Actor>{
 	 * @param follower
 	 * @param belong
 	 */
-	void save4belong(Actor follower, Actor belong);
+	Actor save4belong(Actor follower, Actor belong);
 
 	/**获取指定类型和状态的Actor
 	 * @param actorTypes 类型列表
