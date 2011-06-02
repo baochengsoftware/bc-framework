@@ -31,8 +31,8 @@ public class BatikRasterizeTest {
 	}
 
 	private void convert(String type, String ext) {
-		String from = "c:/test.svg";
-		String to = "c:/test." + ext;
+		String from = "d:/test.svg";
+		String to = "d:/test." + ext;
 		List<String> args = new ArrayList<String>();
 
 		// 转换为的格式,值为image/png、image/jpeg、application/pdf、image/svg xml
