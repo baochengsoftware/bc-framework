@@ -4,13 +4,11 @@
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="todoWork" extends="bc-default" namespace="/bc/todoWork">
-		<action name="delete" class="todoWorkAction" method="delete"/>
 		<action name="list" class="todoWorkAction" method="list"/>
 		<action name="paging" class="todoWorkAction" method="paging"/>
 		<action name="data" class="todoWorkAction" method="data"/>
 	</package>
 	<package name="doneWork" extends="bc-default" namespace="/bc/doneWork">
-		<action name="delete" class="doneWorkAction" method="delete"/>
 		<action name="list" class="doneWorkAction" method="list"/>
 		<action name="paging" class="doneWorkAction" method="paging"/>
 		<action name="data" class="doneWorkAction" method="data"/>

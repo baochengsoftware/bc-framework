@@ -24,25 +24,25 @@ import cn.bc.web.ui.html.page.PageOption;
 import cn.bc.web.ui.html.toolbar.Toolbar;
 import cn.bc.web.ui.html.toolbar.ToolbarButton;
 import cn.bc.web.ui.html.toolbar.ToolbarSearchButton;
-import cn.bc.work.domain.TodoWork;
-import cn.bc.work.service.TodoWorkService;
+import cn.bc.work.domain.DoneWork;
+import cn.bc.work.service.DoneWorkService;
 
 /**
- * 待办事务Action
+ * 已办事务Action
  * 
  * @author dragon
  * 
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller
-public class TodoWorkAction extends CrudAction<Long, TodoWork> {
+public class DoneWorkAction extends CrudAction<Long, DoneWork> {
 	private static final long serialVersionUID = 1L;
-	private TodoWorkService todoWorkService;
+	private DoneWorkService doneWorkService;
 
 	@Autowired
-	public void setTodoWorkService(TodoWorkService todoWorkService) {
-		this.todoWorkService = todoWorkService;
-		this.setCrudService(todoWorkService);
+	public void setDoneWorkService(DoneWorkService doneWorkService) {
+		this.doneWorkService = doneWorkService;
+		this.setCrudService(doneWorkService);
 	}
 
 	@Override
@@ -74,10 +74,10 @@ public class TodoWorkAction extends CrudAction<Long, TodoWork> {
 	protected Toolbar buildToolbar() {
 		Toolbar tb = new Toolbar();
 
-		// 办理按钮
+		// 查看按钮
 		tb.addButton(new ToolbarButton().setIcon("ui-icon-check")
-				.setText(getText("label.do"))
-				.setClick("bc.todoWorkList.doWork"));
+				.setText(getText("label.check"))
+				.setClick("bc.doneWorkList.checkWork"));
 
 		// 搜索按钮
 		ToolbarSearchButton sb = new ToolbarSearchButton();
@@ -90,14 +90,16 @@ public class TodoWorkAction extends CrudAction<Long, TodoWork> {
 	@Override
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
+		columns.add(new TextColumn("work.finishDate",
+				getText("doneWork.finishDate"), 120).setSortable(true)
+				.setDir(Direction.Desc).setFormater(new CalendarFormater()));
 		columns.add(new TextColumn("work.classifier",
 				getText("work.classifier"), 150).setSortable(true).setFormater(
 				new YesNoCnFormater()));
 		columns.add(new TextColumn("work.subject", getText("work.subject"))
 				.setSortable(true));
 		columns.add(new TextColumn("work.sendDate", getText("work.sendDate"),
-				120).setSortable(true).setDir(Direction.Desc)
-				.setFormater(new CalendarFormater()));
+				120).setSortable(true).setFormater(new CalendarFormater()));
 		columns.add(new TextColumn("sender.name", getText("work.sender.name"),
 				120).setSortable(true));
 		return columns;
@@ -105,6 +107,6 @@ public class TodoWorkAction extends CrudAction<Long, TodoWork> {
 
 	@Override
 	protected String getJs() {
-		return contextPath + "/bc/work/todoWork/list.js";
+		return contextPath + "/bc/work/doneWork/list.js";
 	}
 }
