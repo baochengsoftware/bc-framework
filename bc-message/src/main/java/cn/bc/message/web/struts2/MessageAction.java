@@ -12,18 +12,20 @@ import org.springframework.stereotype.Controller;
 
 import cn.bc.core.query.condition.Condition;
 import cn.bc.core.query.condition.Direction;
-import cn.bc.core.query.condition.impl.AndCondition;
-import cn.bc.core.query.condition.impl.EqualsCondition;
+import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
-import cn.bc.identity.domain.Actor;
 import cn.bc.message.domain.Message;
 import cn.bc.message.service.MessageService;
+import cn.bc.web.CalendarFormater;
+import cn.bc.web.YesNoCnFormater;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.GridData;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
 import cn.bc.web.ui.html.toolbar.Toolbar;
+import cn.bc.web.ui.html.toolbar.ToolbarButton;
+import cn.bc.web.ui.html.toolbar.ToolbarSearchButton;
 
 /**
  * 消息Action
@@ -40,23 +42,25 @@ public class MessageAction extends CrudAction<Long, Message> {
 	@Autowired
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
+		this.setCrudService(messageService);
 	}
 
 	@Override
 	protected GridData buildGridData() {
-		return super.buildGridData().setRowLabelExpression("title");
+		return super.buildGridData().setRowLabelExpression("subject");
 	}
 
 	@Override
 	protected Condition getCondition() {
-		AndCondition condition = new AndCondition();
-		condition.add(new OrderCondition("sendTime", Direction.Desc));
-		return condition.add(this.getSearchCondition());
+		OrCondition condition = this.getSearchCondition();
+		if (condition != null)
+			condition.add(new OrderCondition("sendDate", Direction.Desc));
+		return condition;
 	}
 
 	@Override
 	protected String[] getSearchFields() {
-		return new String[] { "title", "content" };
+		return new String[] { "subject", "content" };
 	}
 
 	// 设置页面的尺寸
@@ -68,18 +72,30 @@ public class MessageAction extends CrudAction<Long, Message> {
 
 	@Override
 	protected Toolbar buildToolbar() {
-		return super.buildToolbar();
+		Toolbar tb = new Toolbar();
+		// 删除按钮
+		tb.addButton(new ToolbarButton().setIcon("ui-icon-trash")
+				.setText(getText("label.delete")).setAction("delete"));
+
+		// 搜索按钮
+		ToolbarSearchButton sb = new ToolbarSearchButton();
+		sb.setAction("search").setTitle(getText("title.click2search"));
+		tb.addButton(sb);
+
+		return tb;
 	}
 
 	@Override
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
-		columns.add(new TextColumn("status", getText("label.status"), 40));
-		columns.add(new TextColumn("sendTime", getText("message.sendTime"), 80)
-				.setSortable(true).setDir(Direction.Asc));
+		columns.add(new TextColumn("read", getText("message.read"), 40)
+				.setSortable(true).setFormater(new YesNoCnFormater()));
+		columns.add(new TextColumn("sendDate", getText("message.sendDate"), 120)
+				.setSortable(true).setDir(Direction.Asc)
+				.setFormater(new CalendarFormater()));
 		columns.add(new TextColumn("sender.name",
-				getText("message.sender.name"), 80).setSortable(true));
-		columns.add(new TextColumn("title", getText("message.title"))
+				getText("message.sender.name"), 100).setSortable(true));
+		columns.add(new TextColumn("subject", getText("message.subject"))
 				.setSortable(true));
 		return columns;
 	}

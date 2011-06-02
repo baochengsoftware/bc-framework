@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import cn.bc.core.query.condition.Direction;
+import cn.bc.web.Formater;
 
 /**
  * 列的抽象实现
@@ -19,6 +20,7 @@ public abstract class AbstractColumn implements Column {
 	private String expression;
 	private boolean sortable;
 	private Direction dir = Direction.None;
+	private Formater formater;
 	
 	public boolean isSortable() {
 		return sortable;
@@ -60,6 +62,13 @@ public abstract class AbstractColumn implements Column {
 	}
 	public Column setExpression(String expression) {
 		this.expression = expression;
+		return this;
+	}
+	public Formater getFormater() {
+		return formater;
+	}
+	public Column setFormater(Formater formater) {
+		this.formater = formater;
 		return this;
 	}
 }

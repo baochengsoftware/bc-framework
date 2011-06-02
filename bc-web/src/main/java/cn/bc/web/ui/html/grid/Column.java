@@ -1,6 +1,7 @@
 package cn.bc.web.ui.html.grid;
 
 import cn.bc.core.query.condition.Direction;
+import cn.bc.web.Formater;
 
 public interface Column {
 	/**
@@ -38,4 +39,11 @@ public interface Column {
 	 */
 	String getExpression();
 	Column setExpression(String expression);
+	
+	/**
+	 * 值的格式化处理器
+	 * @return
+	 */
+	Formater getFormater();
+	Column setFormater(Formater formater);
 }

@@ -12,6 +12,7 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
+import cn.bc.web.Formater;
 import cn.bc.web.ui.Component;
 import cn.bc.web.ui.html.Div;
 import cn.bc.web.ui.html.Span;
@@ -36,8 +37,8 @@ public class GridData extends Div {
 	private String rowLabelExpression;
 	private ExpressionParser parser;
 
-	public String getValue(Object obj, String expression) {
-		return getValue(obj, expression, parser);
+	public String getValue(Object obj, String expression, Formater formater) {
+		return getValue(obj, expression, parser, formater);
 	}
 
 	/**
@@ -49,14 +50,19 @@ public class GridData extends Div {
 	 * @return
 	 */
 	public static String getValue(Object obj, String expression,
-			ExpressionParser parser) {
+			ExpressionParser parser, Formater formater) {
 		if (parser == null)
 			parser = new SpelExpressionParser();
 		Expression exp = parser.parseExpression(expression);
 		EvaluationContext context = new StandardEvaluationContext(obj);
 		try {
-			Object o = exp.getValue(context);
-			return o != null ? String.valueOf(o) : "";
+			Object objValue = exp.getValue(context);
+			String value;
+			if (formater != null)
+				value = formater.format(objValue);
+			else
+				value = (objValue != null ? objValue.toString() : "");
+			return value != null ? value : "";
 		} catch (EvaluationException e) {
 			logger.warn(e.getMessage());
 			return "";
@@ -193,7 +199,8 @@ public class GridData extends Div {
 									obj,
 									getRowLabelExpression() != null ? getRowLabelExpression()
 											: "id", null));// 行的标题
-			td.setAttr("data-id", getValue(obj, column.getExpression()));// 行的id
+			td.setAttr("data-id",
+					getValue(obj, column.getExpression(), column.getFormater()));// 行的id
 			td.addChild(new Span().addClazz("ui-icon"));// 勾选标记符
 			td.addChild(new Text(String.valueOf(rc + 1)));// 行号
 
@@ -243,11 +250,12 @@ public class GridData extends Div {
 				// td.addChild(wrapper);
 
 				// 单元格内容
-				td.addChild(new Text(getValue(obj, column.getExpression())));
+				td.addChild(new Text(getValue(obj, column.getExpression(),
+						column.getFormater())));
 			}
 
 			// 添加一列空列
-			//tr.addChild(Grid.EMPTY_TD);
+			// tr.addChild(Grid.EMPTY_TD);
 
 			rc++;
 		}
