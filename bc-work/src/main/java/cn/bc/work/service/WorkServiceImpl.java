@@ -7,18 +7,18 @@ import cn.bc.work.dao.WorkDao;
 import cn.bc.work.domain.Work;
 
 /**
- * 消息service接口的实现
+ * 工作事务service接口的实现
  * 
  * @author dragon
  * 
  */
-public class WorkServiceImpl extends
-		DefaultCrudService<Work> implements WorkService {
-	private WorkDao messageDao;
+public class WorkServiceImpl extends DefaultCrudService<Work> implements
+		WorkService {
+	private WorkDao workDao;
 
 	@Autowired
-	public void setMessageDao(WorkDao messageDao) {
-		this.messageDao = messageDao;
-		this.setCrudDao(messageDao);
+	public void setWorkDao(WorkDao workDao) {
+		this.workDao = workDao;
+		this.setCrudDao(workDao);
 	}
 }

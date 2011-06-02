@@ -2,7 +2,9 @@
 
 -- 插入桌面快捷方式数据
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
-	select 1, 0, '01', 0, null, null, id, null from BC_SECURITY_MODULE where name='职务配置';
+	select 1, 0, '00', 0, null, null, id, null from BC_SECURITY_MODULE where name='待办事务';
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
+	select 1, 0, '01', 0, null, null, id, null from BC_SECURITY_MODULE where name='已办事务';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
 	select 1, 0, '02', 0, null, null, id, null from BC_SECURITY_MODULE where name='单位配置';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
@@ -15,6 +17,8 @@ insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,A
 	select 1, 0, '06', 0, null, null, id, null from BC_SECURITY_MODULE where name='模块配置';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
 	select 1, 0, '07', 0, null, null, id, null from BC_SECURITY_MODULE where name='角色配置';
+insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
+	select 1, 0, '08', 0, null, null, id, null from BC_SECURITY_MODULE where name='职务配置';
 insert into BC_DESKTOP_SHORTCUT (STATUS_,INNER_,ORDER_,STANDALONE,NAME,URL,MID,AID) 
 	select 1, 0, '50', 0, null, null, id, null from BC_SECURITY_MODULE where name='个性化设置';
 

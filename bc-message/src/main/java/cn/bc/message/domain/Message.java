@@ -89,6 +89,7 @@ public class Message extends DefaultEntity {
 		this.type = type;
 	}
 
+	@Column(name = "READ_")
 	public boolean isRead() {
 		return read;
 	}

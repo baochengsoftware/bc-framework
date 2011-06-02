@@ -25,7 +25,7 @@ create table BC_WORK_TODO (
     
     WORK_ID int NOT NULL COMMENT '工作事项ID',
     SENDER_ID int NOT NULL COMMENT '发送者',
-    SEND_TIME datetime NOT NULL COMMENT '发送时间',
+    SEND_DATE datetime NOT NULL COMMENT '发送时间',
     WORKER_ID int NOT NULL COMMENT '发送者',
     INFO varchar(255) COMMENT '附加说明',
     primary key (ID)

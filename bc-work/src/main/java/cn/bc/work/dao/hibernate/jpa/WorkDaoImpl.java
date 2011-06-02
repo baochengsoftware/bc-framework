@@ -5,11 +5,10 @@ import cn.bc.work.dao.WorkDao;
 import cn.bc.work.domain.Work;
 
 /**
- * 消息Dao接口的实现
+ * 工作事务Dao接口的实现
  * 
  * @author dragon
  * 
  */
-public class WorkDaoImpl extends HibernateCrudJpaDao<Work>
-		implements WorkDao {
+public class WorkDaoImpl extends HibernateCrudJpaDao<Work> implements WorkDao {
 }

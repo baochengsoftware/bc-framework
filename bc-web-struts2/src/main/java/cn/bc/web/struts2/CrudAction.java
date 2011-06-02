@@ -66,6 +66,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	private Class<E> entityClass;
 	private Page<E> page; // 分页页面用
 	private String search; // 搜索框输入的文本
+	public String contextPath; // 系统部署的路径，如"/bc"
 
 	@SuppressWarnings("unchecked")
 	public CrudAction() {
@@ -80,6 +81,8 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 							+ this.entityClass + "' [" + this.getClass() + "]");
 			}
 		}
+		
+		contextPath = ServletActionContext.getRequest().getContextPath();
 	}
 
 	public Page<E> getPage() {

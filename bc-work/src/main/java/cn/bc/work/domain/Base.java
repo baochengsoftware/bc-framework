@@ -15,7 +15,7 @@ import cn.bc.core.DefaultEntity;
 import cn.bc.identity.domain.ActorImpl;
 
 /**
- * 待办\已办\草稿事项的基类
+ * 待办\已办事项的基类
  * 
  * @author dragon
  */
@@ -58,6 +58,8 @@ public class Base extends DefaultEntity {
 		this.work = work;
 	}
 
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = ActorImpl.class)
+	@JoinColumn(name = "WORKER_ID", referencedColumnName = "ID")
 	public ActorImpl getWorker() {
 		return worker;
 	}

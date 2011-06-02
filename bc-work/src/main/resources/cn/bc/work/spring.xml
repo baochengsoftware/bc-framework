@@ -20,4 +20,18 @@
 		p:entityManagerFactory-ref="entityManagerFactory" />
 	<bean id="workService" class="cn.bc.work.service.WorkServiceImpl"
 		p:entityClass="cn.bc.work.domain.Work" />
+		
+	<!-- todoWork -->
+	<bean id="todoWorkDao" class="cn.bc.work.dao.hibernate.jpa.TodoWorkDaoImpl"
+		p:entityClass="cn.bc.work.domain.TodoWork"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="todoWorkService" class="cn.bc.work.service.TodoWorkServiceImpl"
+		p:entityClass="cn.bc.work.domain.TodoWork" />
+		
+	<!-- doneWork -->
+	<bean id="doneWorkDao" class="cn.bc.work.dao.hibernate.jpa.DoneWorkDaoImpl"
+		p:entityClass="cn.bc.work.domain.DoneWork"
+		p:entityManagerFactory-ref="entityManagerFactory" />
+	<bean id="doneWorkService" class="cn.bc.work.service.DoneWorkServiceImpl"
+		p:entityClass="cn.bc.work.domain.DoneWork" />
 </beans>

@@ -8,7 +8,7 @@ create table BC_MESSAGE (
     SENDER_ID int NOT NULL COMMENT '发送者',
     SEND_DATE datetime NOT NULL COMMENT '发送时间',
     RECEIVER_ID int NOT NULL COMMENT '接收者',
-    READ int(0) NOT NULL DEFAULT 0 COMMENT '已阅标记',
+    READ_ int(1) NOT NULL default 0 COMMENT '已阅标记',
     FROM_ID int COMMENT '来源标识',
     FROM_TYPE int COMMENT '来源类型',
     SUBJECT varchar(255) NOT NULL COMMENT '标题',

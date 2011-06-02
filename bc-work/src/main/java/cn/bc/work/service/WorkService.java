@@ -4,7 +4,7 @@ import cn.bc.core.service.CrudService;
 import cn.bc.work.domain.Work;
 
 /**
- * 消息Service接口
+ * 工作事务Service接口
  * 
  * @author dragon
  * 
