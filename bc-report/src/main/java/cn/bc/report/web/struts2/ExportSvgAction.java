@@ -124,6 +124,10 @@ public class ExportSvgAction extends ActionSupport {
 			// 将svg文件保存到临时文件夹
 			File outF = new File(tempPath + ".svg");
 			FileOutputStream fops = new FileOutputStream(outF);
+			if(this.svg.indexOf("height=\"-1\"") != -1){
+				//处理highchart导出饼图的错误
+				this.svg = this.svg.replace("height=\"-1\"", "height=\"0\"");
+			}
 			fops.write(this.getSvg().getBytes(encode));
 			fops.close();
 

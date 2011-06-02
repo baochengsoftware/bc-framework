@@ -17,7 +17,7 @@ import cn.bc.identity.service.ActorService;
 import cn.bc.web.struts2.CrudAction;
 
 /**
- * ��������Action
+ * 个人设置Action
  * 
  * @author dragon
  * 
@@ -62,7 +62,7 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 	public String edit() throws Exception {
 		ActorImpl actor = (ActorImpl)getCurrentActor();
 		Personal personal = this.personalService.loadByActor(actor.getId());
-		if (personal == null) {// ��ȫ�����ø���һ��
+		if (personal == null) {// 没有就从全局配置复制一个
 			Personal common = this.personalService.loadGlobalConfig();
 			personal = new Personal();
 			personal.setStatus(Entity.STATUS_ENABLED);
@@ -76,11 +76,11 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 		return "form";
 	}
 
-	// �����������
+	// 更新个人设置
 	public String update() throws Exception {
 		Actor actor = getCurrentActor();
 		Personal personal = this.personalService.loadByActor(actor.getId());
-		if (personal == null) {// ����һ���µĸ�������
+		if (personal == null) {// 没有就从全局配置复制一个
 			Personal common = this.personalService.loadGlobalConfig();
 			personal = new Personal();
 			personal.setStatus(Entity.STATUS_ENABLED);
@@ -92,7 +92,7 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 				personal.setFont(font);
 			if (theme != null && theme.length() > 0)
 				personal.setTheme(theme);
-		} else {// ������������
+		} else {// 仅更新传入的数据
 			if (font != null && font.length() > 0)
 				personal.setFont(font);
 			if (theme != null && theme.length() > 0)
