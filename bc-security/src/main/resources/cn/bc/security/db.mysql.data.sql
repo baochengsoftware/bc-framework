@@ -12,7 +12,9 @@ insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCL
 
 -- 插入链接模块数据
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
-	values(1, 0, 2, null, '99','个性化设置', '/bc/personal/edit', 'i0504');
+	values(1, 0, 2, null, '98','个性化设置', '/bc/personal/edit', 'i0504');
+insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
+	values(1, 0, 2, null, '99','桌面管理', '/bc/shortcut/list', 'i0504');
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 2, m.id, '10-01','待办事务', '/bc/todoWork/list', 'i0605' from BC_SECURITY_MODULE m where m.code='10';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 

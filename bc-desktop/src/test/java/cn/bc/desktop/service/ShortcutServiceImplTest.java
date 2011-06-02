@@ -67,7 +67,7 @@ public class ShortcutServiceImplTest extends
 	protected Shortcut createShortcut(Actor actor, Module module, String order) {
 		Shortcut shortcut = super.createInstance(this.getDefaultConfig());
 		shortcut.setOrder(order);
-		shortcut.setActor(actor);
+		shortcut.setActor((ActorImpl)actor);
 		shortcut.setModule(module);
 		return shortcut;
 	}
@@ -83,7 +83,7 @@ public class ShortcutServiceImplTest extends
 
 		// 仅属于user的Shortcut
 		Shortcut shortcut4user = this.createInstance(this.getDefaultConfig());
-		shortcut4user.setActor(user);
+		shortcut4user.setActor((ActorImpl)user);
 		this.shortcutService.save(shortcut4user);
 		Assert.assertNotNull(shortcut4user.getId());
 
@@ -107,7 +107,7 @@ public class ShortcutServiceImplTest extends
 
 		// 仅属于user的Shortcut
 		Shortcut shortcut4user = this.createShortcut(user, null, "01");
-		shortcut4user.setActor(user);
+		shortcut4user.setActor((ActorImpl)user);
 		this.shortcutService.save(shortcut4user);
 		Assert.assertNotNull(shortcut4user.getId());
 

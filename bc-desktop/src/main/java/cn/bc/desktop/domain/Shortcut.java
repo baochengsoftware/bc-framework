@@ -30,7 +30,7 @@ public class Shortcut extends DefaultEntity {
 	private String name;//名称,为空则使用模块的名称
 	private String url;//地址,为空则使用模块的地址
 	private Module module;//对应的模块
-	private Actor actor;//所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)
+	private ActorImpl actor;//所属的参与者(如果为上级参与者,如单位部门,则其下的所有参与者都拥有该快捷方式)
 	private String iconClass;//图标样式
 	
 	public String getIconClass() {
@@ -77,10 +77,10 @@ public class Shortcut extends DefaultEntity {
 	
 	@ManyToOne(targetEntity=ActorImpl.class,fetch=FetchType.LAZY)
 	@JoinColumn(name="AID", nullable=true, updatable=false)
-	public Actor getActor() {
+	public ActorImpl getActor() {
 		return actor;
 	}
-	public void setActor(Actor actor) {
+	public void setActor(ActorImpl actor) {
 		this.actor = actor;
 	}
 }
