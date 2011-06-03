@@ -4,13 +4,16 @@
 package cn.bc.identity.web.struts2;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.bc.core.Entity;
 import cn.bc.core.query.condition.Condition;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
@@ -18,6 +21,9 @@ import cn.bc.core.query.condition.impl.EqualsCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorImpl;
+import cn.bc.identity.domain.ActorRelation;
+import cn.bc.identity.domain.Duty;
+import cn.bc.identity.service.DutyService;
 import cn.bc.identity.service.UserService;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
@@ -33,10 +39,15 @@ import cn.bc.web.ui.html.toolbar.ToolbarButton;
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller
-public class UserAction extends AbstractActorAction {
+public class UserAction extends AbstractActorAction implements SessionAware {
 	private static final long serialVersionUID = 1L;
-	private List<ActorImpl> groups;// 所在的岗位
 	private UserService userService;
+	private DutyService dutyService;
+	private Map<String, Object> session;
+
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -44,12 +55,9 @@ public class UserAction extends AbstractActorAction {
 		this.setActorService(userService);
 	}
 
-	public List<ActorImpl> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(List<ActorImpl> groups) {
-		this.groups = groups;
+	@Autowired
+	public void setDutyService(DutyService dutyService) {
+		this.dutyService = dutyService;
 	}
 
 	protected String getEntityConfigName() {
@@ -121,6 +129,10 @@ public class UserAction extends AbstractActorAction {
 		return "saveSuccess";
 	}
 
+	public List<Duty> duties;// 可选的职务列表
+	public List<Actor> ownedGroups;// 已拥有的岗位
+	public List<Actor> standbyGroups;// 未拥有的岗位
+
 	@Override
 	public String edit() throws Exception {
 		this.setE(this.getCrudService().load(this.getId()));
@@ -129,7 +141,18 @@ public class UserAction extends AbstractActorAction {
 		this.setBelong((ActorImpl) this.getActorService().loadBelong(
 				this.getId(), getBelongTypes()));
 
-		// 加载岗位信息 TODO
+		// 加载可选的职务列表
+		this.duties = this.dutyService.createQuery()
+				.condition(new OrderCondition("code", Direction.Asc)).list();
+
+		// 加载岗位信息
+		Actor curUser = (Actor) this.session.get("user");
+		this.ownedGroups = this.userService.findMaster(curUser.getId(),
+				new Integer[] { ActorRelation.TYPE_BELONG },
+				new Integer[] { Actor.TYPE_GROUP });
+		this.standbyGroups = this.userService.find(
+				new Integer[] { Actor.TYPE_GROUP },
+				new Integer[] { Entity.STATUS_ENABLED });
 
 		return "form";
 	}

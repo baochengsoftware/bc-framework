@@ -61,7 +61,7 @@ public abstract class AbstractActorAction extends CrudAction<Long, Actor> {
 
 	// 查询条件中要匹配的域
 	protected String[] getSearchFields() {
-		return new String[] { "code", "name", "phone", "email" };
+		return new String[] { "code", "order", "name", "phone", "email" };
 	}
 
 	@Override

@@ -1,14 +1,29 @@
 -- 系统标识相关模块
 
+-- 职务
+create table BC_IDENTITY_DUTY (
+    ID int NOT NULL auto_increment,
+    UID_ varchar(36) COMMENT '全局标识',
+    STATUS_ int(1) NOT NULL COMMENT '状态：0-已禁用,1-启用中,2-已删除',
+    INNER_ int(1) NOT NULL COMMENT '是否为内置对象:0-否,1-是',
+    CODE varchar(100) NOT NULL COMMENT '编码',
+    NAME varchar(255) NOT NULL COMMENT '名称',
+    primary key (ID)
+) COMMENT='职务';
+
 -- 参与者的扩展属性
 create table BC_IDENTITY_ACTOR_DETAIL (
     ID int NOT NULL auto_increment,
-    CREATEDATE datetime COMMENT '创建时间',
-    FIRST_NAME varchar(45) COMMENT 'user-姓氏',
-    LAST_NAME varchar(45) COMMENT 'user-名字',
-    SEX int(1) COMMENT 'user-性别：1-男,2-女',
+    CREATE_DATE datetime COMMENT '创建时间',
+    WORK_DATE date COMMENT 'user-入职时间',
+    SEX int(1) NOT NULL default 0 COMMENT 'user-性别：0-未设置,1-男,2-女',
+   	CARD varchar(20) COMMENT 'user-身份证',
+    DUTY_ID int COMMENT 'user-职务ID',
+   	COMMENT varchar(1000) COMMENT '备注',
     primary key (ID)
 ) COMMENT='参与者的扩展属性';
+ALTER TABLE BC_IDENTITY_ACTOR_DETAIL ADD CONSTRAINT FK_ACTORDETAIL_DUTY FOREIGN KEY (DUTY_ID) 
+	REFERENCES BC_IDENTITY_DUTY (ID);
 
 -- 参与者
 create table BC_IDENTITY_ACTOR (
@@ -51,17 +66,6 @@ create table BC_IDENTITY_AUTH (
 ) COMMENT='认证信息';
 ALTER TABLE BC_IDENTITY_AUTH ADD CONSTRAINT FK_AUTH_ACTOR FOREIGN KEY (ID) 
 	REFERENCES BC_IDENTITY_ACTOR (ID);
-
--- 职务
-create table BC_IDENTITY_DUTY (
-    ID int NOT NULL auto_increment,
-    UID_ varchar(36) COMMENT '全局标识',
-    STATUS_ int(1) NOT NULL COMMENT '状态：0-已禁用,1-启用中,2-已删除',
-    INNER_ int(1) NOT NULL COMMENT '是否为内置对象:0-否,1-是',
-    CODE varchar(100) NOT NULL COMMENT '编码',
-    NAME varchar(255) NOT NULL COMMENT '名称',
-    primary key (ID)
-) COMMENT='职务';
 
 -- 标识生成器
 CREATE TABLE BC_IDENTITY_IDGENERATOR (

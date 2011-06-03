@@ -7,16 +7,17 @@ import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import cn.bc.identity.domain.ActorDetail;
 
 @Entity
 @Table(name = "BC_IDENTITY_ACTOR_DETAIL")
@@ -41,7 +42,7 @@ public class ActorDetailImpl implements ActorDetail {
 	/**
 	 * @return 创建时间
 	 */
-	@Column
+	@Column(name = "CREATE_DATE")
 	public Calendar getCreateDate() {
 		return getCalendar("createDate");
 	}
@@ -51,25 +52,61 @@ public class ActorDetailImpl implements ActorDetail {
 	}
 
 	/**
-	 * @return 姓氏
+	 * @return 入职时间
 	 */
-	@Column(name = "FIRST_NAME")
-	public String getFirstName() {
-		return getString("firstName");
+	@Column(name = "WORK_DATE")
+	public Calendar getWorkDate() {
+		return getCalendar("workDate");
 	}
-	public void setFirstName(String firstName) {
-		set("firstName", firstName);
+
+	public void setWorkDate(Calendar workDate) {
+		set("workDate", workDate);
 	}
 
 	/**
-	 * @return 名字
+	 * @return 身份证
 	 */
-	@Column(name = "LAST_NAME")
-	public String getLastName() {
-		return getString("lastName");
+	public String getCard() {
+		return getString("card");
 	}
-	public void setLastName(String lastName) {
-		set("lastName", lastName);
+	public void setCard(String card) {
+		set("card", card);
+	}
+
+	/**
+	 * @return 备注
+	 */
+	public String getComment() {
+		return getString("comment");
+	}
+	public void setComment(String comment) {
+		set("comment", comment);
+	}
+
+	public static final Integer SEX_NONE = 0;
+	public static final Integer SEX_MEN = 1;
+	public static final Integer SEX_WOMEN = 2;
+	/**
+	 * @return 性别(0-未设置,1-男,2-女)
+	 */
+	@Column
+	public Integer getSex() {
+		return getInteger("sex");
+	}
+	public void setSex(Integer sex) {
+		set("sex", sex);
+	}
+	
+	/**
+	 * @return 性别(0-未设置,1-男,2-女)
+	 */
+	@ManyToOne(fetch=FetchType.EAGER, optional = true)
+	@JoinColumn(name = "DUTY_ID", referencedColumnName = "ID")
+	public Duty getDuty() {
+		return (Duty)get("duty");
+	}
+	public void setDuty(Duty duty) {
+		set("sex", duty);
 	}
 
 	@Transient
