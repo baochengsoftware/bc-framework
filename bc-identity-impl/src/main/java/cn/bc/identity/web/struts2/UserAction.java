@@ -108,7 +108,7 @@ public class UserAction extends AbstractActorAction {
 		// Integer(Entity.STATUS_ENABLED)));
 		condition.add(new OrderCondition("order", Direction.Asc).add("code",
 				Direction.Asc));
-		return condition;
+		return condition.add(this.getSearchCondition());
 	}
 
 	protected Integer[] getBelongTypes() {
