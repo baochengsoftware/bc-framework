@@ -37,11 +37,11 @@ import cn.bc.web.ui.html.toolbar.ToolbarSearchButton;
 @Controller
 public class MessageAction extends CrudAction<Long, Message> {
 	private static final long serialVersionUID = 1L;
-	private MessageService messageService;
+	//private MessageService messageService;
 
 	@Autowired
 	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService;
+		//this.messageService = messageService;
 		this.setCrudService(messageService);
 	}
 

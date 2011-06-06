@@ -15,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.bc.core.Entity;
 import cn.bc.desktop.domain.Shortcut;
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorImpl;
 import cn.bc.identity.domain.ActorRelation;
-import cn.bc.identity.domain.ActorRelationImpl;
 import cn.bc.identity.service.ActorRelationService;
 import cn.bc.identity.service.ActorService;
 import cn.bc.security.domain.Module;
@@ -67,7 +65,7 @@ public class ShortcutServiceImplTest extends
 	protected Shortcut createShortcut(Actor actor, Module module, String order) {
 		Shortcut shortcut = super.createInstance(this.getDefaultConfig());
 		shortcut.setOrder(order);
-		shortcut.setActor((ActorImpl)actor);
+		shortcut.setActor((Actor)actor);
 		shortcut.setModule(module);
 		return shortcut;
 	}
@@ -83,7 +81,7 @@ public class ShortcutServiceImplTest extends
 
 		// 仅属于user的Shortcut
 		Shortcut shortcut4user = this.createInstance(this.getDefaultConfig());
-		shortcut4user.setActor((ActorImpl)user);
+		shortcut4user.setActor((Actor)user);
 		this.shortcutService.save(shortcut4user);
 		Assert.assertNotNull(shortcut4user.getId());
 
@@ -107,7 +105,7 @@ public class ShortcutServiceImplTest extends
 
 		// 仅属于user的Shortcut
 		Shortcut shortcut4user = this.createShortcut(user, null, "01");
-		shortcut4user.setActor((ActorImpl)user);
+		shortcut4user.setActor((Actor)user);
 		this.shortcutService.save(shortcut4user);
 		Assert.assertNotNull(shortcut4user.getId());
 
@@ -218,7 +216,7 @@ public class ShortcutServiceImplTest extends
 
 	private ActorRelation createActorRelation(Actor master, Actor follower,
 			Integer type, String order) {
-		ActorRelation ar = new ActorRelationImpl();
+		ActorRelation ar = new ActorRelation();
 		ar.setMaster(master);
 		ar.setFollower(follower);
 		ar.setType(type);
@@ -228,7 +226,7 @@ public class ShortcutServiceImplTest extends
 
 
 	private Actor createActor(int type, String code, String order) {
-		ActorImpl actor = new ActorImpl();
+		Actor actor = new Actor();
 		actor.setType(type);
 		actor.setInner(false);
 		actor.setStatus(Entity.STATUS_ENABLED);

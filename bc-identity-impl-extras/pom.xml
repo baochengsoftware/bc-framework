@@ -14,10 +14,5 @@
 			<artifactId>persistence-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>cn.bc</groupId>
-			<artifactId>bc-identity</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 </project>

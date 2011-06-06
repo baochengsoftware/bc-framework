@@ -16,12 +16,10 @@ import cn.bc.core.query.condition.Condition;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
-import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.desktop.domain.Shortcut;
 import cn.bc.desktop.service.ShortcutService;
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorImpl;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.GridData;
@@ -56,7 +54,7 @@ public class ShortcutAction extends CrudAction<Long, Shortcut> implements
 	public String create() throws Exception {
 		this.setE(this.shortcutService.create());
 		// 设置属于当前用户
-		this.getE().setActor((ActorImpl) this.session.get("user"));
+		this.getE().setActor((Actor) this.session.get("user"));
 		return "form";
 	}
 
@@ -67,7 +65,7 @@ public class ShortcutAction extends CrudAction<Long, Shortcut> implements
 
 	@Override
 	protected Condition getCondition() {
-		Actor curUser = (ActorImpl) this.session.get("user");
+		Actor curUser = (Actor) this.session.get("user");
 		AndCondition condition = new AndCondition();
 		condition.add(new EqualsCondition("actor.id", curUser.getId()));//当前用户的桌面快捷方式
 		condition.add(new OrderCondition("order", Direction.Asc));

@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.bc.core.Entity;
 import cn.bc.desktop.domain.Personal;
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorImpl;
 import cn.bc.identity.service.ActorService;
 import cn.bc.test.AbstractEntityCrudTest;
 
@@ -30,7 +29,7 @@ public class PersionServiceImplTest extends
 	public void setPersonalService(
 			PersonalService personalService) {
 		this.personalService = personalService;
-		this.crudOperations = personalService;// ¸³Öµ»ùÀàµÄcrud²Ù×÷¶ÔÏó
+		this.crudOperations = personalService;// ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½crudï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 
 	@Autowired
@@ -48,28 +47,28 @@ public class PersionServiceImplTest extends
 
 	protected Personal createPersonal(Actor actor) {
 		Personal c = this.createInstance(this.getDefaultConfig());
-		c.setActor((ActorImpl)actor);
+		c.setActor((Actor)actor);
 		return c;
 	}
 
 	@Test
 	public void testLoadGlobal() {
-		// Çå¿Õ²âÊÔÏÖ³¡
+		// ï¿½ï¿½Õ²ï¿½ï¿½ï¿½ï¿½Ö³ï¿½
 		deleteAll();
 
-		// Í¨ÓÃµÄ
+		// Í¨ï¿½Ãµï¿½
 		Personal personal4common = this.createPersonal(null);
 		this.personalService.save(personal4common);
 		Assert.assertNotNull(personal4common.getId());
 
-		// ·´²é
+		// ï¿½ï¿½ï¿½ï¿½
 		Personal c = this.personalService.loadGlobalConfig();
 		Assert.assertEquals(personal4common, c);
 	}
 
 	@Test
 	public void testLoadByActor() {
-		// Çå¿Õ²âÊÔÏÖ³¡
+		// ï¿½ï¿½Õ²ï¿½ï¿½ï¿½ï¿½Ö³ï¿½
 		deleteAll();
 
 		// user
@@ -77,23 +76,23 @@ public class PersionServiceImplTest extends
 		this.actorService.save(user);
 		Assert.assertNotNull(user.getId());
 
-		// Í¨ÓÃµÄ
+		// Í¨ï¿½Ãµï¿½
 		Personal personal4common = this.createPersonal(null);
 		this.personalService.save(personal4common);
 		Assert.assertNotNull(personal4common.getId());
 
-		// ·´²é
+		// ï¿½ï¿½ï¿½ï¿½
 		Personal c = this.personalService.loadByActor(user.getId(),true);
 		Assert.assertEquals(personal4common, c);
 		c = this.personalService.loadByActor(user.getId());
 		Assert.assertNull(c);
 
-		// ×¨ÓÃµÄ
+		// ×¨ï¿½Ãµï¿½
 		Personal personal4user = this.createPersonal(user);
 		this.personalService.save(personal4user);
 		Assert.assertNotNull(personal4user.getId());
 
-		// ·´²é
+		// ï¿½ï¿½ï¿½ï¿½
 		c = this.personalService.loadByActor(user.getId());
 		Assert.assertEquals(personal4user, c);
 		c = this.personalService.loadByActor(user.getId(),true);
@@ -102,21 +101,21 @@ public class PersionServiceImplTest extends
 
 	@Test
 	public void testLoadByActorError() {
-		// Çå¿Õ²âÊÔÏÖ³¡
+		// ï¿½ï¿½Õ²ï¿½ï¿½ï¿½ï¿½Ö³ï¿½
 		deleteAll();
 
 		Assert.assertNull(this.personalService.loadByActor(new Long(1)));
 	}
 
 	private Actor createActor(int type, String code, String order) {
-		ActorImpl actor = new ActorImpl();
+		Actor actor = new Actor();
 		actor.setType(type);
 		actor.setInner(false);
 		actor.setStatus(Entity.STATUS_ENABLED);
 		actor.setUid(UUID.randomUUID().toString());
 		actor.setCode(code);
 		actor.setOrder(order);
-		actor.setName("²âÊÔ" + code);
+		actor.setName("ï¿½ï¿½ï¿½ï¿½" + code);
 
 		return actor;
 	}

@@ -10,10 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cn.bc.core.DefaultEntity;
-import cn.bc.identity.domain.ActorImpl;
+import cn.bc.identity.domain.Actor;
 
 /**
- * ¸öÈËÉèÖÃ
+ * ä¸ªæ€§åŒ–è®¾ç½®
  * 
  * @author dragon
  */
@@ -22,9 +22,9 @@ import cn.bc.identity.domain.ActorImpl;
 public class Personal extends DefaultEntity {
 	private static final long serialVersionUID = 1L;
 
-	private String font;// ×ÖÌå´óĞ¡
-	private String theme;// Ö÷ÌâÃû³Æ
-	private ActorImpl actor;// ËùÊôµÄ²ÎÓëÕß
+	private String font;// å­—ä½“å¤§å°
+	private String theme;// ä¸»é¢˜åç§°
+	private Actor actor;// æ‰€å±å‚ä¸è€…
 
 	public String getFont() {
 		return font;
@@ -42,14 +42,13 @@ public class Personal extends DefaultEntity {
 		this.theme = theme;
 	}
 
-	//TODO struts2ÊôĞÔÎª½Ó¿ÚÊ±±£´æ³ö´í£¬ÎŞ·¨ÊµÀı»¯
-	@ManyToOne(targetEntity = ActorImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Actor.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "AID", nullable = true, updatable = false)
-	public ActorImpl getActor() {
+	public Actor getActor() {
 		return actor;
 	}
 
-	public void setActor(ActorImpl actor) {
+	public void setActor(Actor actor) {
 		this.actor = actor;
 	}
 }

@@ -14,11 +14,11 @@ import cn.bc.message.domain.Message;
  */
 public class MessageServiceImpl extends
 		DefaultCrudService<Message> implements MessageService {
-	private MessageDao messageDao;
+	//private MessageDao messageDao;
 
 	@Autowired
 	public void setMessageDao(MessageDao messageDao) {
-		this.messageDao = messageDao;
+		//this.messageDao = messageDao;
 		this.setCrudDao(messageDao);
 	}
 }

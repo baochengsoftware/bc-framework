@@ -12,7 +12,6 @@ import cn.bc.core.Entity;
 import cn.bc.desktop.domain.Personal;
 import cn.bc.desktop.service.PersonalService;
 import cn.bc.identity.domain.Actor;
-import cn.bc.identity.domain.ActorImpl;
 import cn.bc.identity.service.ActorService;
 import cn.bc.web.struts2.CrudAction;
 
@@ -60,7 +59,7 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 
 	@Override
 	public String edit() throws Exception {
-		ActorImpl actor = (ActorImpl)getCurrentActor();
+		Actor actor = (Actor)getCurrentActor();
 		Personal personal = this.personalService.loadByActor(actor.getId());
 		if (personal == null) {// 没有就从全局配置复制一个
 			Personal common = this.personalService.loadGlobalConfig();
@@ -87,7 +86,7 @@ public class PersonalAction extends CrudAction<Long, Personal> {
 			personal.setInner(common.isInner());
 			personal.setFont(common.getFont());
 			personal.setTheme(common.getTheme());
-			personal.setActor((ActorImpl)actor);
+			personal.setActor((Actor)actor);
 			if (font != null && font.length() > 0)
 				personal.setFont(font);
 			if (theme != null && theme.length() > 0)

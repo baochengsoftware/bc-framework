@@ -26,7 +26,7 @@
 		</dependency>
 		<dependency>
 			<groupId>cn.bc</groupId>
-			<artifactId>bc-identity-impl-extras</artifactId>
+			<artifactId>bc-identity</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

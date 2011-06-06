@@ -11,16 +11,23 @@ package cn.bc.identity.domain;
  * 
  * @author dragon
  */
-public interface ActorProxy extends Actor {
+public class ActorProxy extends Actor {
+	private static final long serialVersionUID = 1L;
+	private Actor actor;
+	
 	/**
 	 * @return 返回所代理的参与者
 	 */
-	Actor getActor();
+	Actor getActor(){
+		return actor;
+	}
 
 	/**
 	 * 设置所要代理的参与者
 	 * 
 	 * @param actor
 	 */
-	void setActor(Actor actor);
+	void setActor(Actor actor){
+		this.actor = actor;
+	}
 }

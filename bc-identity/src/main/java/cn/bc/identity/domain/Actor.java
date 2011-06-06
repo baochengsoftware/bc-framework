@@ -5,19 +5,32 @@ package cn.bc.identity.domain;
 
 import java.util.Set;
 
-import cn.bc.core.Entity;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import cn.bc.security.domain.Role;
 
 /**
  * 参与者
- * <p>
- * 参与者既可以代表一个人也可以代表一个组织, 使用该接口可以模糊人与组织间的关系， 组织也是一种抽象表示，可以代表单位、部门、岗位、团队等。
- * 如一项任务可能派给具体的人也可以派给具体的某个部门或岗位。
- * </p>
  * 
  * @author dragon
  */
-public interface Actor extends Entity<Long> {
+@Entity
+@Table(name = "BC_IDENTITY_ACTOR")
+public class Actor implements cn.bc.core.Entity<Long> {
+	private static final long serialVersionUID = 1L;
 	/** 类型:未定义 */
 	public static final int TYPE_UNDEFINED = 0;
 	/** 类型:用户 */
@@ -29,98 +42,141 @@ public interface Actor extends Entity<Long> {
 	/** 类型:岗位或团队 */
 	public static final int TYPE_GROUP = 4;
 
-	/**
-	 * @return 编码
-	 */
-	String getCode();
-
-	/**
-	 * 设置编码
-	 * 
-	 * @param code
-	 */
-	void setCode(String code);
-
-	/**
-	 * @return 名称
-	 */
-	String getName();
-
-	/**
-	 * 设置名称
-	 * 
-	 * @param name
-	 */
-	void setName(String name);
-
-	/**
-	 * @return 类型
-	 */
-	int getType();
-
-	/**
-	 * 设置类型
-	 * 
-	 * @param type
-	 */
-	void setType(int type);
-
-	/**
-	 * @return 邮箱
-	 */
-	String getEmail();
-
-	/**
-	 * 设置邮箱
-	 * 
-	 * @param email
-	 */
-	void setEmail(String email);
-
-	/**
-	 * @return 联系电话
-	 */
-	String getPhone();
-
-	/**
-	 * 设置联系电话
-	 * 
-	 * @param phone
-	 */
-	void setPhone(String phone);
+	public Actor(){
+		
+	}
 	
-	/**
-	 * @return 同类参与者之间的排序号
-	 */
-	String getOrder();
+	private Long id;
+	private String uid;
+	private int status = cn.bc.core.Entity.STATUS_ENABLED;
+	private boolean inner = false;
+
+	private String name;
+	private String code;
+	private int type = Actor.TYPE_UNDEFINED;
+	private String email;
+	private String phone;
+	private String order;
+
+	private ActorDetail detail;
 	
-	/**
-	 * 设置同类参与者之间的排序号
-	 * @param order
-	 */
-	void setOrder(String order);
+	private Set<Role> roles;//拥有的角色列表
 
-	/**
-	 * @return 扩展属性
-	 */
-	ActorDetail getDetail();
+	@ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name="BC_SECURITY_ROLE_ACTOR",
+        joinColumns=
+            @JoinColumn(name="AID", referencedColumnName="ID"),
+        inverseJoinColumns=
+            @JoinColumn(name="RID", referencedColumnName="ID")
+        )
+    @OrderBy("code asc")
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-	/**
-	 * 设置扩展属性
-	 * 
-	 * @param detail
-	 *            扩展属性
-	 */
-	void setDetail(ActorDetail detail);
-	
-	/**
-	 * @return 拥有的角色
-	 */
-	Set<Role> getRoles();
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
-	/**
-	 * 设置拥有的角色
-	 * @param roles
-	 */
-	void setRoles(Set<Role> roles);
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Column(name = "UID_")
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	@Column(name = "TYPE_")
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	@Column(name = "STATUS_")
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@OneToOne(targetEntity = ActorDetail.class, cascade = CascadeType.ALL, optional = true)
+	@JoinColumn(name = "DETAIL_ID", referencedColumnName = "ID")
+	public ActorDetail getDetail() {
+		return detail;
+	}
+
+	@Column(name = "ORDER_")
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public void setDetail(ActorDetail detail) {
+		this.detail = detail;
+	}
+
+	@Transient
+	public boolean isNew() {
+		return getId() == null || getId() <= 0;
+	}
+
+	@Column(name = "INNER_")
+	public boolean isInner() {
+		return inner;
+	}
+
+	public void setInner(boolean inner) {
+		this.inner = inner;
+	}
 }

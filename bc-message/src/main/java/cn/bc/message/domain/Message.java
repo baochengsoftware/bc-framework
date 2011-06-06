@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cn.bc.core.DefaultEntity;
-import cn.bc.identity.domain.ActorImpl;
+import cn.bc.identity.domain.Actor;
 
 /**
  * 消息
@@ -29,8 +29,8 @@ public class Message extends DefaultEntity {
 	private String content;// 内容
 	private Integer type;// 类型
 	private Calendar sendDate;// 发送时间
-	private ActorImpl sender;// 发送人
-	private ActorImpl receiver;// 接收人
+	private Actor sender;// 发送人
+	private Actor receiver;// 接收人
 	private boolean read; // 阅读标志
 	private Long fromId; // 来源标识
 	private Integer fromType; // 来源类型
@@ -44,23 +44,23 @@ public class Message extends DefaultEntity {
 		this.sendDate = sendDate;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = ActorImpl.class)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Actor.class)
 	@JoinColumn(name = "SENDER_ID", referencedColumnName = "ID")
-	public ActorImpl getSender() {
+	public Actor getSender() {
 		return sender;
 	}
 
-	public void setSender(ActorImpl sender) {
+	public void setSender(Actor sender) {
 		this.sender = sender;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = ActorImpl.class)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false, targetEntity = Actor.class)
 	@JoinColumn(name = "RECEIVER_ID", referencedColumnName = "ID")
-	public ActorImpl getReceiver() {
+	public Actor getReceiver() {
 		return receiver;
 	}
 
-	public void setReceiver(ActorImpl receiver) {
+	public void setReceiver(Actor receiver) {
 		this.receiver = receiver;
 	}
 
