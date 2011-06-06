@@ -23,8 +23,8 @@
 		<module>bc-web-struts2</module>
 
 		<module>bc-identity</module>
-		<module>bc-identity-impl-extras</module>
-		<module>bc-identity-impl</module>
+		<!--<module>bc-identity-impl-extras</module>
+		<module>bc-identity-impl</module>-->
 		<module>bc-security</module>
 		<module>bc-desktop</module>
 		<module>bc-report</module>

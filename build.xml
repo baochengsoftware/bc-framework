@@ -9,6 +9,10 @@
 	<property name="fixlastline" value="true" />
 	<property name="encoding" value="UTF-8" />
 
+	<target name="cleanAll">
+		
+	</target>
+
 	<target name="build">
 		<antcall target="buildsql" />
 		<!--<antcall target="db.drop" />
@@ -79,7 +83,7 @@
 				<fileset dir="${src.dir}/bc-security/src/@{fromDir}/resources">
 					<include name="**/@{file}" />
 				</fileset>
-				<fileset dir="${src.dir}/bc-identity-impl/src/@{fromDir}/resources">
+				<fileset dir="${src.dir}/bc-identity/src/@{fromDir}/resources">
 					<include name="**/@{file}" />
 				</fileset>
 				<fileset dir="${src.dir}/bc-desktop/src/@{fromDir}/resources">
@@ -114,7 +118,7 @@
 				<fileset dir="${src.dir}/bc-desktop/src/@{fromDir}/resources">
 					<include name="**/@{file}" />
 				</fileset>
-				<fileset dir="${src.dir}/bc-identity-impl/src/@{fromDir}/resources">
+				<fileset dir="${src.dir}/bc-identity/src/@{fromDir}/resources">
 					<include name="**/@{file}" />
 				</fileset>
 				<fileset dir="${src.dir}/bc-security/src/@{fromDir}/resources">
