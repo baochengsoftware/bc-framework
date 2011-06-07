@@ -57,10 +57,11 @@ public class ActorRelationDaoImpl extends HibernateCrudJpaDao<ActorRelation>
 		AndCondition condition = new AndCondition();
 		condition.add(new EqualsCondition("type", type));
 		condition.add(new EqualsCondition("follower.id", followerId));
-		
-		if (masterTypes != null && masterTypes.length > 0){
+
+		if (masterTypes != null && masterTypes.length > 0) {
 			if (masterTypes.length == 1) {
-				condition.add(new EqualsCondition("master.type", masterTypes[0]));
+				condition
+						.add(new EqualsCondition("master.type", masterTypes[0]));
 			} else {
 				condition.add(new InCondition("master.type", masterTypes));
 			}
@@ -162,5 +163,11 @@ public class ActorRelationDaoImpl extends HibernateCrudJpaDao<ActorRelation>
 
 	public void delete(ActorRelation actorRelation) {
 		this.getJpaTemplate().remove(actorRelation);
+	}
+
+	public void delete(List<ActorRelation> actorRelations) {
+		if (actorRelations != null)
+			for (ActorRelation ar : actorRelations)
+				this.getJpaTemplate().remove(ar);
 	}
 }

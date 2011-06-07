@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -44,17 +42,12 @@ import cn.bc.web.ui.html.toolbar.ToolbarButton;
  */
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Controller
-public class UserAction extends AbstractActorAction implements SessionAware {
+public class UserAction extends AbstractActorAction {
 	private static final long serialVersionUID = 1L;
 	// private static final Log logger = LogFactory.getLog(UserAction.class);
 	private UserService userService;
 	private DutyService dutyService;
 	private IdGeneratorService idGeneratorService;
-	private Map<String, Object> session;
-
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -150,25 +143,36 @@ public class UserAction extends AbstractActorAction implements SessionAware {
 
 	@Override
 	public String save() throws Exception {
-		this.userService.save4belong(this.getE(), this.getBelong());
+		// 处理分配的角色
+		dealRoles4Save();
+
+		// 处理分派的岗位
+		Long[] groupIds = null;
+		if (this.assignGroupIds != null && this.assignGroupIds.length() > 0) {
+			String[] gids = this.assignGroupIds.split(",");
+			groupIds = new Long[gids.length];
+			for (int i = 0; i < gids.length; i++) {
+				groupIds[i] = new Long(gids[i]);
+			}
+		}
+
+		// 保存
+		this.userService.save(this.getE(), this.belong, groupIds);
 		return "saveSuccess";
 	}
 
 	public List<Duty> duties;// 可选的职务列表
 	public List<Actor> ownedGroups;// 已拥有的岗位
-	public Set<Role> ownedRoles;// 已拥有的角色
-	public Set<Role> inheritRolesFromOU;// 从上级组织继承的角色信息
 	public Set<Role> inheritRolesFromGroup;// 从岗位间接获取的角色信息
-	public String assignGroupIds;//分派的岗位id，多个id用逗号连接
-	public String assignRoleIds;//分派的角色id，多个id用逗号连接
-	
+	public String assignGroupIds;// 分派的岗位id，多个id用逗号连接
+
 	@Override
 	public String edit() throws Exception {
 		this.setE(this.getCrudService().load(this.getId()));
 
 		// 加载上级组织信息
-		this.setBelong((Actor) this.getActorService().loadBelong(this.getId(),
-				getBelongTypes()));
+		this.belong = (Actor) this.getActorService().loadBelong(this.getId(),
+				getBelongTypes());
 
 		// 表单可选项的加载
 		initSelects();
@@ -178,17 +182,8 @@ public class UserAction extends AbstractActorAction implements SessionAware {
 				new Integer[] { ActorRelation.TYPE_BELONG },
 				new Integer[] { Actor.TYPE_GROUP });
 
-		// 加载直接分配的角色信息
-		this.ownedRoles = this.userService.load(this.getId()).getRoles();
-
-		// 加载从上级组织继承的角色信息
-		List<Actor> ancestorOU = this.userService.findAncestorOrganization(this
-				.getBelong().getId(), new Integer[] { Actor.TYPE_UNIT,
-				Actor.TYPE_DEPARTMENT });
-		this.inheritRolesFromOU = new HashSet<Role>();
-		for (Actor ou : ancestorOU) {
-			inheritRolesFromOU.addAll(ou.getRoles());
-		}
+		//加载直接分配的角色和从上级继承的角色
+		dealRoles4Edit();
 
 		// 加载从岗位间接获取的角色信息
 		this.inheritRolesFromGroup = new HashSet<Role>();
@@ -204,9 +199,5 @@ public class UserAction extends AbstractActorAction implements SessionAware {
 		// 加载可选的职务列表
 		this.duties = this.dutyService.createQuery()
 				.condition(new OrderCondition("code", Direction.Asc)).list();
-		// 加载可选的岗位信息
-		// this.standbyGroups = this.userService.find(
-		// new Integer[] { Actor.TYPE_GROUP },
-		// new Integer[] { Entity.STATUS_ENABLED });
 	}
 }

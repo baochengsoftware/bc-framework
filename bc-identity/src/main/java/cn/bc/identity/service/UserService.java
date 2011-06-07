@@ -1,5 +1,6 @@
 package cn.bc.identity.service;
 
+import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.AuthData;
 
 /**
@@ -23,4 +24,12 @@ public interface UserService extends ActorService {
 	 * @return
 	 */
 	AuthData loadAuthData(Long userId);
+
+	/**
+	 * 保存用户信息
+	 * @param user 用户
+	 * @param belong 用户隶属的上级
+	 * @param groupIds 用户所分派的岗位id
+	 */
+	Actor save(Actor user, Actor belong, Long[] groupIds);
 }

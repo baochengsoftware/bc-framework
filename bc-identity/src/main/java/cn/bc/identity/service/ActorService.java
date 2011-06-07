@@ -114,7 +114,7 @@ public interface ActorService extends CrudService<Actor>{
 
 	/**
 	 * @param follower
-	 * @param belong
+	 * @param belong 单一隶属上级
 	 */
 	Actor save4belong(Actor follower, Actor belong);
 

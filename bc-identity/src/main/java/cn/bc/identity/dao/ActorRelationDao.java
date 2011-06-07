@@ -65,4 +65,10 @@ public interface ActorRelationDao extends CrudDao<ActorRelation>{
 	 * @param actorRelation 对象
 	 */
 	void delete(ActorRelation actorRelation);
+	
+	/**
+	 * CRUD'D:删除对象
+	 * @param actorRelations 对象
+	 */
+	void delete(List<ActorRelation> actorRelations);
 }
