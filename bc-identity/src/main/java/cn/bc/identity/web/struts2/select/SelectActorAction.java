@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import cn.bc.identity.service.ActorService;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * 选择单位信息
+ * 选择Actor信息
  * 
  * @author dragon
  * 
@@ -29,7 +30,7 @@ public class SelectActorAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private List<Actor> es;
 	private ActorService actorService;
-	private long[] selected;// 当前选中项的id值，多个用逗号连接
+	public long[] selected;// 当前选中项的id值，多个用逗号连接
 	private long[] exclude;// 要排除可选择的项的id，多个用逗号连接
 	private boolean multiple;// 是否可以多选
 
@@ -37,8 +38,8 @@ public class SelectActorAction extends ActionSupport {
 		return actorService;
 	}
 
-	@Autowired
-	public void setActorService(ActorService actorService) {
+	@Autowired()
+	public void setActorService(@Qualifier(value="actorService") ActorService actorService) {
 		this.actorService = actorService;
 	}
 
@@ -56,14 +57,6 @@ public class SelectActorAction extends ActionSupport {
 
 	public void setEs(List<Actor> es) {
 		this.es = es;
-	}
-
-	public long[] getSelected() {
-		return selected;
-	}
-
-	public void setSelected(long[] selected) {
-		this.selected = selected;
 	}
 
 	public long[] getExclude() {

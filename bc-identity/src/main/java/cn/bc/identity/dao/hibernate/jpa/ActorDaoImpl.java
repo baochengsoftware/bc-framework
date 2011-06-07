@@ -352,7 +352,8 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 
 		// 处理与上级的隶属
 		ActorRelation curAr;
-		curAr = this.actorRelationDao.load4Belong(follower.getId());
+		curAr = this.actorRelationDao.load4Belong(follower.getId(),
+				new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
 		if (belong != null && !belong.isNew()) {
 			belong = this.load(belong.getId());// 重新加载一下belong
 			if (curAr != null
@@ -374,7 +375,7 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 			if (curAr != null)
 				this.actorRelationDao.delete(curAr);
 		}
-		
+
 		return follower;
 	}
 

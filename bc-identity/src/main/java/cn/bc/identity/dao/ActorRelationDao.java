@@ -33,8 +33,10 @@ public interface ActorRelationDao extends CrudDao<ActorRelation>{
 	 * 获取主控方某类型的关联关系列表
 	 * @param type 关联类型,不能为空
 	 * @param followerId 从属方Id,不能为空
+	 * @param masterTypes 主控方类型
 	 * @return
 	 */
+	List<ActorRelation> findByFollower(Integer type, Long followerId, Integer[] masterTypes);
 	List<ActorRelation> findByFollower(Integer type, Long followerId);
 	
 	/**
@@ -53,9 +55,10 @@ public interface ActorRelationDao extends CrudDao<ActorRelation>{
 
 	/**获取单一的隶属上级
 	 * @param followerId 下级的id
+	 * @param masterTypes 主控方类型
 	 * @return
 	 */
-	ActorRelation load4Belong(Long followerId);
+	ActorRelation load4Belong(Long followerId, Integer[] masterTypes);
 	
 	/**
 	 * CRUD'D:删除对象

@@ -107,7 +107,7 @@ public class ActorDetail implements Serializable {
 		return (Duty)get("duty");
 	}
 	public void setDuty(Duty duty) {
-		set("sex", duty);
+		set("duty", duty);
 	}
 
 	@Transient

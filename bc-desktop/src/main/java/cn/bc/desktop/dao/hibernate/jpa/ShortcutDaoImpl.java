@@ -122,7 +122,7 @@ public class ShortcutDaoImpl extends HibernateCrudJpaDao<Shortcut> implements
 					} else {
 						hql.append(" and sm.id in (?");
 						args.add(mids.get(0));
-						for (int i = 1; i < aids.size(); i++) {
+						for (int i = 1; i < mids.size(); i++) {
 							hql.append(",?");
 							args.add(mids.get(i));
 						}

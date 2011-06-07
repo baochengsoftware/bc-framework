@@ -11,6 +11,7 @@ import cn.bc.core.exception.CoreException;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
+import cn.bc.core.query.condition.impl.InCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.dao.ActorRelationDao;
 import cn.bc.identity.domain.ActorRelation;
@@ -46,11 +47,24 @@ public class ActorRelationDaoImpl extends HibernateCrudJpaDao<ActorRelation>
 	}
 
 	public List<ActorRelation> findByFollower(Integer type, Long followerId) {
+		return findByFollower(type, followerId, null);
+	}
+
+	public List<ActorRelation> findByFollower(Integer type, Long followerId,
+			Integer[] masterTypes) {
 		Assert.notNull(type);
 		Assert.notNull(followerId);
 		AndCondition condition = new AndCondition();
 		condition.add(new EqualsCondition("type", type));
 		condition.add(new EqualsCondition("follower.id", followerId));
+		
+		if (masterTypes != null && masterTypes.length > 0){
+			if (masterTypes.length == 1) {
+				condition.add(new EqualsCondition("master.type", masterTypes[0]));
+			} else {
+				condition.add(new InCondition("master.type", masterTypes));
+			}
+		}
 
 		OrderCondition oc = new OrderCondition("master.order", Direction.Asc);
 		oc.add("order", Direction.Asc);
@@ -90,7 +104,8 @@ public class ActorRelationDaoImpl extends HibernateCrudJpaDao<ActorRelation>
 			}
 			hql.append(t.toString());
 		}
-		return (List<ActorRelation>)this.getJpaTemplate().find(hql.toString(), args.toArray());
+		return (List<ActorRelation>) this.getJpaTemplate().find(hql.toString(),
+				args.toArray());
 	}
 
 	public void deleteByMasterOrFollower(Serializable[] mfIds) {
@@ -131,15 +146,16 @@ public class ActorRelationDaoImpl extends HibernateCrudJpaDao<ActorRelation>
 		this.executeUpdate(hql.toString(), args);
 	}
 
-	public ActorRelation load4Belong(Long followerId) {
-		List<ActorRelation> ars = this.findByFollower(ActorRelation.TYPE_BELONG, followerId);
-		if(ars != null && !ars.isEmpty()){
-			if(ars.size() > 1){
+	public ActorRelation load4Belong(Long followerId, Integer[] masterTypes) {
+		List<ActorRelation> ars = this.findByFollower(
+				ActorRelation.TYPE_BELONG, followerId, masterTypes);
+		if (ars != null && !ars.isEmpty()) {
+			if (ars.size() > 1) {
 				throw new CoreException("no unique for load4Belong!");
-			}else{
+			} else {
 				return ars.get(0);
 			}
-		}else{
+		} else {
 			return null;
 		}
 	}

@@ -92,6 +92,11 @@
 			<result>/bc/identity/department/select2.jsp</result>
 		</action>
 	</package>
+	<package name="selectGroup" extends="bc-default" namespace="/bc">
+		<action name="selectGroup" class="selectGroupAction">
+			<result>/bc/identity/group/select.jsp</result>
+		</action>
+	</package>
 	<package name="authData" extends="bc-default" namespace="/bc/auth">
 		<action name="setPassword" class="authDataAction" method="setPassword">
 			<result name="form">/bc/identity/user/password.jsp</result>
