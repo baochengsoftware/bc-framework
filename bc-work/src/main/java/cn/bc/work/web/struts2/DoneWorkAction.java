@@ -14,8 +14,8 @@ import cn.bc.core.query.condition.Condition;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
-import cn.bc.web.CalendarFormater;
-import cn.bc.web.YesNoCnFormater;
+import cn.bc.web.formater.CalendarFormater;
+import cn.bc.web.formater.BooleanFormater;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.GridData;
@@ -95,7 +95,7 @@ public class DoneWorkAction extends CrudAction<Long, DoneWork> {
 				.setDir(Direction.Desc).setFormater(new CalendarFormater()));
 		columns.add(new TextColumn("work.classifier",
 				getText("work.classifier"), 150).setSortable(true).setFormater(
-				new YesNoCnFormater()));
+				new BooleanFormater(getText("label.yes"), getText("label.no"))));
 		columns.add(new TextColumn("work.subject", getText("work.subject"))
 				.setSortable(true));
 		columns.add(new TextColumn("work.sendDate", getText("work.sendDate"),

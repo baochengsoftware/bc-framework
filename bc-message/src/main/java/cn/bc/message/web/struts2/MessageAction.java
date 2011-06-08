@@ -16,8 +16,8 @@ import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.message.domain.Message;
 import cn.bc.message.service.MessageService;
-import cn.bc.web.CalendarFormater;
-import cn.bc.web.YesNoCnFormater;
+import cn.bc.web.formater.CalendarFormater;
+import cn.bc.web.formater.BooleanFormater;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.GridData;
@@ -89,7 +89,7 @@ public class MessageAction extends CrudAction<Long, Message> {
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
 		columns.add(new TextColumn("read", getText("message.read"), 40)
-				.setSortable(true).setFormater(new YesNoCnFormater()));
+				.setSortable(true).setFormater(new BooleanFormater()));
 		columns.add(new TextColumn("sendDate", getText("message.sendDate"), 120)
 				.setSortable(true).setDir(Direction.Asc)
 				.setFormater(new CalendarFormater()));

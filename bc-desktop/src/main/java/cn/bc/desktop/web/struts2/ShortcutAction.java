@@ -12,6 +12,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import cn.bc.core.Entity;
 import cn.bc.core.query.condition.Condition;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
@@ -20,6 +21,7 @@ import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.desktop.domain.Shortcut;
 import cn.bc.desktop.service.ShortcutService;
 import cn.bc.identity.domain.Actor;
+import cn.bc.web.formater.BooleanFormater;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.GridData;
@@ -53,6 +55,8 @@ public class ShortcutAction extends CrudAction<Long, Shortcut> implements
 	@Override
 	public String create() throws Exception {
 		this.setE(this.shortcutService.create());
+		this.getE().setStatus(Entity.STATUS_ENABLED);
+		this.getE().setStandalone(true);
 		// 设置属于当前用户
 		this.getE().setActor((Actor) this.session.get("user"));
 		return "form";
@@ -67,7 +71,7 @@ public class ShortcutAction extends CrudAction<Long, Shortcut> implements
 	protected Condition getCondition() {
 		Actor curUser = (Actor) this.session.get("user");
 		AndCondition condition = new AndCondition();
-		condition.add(new EqualsCondition("actor.id", curUser.getId()));//当前用户的桌面快捷方式
+		condition.add(new EqualsCondition("actor.id", curUser.getId()));// 当前用户的桌面快捷方式
 		condition.add(new OrderCondition("order", Direction.Asc));
 		return condition.add(this.getSearchCondition());
 	}
@@ -80,8 +84,8 @@ public class ShortcutAction extends CrudAction<Long, Shortcut> implements
 	// 设置页面的尺寸
 	@Override
 	protected PageOption buildListPageOption() {
-		return super.buildListPageOption().setWidth(500).setMinWidth(200)
-				.setHeight(300).setMinHeight(200);
+		return super.buildListPageOption().setWidth(600).setMinWidth(200)
+				.setHeight(400).setMinHeight(200);
 	}
 
 	@Override
@@ -89,7 +93,12 @@ public class ShortcutAction extends CrudAction<Long, Shortcut> implements
 		List<Column> columns = super.buildGridColumns();
 		columns.add(new TextColumn("order", getText("shortcut.order"), 80)
 				.setDir(Direction.Asc).setSortable(true));
-		columns.add(new TextColumn("name", getText("shortcut.name"), 80)
+		columns.add(new TextColumn("standalone",
+				getText("shortcut.standalone"), 80).setSortable(true)
+				.setFormater(
+						new BooleanFormater(getText("shortcut.standalone.yes"),
+								getText("shortcut.standalone.no"))));
+		columns.add(new TextColumn("name", getText("shortcut.name"), 100)
 				.setSortable(true));
 		columns.add(new TextColumn("url", getText("shortcut.url"))
 				.setSortable(true));

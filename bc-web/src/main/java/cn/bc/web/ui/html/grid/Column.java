@@ -1,7 +1,7 @@
 package cn.bc.web.ui.html.grid;
 
 import cn.bc.core.query.condition.Direction;
-import cn.bc.web.Formater;
+import cn.bc.web.formater.Formater;
 
 public interface Column {
 	/**

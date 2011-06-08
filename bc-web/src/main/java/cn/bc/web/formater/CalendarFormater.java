@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cn.bc.web;
+package cn.bc.web.formater;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

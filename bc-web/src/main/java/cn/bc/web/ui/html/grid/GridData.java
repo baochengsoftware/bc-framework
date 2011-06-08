@@ -12,7 +12,7 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
-import cn.bc.web.Formater;
+import cn.bc.web.formater.Formater;
 import cn.bc.web.ui.Component;
 import cn.bc.web.ui.html.Div;
 import cn.bc.web.ui.html.Span;

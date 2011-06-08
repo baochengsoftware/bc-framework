@@ -98,14 +98,12 @@ public class ShortcutDaoImpl extends HibernateCrudJpaDao<Shortcut> implements
 				if (mids != null && !mids.isEmpty())
 					hql.append(" left join s.module sm");
 
-				// actorIds
+				// actorIds -- 自己或上级组织定义的快捷方式
 				if (aids.size() == 1) {
-					hql.append(" where " + (includeCommon ? "(" : "")
-							+ "sa.id=?");
+					hql.append(" where sa.id=?");
 					args.add(aids.get(0));
 				} else {
-					hql.append(" where " + (includeCommon ? "(" : "")
-							+ "sa.id in (?");
+					hql.append(" where sa.id in (?");
 					args.add(aids.get(0));
 					for (int i = 1; i < aids.size(); i++) {
 						hql.append(",?");
@@ -114,13 +112,13 @@ public class ShortcutDaoImpl extends HibernateCrudJpaDao<Shortcut> implements
 					hql.append(")");
 				}
 
-				// moduleIds
+				// moduleIds--有权限访问的资源对应的快捷方式
 				if (mids != null && !mids.isEmpty()) {
 					if (mids.size() == 1) {
-						hql.append(" and sm.id=?");
+						hql.append(" or sm.id=?");
 						args.add(mids.get(0));
 					} else {
-						hql.append(" and sm.id in (?");
+						hql.append(" or sm.id in (?");
 						args.add(mids.get(0));
 						for (int i = 1; i < mids.size(); i++) {
 							hql.append(",?");
@@ -129,19 +127,17 @@ public class ShortcutDaoImpl extends HibernateCrudJpaDao<Shortcut> implements
 						hql.append(")");
 					}
 				}
-				if (includeCommon)
-					hql.append(" or s.actor is null)");
-
-				hql.append(" order by sa.order,s.order");
 			} else {//不包含父组织的处理
 				hql.append(" left join s.actor sa");
 				hql.append(" where sa.id=?");
 				args.add(actorId);
-				if (includeCommon)
-					// 不要使用sa is null：a.id is null
-					hql.append(" or s.actor is null");
-				hql.append(" order by sa.order,s.order");
 			}
+			if (includeCommon){
+				// 不要使用sa is null：a.id is null
+				// 全系统通用的快捷方式
+				 hql.append(" or (s.actor is null and s.module is null)");
+			}
+			hql.append(" order by s.order");
 		}
 		if (logger.isDebugEnabled()) {
 			logger.debug("hql=" + hql.toString());

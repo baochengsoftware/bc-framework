@@ -2,7 +2,9 @@ package cn.bc.identity.dao.hibernate.jpa;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -245,19 +247,19 @@ public class ActorDaoImpl extends HibernateCrudJpaDao<Actor> implements
 	public List<Actor> findAncestorOrganization(Long lowerOrganizationId,
 			Integer... ancestorOrganizationTypes) {
 		// 默认为单位+部门+岗位
-		if (ancestorOrganizationTypes == null)
+		if (ancestorOrganizationTypes == null || ancestorOrganizationTypes.length == 0)
 			ancestorOrganizationTypes = new Integer[] { Actor.TYPE_UNIT,
 					Actor.TYPE_DEPARTMENT, Actor.TYPE_GROUP };
 
 		// TODO 性能优化，以下只是使用了递归查找
-		List<Actor> ancestors = new ArrayList<Actor>();
+		Set<Actor> ancestors = new HashSet<Actor>();//使用Set避免重复
 		this.recursiveFindHigherOrganization(ancestors, lowerOrganizationId,
 				ancestorOrganizationTypes);
-		return ancestors;
+		return new ArrayList<Actor>(ancestors);
 	}
 
 	// 递归查找祖先组织
-	private void recursiveFindHigherOrganization(List<Actor> ancestors,
+	private void recursiveFindHigherOrganization(Set<Actor> ancestors,
 			Long lowerId, Integer... ancestorOrganizationTypes) {
 		List<Actor> highers = this.findHigherOrganization(lowerId,
 				ancestorOrganizationTypes);

@@ -1,4 +1,4 @@
-package cn.bc.web;
+package cn.bc.web.formater;
 
 /**
  * 值格式化接口

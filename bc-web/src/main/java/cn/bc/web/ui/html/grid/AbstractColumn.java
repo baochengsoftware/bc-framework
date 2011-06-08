@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import cn.bc.core.query.condition.Direction;
-import cn.bc.web.Formater;
+import cn.bc.web.formater.Formater;
 
 /**
  * 列的抽象实现
