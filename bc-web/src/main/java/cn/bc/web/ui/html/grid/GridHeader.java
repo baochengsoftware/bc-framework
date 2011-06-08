@@ -85,6 +85,8 @@ public class GridHeader extends Div {
 			column = columns.get(i);
 			td = new Td();
 			tr.addChild(td);
+			td.setAttr("data-id", column.getId());
+			td.setAttr("data-label", column.getLabel());
 
 			if (i == 1) {
 				td.addClazz("first");// 首列样式
