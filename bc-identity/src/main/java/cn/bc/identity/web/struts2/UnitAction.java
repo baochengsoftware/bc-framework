@@ -15,6 +15,7 @@ import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
+import cn.bc.web.formater.EntityStatusFormater;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
@@ -50,7 +51,8 @@ public class UnitAction extends AbstractActorAction {
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
 
-		columns.add(new TextColumn("status", getText("actor.status"), 40));
+		columns.add(new TextColumn("status", getText("actor.status"), 60)
+				.setFormater(new EntityStatusFormater(getEntityStatuses())));
 		columns.add(new TextColumn("order", getText("actor.order"), 80)
 				.setSortable(true).setDir(Direction.Asc));
 		columns.add(new TextColumn("code", getText("actor.code"), 80)

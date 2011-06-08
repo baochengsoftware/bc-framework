@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -81,7 +83,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 							+ this.entityClass + "' [" + this.getClass() + "]");
 			}
 		}
-		
+
 		contextPath = ServletActionContext.getRequest().getContextPath();
 	}
 
@@ -355,6 +357,7 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 
 	/**
 	 * 查询条件中要匹配的域
+	 * 
 	 * @return
 	 */
 	protected String[] getSearchFields() {
@@ -540,5 +543,21 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 	/** 页面需要另外加载的js文件，逗号连接多个文件 */
 	protected String getJs() {
 		return null;
+	}
+
+	/**
+	 * 获取Entity的状态值转换列表
+	 * 
+	 * @return
+	 */
+	protected Map<String, String> getEntityStatuses() {
+		Map<String, String> statuses = new HashMap<String, String>();
+		statuses.put(String.valueOf(Entity.STATUS_DISABLED),
+				getText("entity.status.disabled"));
+		statuses.put(String.valueOf(Entity.STATUS_ENABLED),
+				getText("entity.status.enabled"));
+		statuses.put(String.valueOf(Entity.STATUS_DELETED),
+				getText("entity.status.deleted"));
+		return statuses;
 	}
 }

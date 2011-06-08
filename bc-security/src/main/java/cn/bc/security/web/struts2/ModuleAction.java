@@ -4,7 +4,11 @@
 package cn.bc.security.web.struts2;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -18,6 +22,7 @@ import cn.bc.core.query.condition.impl.OrCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.security.domain.Module;
 import cn.bc.security.service.ModuleService;
+import cn.bc.security.web.ModuleTypeFormater;
 import cn.bc.web.struts2.CrudAction;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
@@ -39,10 +44,9 @@ public class ModuleAction extends CrudAction<Long, Module> {
 	// 模块类型列表
 	public ModuleAction() {
 		types = new ArrayList<KeyValue>();
-		types.add(new KeyValue(String.valueOf(Module.TYPE_FOLDER), "模块"));
-		types.add(new KeyValue(String.valueOf(Module.TYPE_OPERATE), "操作"));
-		types.add(new KeyValue(String.valueOf(Module.TYPE_INNER_LINK), "内部链接"));
-		types.add(new KeyValue(String.valueOf(Module.TYPE_OUTER_LINK), "外部链接"));
+		for (Entry<String, String> e : getModuleTypes().entrySet()) {
+			types.add(new KeyValue(e.getKey(), e.getValue()));
+		}
 	}
 
 	@Autowired
@@ -75,8 +79,9 @@ public class ModuleAction extends CrudAction<Long, Module> {
 		List<Column> columns = super.buildGridColumns();
 
 		// columns.add(new TextColumn("status", getText("actor.status"), 40));
-		columns.add(new TextColumn("type", getText("module.type"), 60)
-				.setSortable(true));
+		columns.add(new TextColumn("type", getText("module.type"), 80)
+				.setSortable(true).setFormater(
+						new ModuleTypeFormater(getModuleTypes())));
 		columns.add(new TextColumn("belong.name", getText("module.belong"), 80));
 		columns.add(new TextColumn("code", getText("label.order"), 100)
 				.setSortable(true).setDir(Direction.Asc));
@@ -89,6 +94,25 @@ public class ModuleAction extends CrudAction<Long, Module> {
 		columns.add(new TextColumn("option", getText("module.option"), 100));
 
 		return columns;
+	}
+
+	/**
+	 * 获取资源类型值转换列表
+	 * 
+	 * @return
+	 */
+	protected Map<String, String> getModuleTypes() {
+		Map<String, String> types = new HashMap<String, String>();
+		types = new LinkedHashMap<String, String>();
+		types.put(String.valueOf(Module.TYPE_FOLDER),
+				getText("module.type.folder"));
+		types.put(String.valueOf(Module.TYPE_OPERATE),
+				getText("module.type.operate"));
+		types.put(String.valueOf(Module.TYPE_INNER_LINK),
+				getText("module.type.innerLink"));
+		types.put(String.valueOf(Module.TYPE_OUTER_LINK),
+				getText("module.type.outerLink"));
+		return types;
 	}
 
 	// 查询条件中要匹配的域

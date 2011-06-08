@@ -18,6 +18,7 @@ import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.identity.domain.Actor;
 import cn.bc.identity.domain.ActorRelation;
 import cn.bc.identity.service.GroupService;
+import cn.bc.web.formater.EntityStatusFormater;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
@@ -60,7 +61,8 @@ public class GroupAction extends AbstractActorAction {
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
 
-		columns.add(new TextColumn("status", getText("actor.status"), 40));
+		columns.add(new TextColumn("status", getText("actor.status"), 60)
+				.setFormater(new EntityStatusFormater(getEntityStatuses())));
 		columns.add(new TextColumn("order", getText("actor.order"), 80)
 				.setSortable(true).setDir(Direction.Asc));
 		columns.add(new TextColumn("code", getText("actor.code"), 80)
@@ -68,7 +70,7 @@ public class GroupAction extends AbstractActorAction {
 		columns.add(new TextColumn("name", getText("actor.name"))
 				.setSortable(true));
 		columns.add(new TextColumn("phone", getText("actor.phone"), 120));
-		//columns.add(new TextColumn("email", getText("actor.email"), 150));
+		// columns.add(new TextColumn("email", getText("actor.email"), 150));
 
 		return columns;
 	}
@@ -125,7 +127,7 @@ public class GroupAction extends AbstractActorAction {
 				new Integer[] { ActorRelation.TYPE_BELONG },
 				new Integer[] { Actor.TYPE_USER });
 
-		//加载直接分配的角色和从上级继承的角色
+		// 加载直接分配的角色和从上级继承的角色
 		dealRoles4Edit();
 
 		return "form";

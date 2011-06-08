@@ -28,6 +28,7 @@ import cn.bc.identity.service.DutyService;
 import cn.bc.identity.service.IdGeneratorService;
 import cn.bc.identity.service.UserService;
 import cn.bc.security.domain.Role;
+import cn.bc.web.formater.EntityStatusFormater;
 import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.TextColumn;
 import cn.bc.web.ui.html.page.PageOption;
@@ -112,7 +113,8 @@ public class UserAction extends AbstractActorAction {
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
 
-		columns.add(new TextColumn("status", getText("actor.status"), 40));
+		columns.add(new TextColumn("status", getText("actor.status"), 60)
+				.setFormater(new EntityStatusFormater(getEntityStatuses())));
 		columns.add(new TextColumn("order", getText("actor.order"), 80)
 				.setSortable(true).setDir(Direction.Asc));
 		columns.add(new TextColumn("code", getText("user.code"))
@@ -182,7 +184,7 @@ public class UserAction extends AbstractActorAction {
 				new Integer[] { ActorRelation.TYPE_BELONG },
 				new Integer[] { Actor.TYPE_GROUP });
 
-		//加载直接分配的角色和从上级继承的角色
+		// 加载直接分配的角色和从上级继承的角色
 		dealRoles4Edit();
 
 		// 加载从岗位间接获取的角色信息
