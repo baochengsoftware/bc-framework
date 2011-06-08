@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import cn.bc.core.query.condition.Direction;
 import cn.bc.core.query.condition.impl.AndCondition;
 import cn.bc.core.query.condition.impl.EqualsCondition;
+import cn.bc.core.query.condition.impl.InCondition;
+import cn.bc.core.query.condition.impl.MixCondition;
 import cn.bc.core.query.condition.impl.OrderCondition;
 import cn.bc.security.domain.Module;
 import cn.bc.security.service.ModuleService;
@@ -32,13 +34,22 @@ public class SelectModuleAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private List<Module> es;
 	private ModuleService moduleService;
-	private long[] selected;// 当前选中项的id值，多个用逗号连接
-	private long[] exclude;// 要排除可选择的项的id，多个用逗号连接
+	private long[] selected;// 当前选中项的id值
+	private long[] exclude;// 要排除可选择的项的id
+	private Integer[] types;// 资源类型
 	private boolean multiple;// 是否可以多选
 
 	@Autowired
 	public void setModuleService(ModuleService actorService) {
 		this.moduleService = actorService;
+	}
+
+	public Integer[] getTypes() {
+		return types;
+	}
+
+	public void setTypes(Integer[] types) {
+		this.types = types;
 	}
 
 	public List<Module> getEs() {
@@ -74,9 +85,14 @@ public class SelectModuleAction extends ActionSupport {
 	}
 
 	public String execute() throws Exception {
-		AndCondition condition = new AndCondition();
-		condition.add(new EqualsCondition("type",new Integer(Module.TYPE_FOLDER)));
-		condition.add(new OrderCondition("code",Direction.Asc));
+		MixCondition condition = new AndCondition();
+		if (types != null && types.length > 0) {
+			condition.add(new InCondition("type", types));
+		} else {// 默认为选择模块
+			condition.add(new EqualsCondition("type", new Integer(
+					Module.TYPE_FOLDER)));
+		}
+		condition.add(new OrderCondition("code", Direction.Asc));
 		this.es = this.moduleService.createQuery().condition(condition).list();
 
 		// 排除不能选择的

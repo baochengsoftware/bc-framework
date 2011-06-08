@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import cn.bc.core.DefaultEntity;
 
 /**
- * 模块
+ * 资源
  * 
  * @author dragon
  */
@@ -22,19 +22,21 @@ import cn.bc.core.DefaultEntity;
 public class Module extends DefaultEntity {
 	private static final long serialVersionUID = 4623393538293916992L;
 	
-	/**模块类型为文件夹*/
+	/**资源类型为文件夹*/
 	public static final int TYPE_FOLDER = 1;
-	/**模块类型为内部链接*/
+	/**资源类型为内部链接*/
 	public static final int TYPE_INNER_LINK = 2;
-	/**模块类型为外部链接*/
+	/**资源类型为外部链接*/
 	public static final int TYPE_OUTER_LINK = 3;
-	/**模块类型为HTML*/
+	/**资源类型为HTML*/
 	public static final int TYPE_HTML = 4;
+	/**资源类型为按钮操作*/
+	public static final int TYPE_OPERATE = 5;
 
 	private String name;//名称
 	private String code;//编码
-	private int type;//模块类型，TYPE_*定义的相关常数
-	private String url;//模块地址
+	private int type;//资源类型，TYPE_*定义的相关常数
+	private String url;//资源地址
 	private Module belong;//所隶属的模块
 	private String iconClass;//图标样式
 	private String option;//额外配置

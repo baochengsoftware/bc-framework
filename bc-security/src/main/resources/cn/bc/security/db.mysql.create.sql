@@ -1,5 +1,5 @@
 -- 系统安全相关模块
--- 模块
+-- 系统资源
 create table BC_SECURITY_MODULE (
     ID int NOT NULL auto_increment,
     UID_ varchar(36) COMMENT '全局标识',
@@ -13,7 +13,7 @@ create table BC_SECURITY_MODULE (
     ICONCLASS varchar(255) COMMENT '图标样式',
     OPTION_ text COMMENT '扩展参数',
     primary key (ID)
-) COMMENT='模块';
+) COMMENT='系统资源';
 
 -- 角色
 create table BC_SECURITY_ROLE (
@@ -32,7 +32,7 @@ create table BC_SECURITY_ROLE_MODULE (
     RID int NOT NULL COMMENT '角色ID',
     MID int NOT NULL COMMENT '模块ID',
     primary key (RID,MID)
-) COMMENT='角色与模块的关联：角色可以使用哪些模块资源';
+) COMMENT='角色与资源的关联：角色可以访问哪些资源';
 ALTER TABLE BC_SECURITY_ROLE_MODULE ADD CONSTRAINT FK_RM_ROLE FOREIGN KEY (RID) 
 	REFERENCES BC_SECURITY_ROLE (ID);
 ALTER TABLE BC_SECURITY_ROLE_MODULE ADD CONSTRAINT FK_RM_MODULE FOREIGN KEY (MID) 

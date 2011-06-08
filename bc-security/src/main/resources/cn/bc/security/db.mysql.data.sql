@@ -10,7 +10,7 @@ insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCL
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 1, m.id, '90-02','权限配置', null, 'icon' from BC_SECURITY_MODULE m where m.code='90';
 
--- 插入链接模块数据
+-- 插入链接资源数据
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	values(1, 0, 2, null, '98','个性化设置', '/bc/personal/edit', 'i0504');
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
@@ -33,7 +33,7 @@ insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCL
 	select 1, 0, 2, m.id, '90-01-05','用户配置', '/bc/user/paging', 'i0507' from BC_SECURITY_MODULE m where m.code='90-01';
     
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS)
-	select 1, 0, 2, m.id, '90-02-01','模块配置', '/bc/module/paging', 'i0600' from BC_SECURITY_MODULE m where m.code='90-02';
+	select 1, 0, 2, m.id, '90-02-01','资源配置', '/bc/module/paging', 'i0600' from BC_SECURITY_MODULE m where m.code='90-02';
 insert into BC_SECURITY_MODULE (STATUS_,INNER_,TYPE_,BELONG,CODE,NAME,URL,ICONCLASS) 
 	select 1, 0, 2, m.id, '90-02-02','角色配置', '/bc/role/paging', 'i0509' from BC_SECURITY_MODULE m where m.code='90-02';
 

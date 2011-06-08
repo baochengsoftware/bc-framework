@@ -33,20 +33,21 @@ import cn.bc.web.ui.html.page.PageOption;
 @Controller
 public class ModuleAction extends CrudAction<Long, Module> {
 	private static final long serialVersionUID = 1L;
-	//private ModuleService moduleService;
-	private List<KeyValue> types;// 可选的模块类型
+	// private ModuleService moduleService;
+	public List<KeyValue> types;// 可选的模块类型
 
 	// 模块类型列表
 	public ModuleAction() {
 		types = new ArrayList<KeyValue>();
-		types.add(new KeyValue(String.valueOf(Module.TYPE_FOLDER), "分类"));
+		types.add(new KeyValue(String.valueOf(Module.TYPE_FOLDER), "模块"));
+		types.add(new KeyValue(String.valueOf(Module.TYPE_OPERATE), "操作"));
 		types.add(new KeyValue(String.valueOf(Module.TYPE_INNER_LINK), "内部链接"));
 		types.add(new KeyValue(String.valueOf(Module.TYPE_OUTER_LINK), "外部链接"));
 	}
 
 	@Autowired
 	public void setModuleService(ModuleService moduleService) {
-		//this.moduleService = moduleService;
+		// this.moduleService = moduleService;
 		this.setCrudService(moduleService);
 	}
 
@@ -98,6 +99,12 @@ public class ModuleAction extends CrudAction<Long, Module> {
 	@Override
 	public String save() throws Exception {
 		// 处理隶属关系
+		Module belong = this.getE().getBelong();
+		if (belong != null
+				&& (belong.getId() == null || belong.getId().longValue() == 0)) {
+			this.getE().setBelong(null);
+		}
+
 		return super.save();
 	}
 }

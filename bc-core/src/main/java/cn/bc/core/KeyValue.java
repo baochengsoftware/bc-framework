@@ -7,22 +7,24 @@ package cn.bc.core;
  * 
  */
 public class KeyValue {
-	private String Label;//显示的名称
-	private String value;//实际的值
+	private String key;// 实际的值
+	private String value;// 显示的名称
 
 	public KeyValue() {
 	}
 
-	public KeyValue(String Label, String value) {
+	public KeyValue(String key, String value) {
 		this();
+		this.key = key;
+		this.value = value;
 	}
 
-	public String getLabel() {
-		return Label;
+	public String getKey() {
+		return key;
 	}
 
-	public void setLabel(String label) {
-		Label = label;
+	public void setKey(String key) {
+		this.key = key;
 	}
 
 	public String getValue() {
