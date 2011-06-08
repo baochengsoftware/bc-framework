@@ -9,7 +9,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 
 import cn.bc.identity.dao.ActorRelationDao;
@@ -29,7 +28,6 @@ public class UserServiceImpl extends ActorServiceImpl implements UserService {
 	private AuthDataDao authDataDao;
 	private ActorRelationDao actorRelationDao;
 
-	@Autowired
 	public void setActorRelationDao(ActorRelationDao actorRelationDao) {
 		this.actorRelationDao = actorRelationDao;
 	}

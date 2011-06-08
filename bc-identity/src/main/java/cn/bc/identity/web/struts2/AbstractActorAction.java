@@ -110,18 +110,20 @@ public abstract class AbstractActorAction extends CrudAction<Long, Actor> {
 		// 加载直接分配的角色信息
 		this.ownedRoles = this.getActorService().load(this.getId()).getRoles();
 
-		// 加载从上级组织继承的角色信息
 		this.inheritRolesFromOU = new HashSet<Role>();
-		inheritRolesFromOU.addAll(this.belong.getRoles());
+		if (this.belong != null) {
+			// 加载从上级组织继承的角色信息
+			inheritRolesFromOU.addAll(this.belong.getRoles());
 
-		// 加载从上级的上级继承的角色信息
-		List<Actor> ancestorOU = this
-				.getActorService()
-				.findAncestorOrganization(
-						this.belong.getId(),
-						new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
-		for (Actor ou : ancestorOU) {
-			inheritRolesFromOU.addAll(ou.getRoles());
+			// 加载从上级的上级继承的角色信息
+			List<Actor> ancestorOU = this.getActorService()
+					.findAncestorOrganization(
+							this.belong.getId(),
+							new Integer[] { Actor.TYPE_UNIT,
+									Actor.TYPE_DEPARTMENT });
+			for (Actor ou : ancestorOU) {
+				inheritRolesFromOU.addAll(ou.getRoles());
+			}
 		}
 	}
 
