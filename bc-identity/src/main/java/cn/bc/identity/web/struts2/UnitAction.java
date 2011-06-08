@@ -42,7 +42,7 @@ public class UnitAction extends AbstractActorAction {
 
 	// 设置页面的尺寸
 	protected PageOption buildListPageOption() {
-		return super.buildListPageOption().setWidth(620).setMinWidth(450)
+		return super.buildListPageOption().setWidth(650).setMinWidth(450)
 				.setHeight(400).setMinHeight(200);
 	}
 

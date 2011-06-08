@@ -111,12 +111,15 @@ public abstract class AbstractActorAction extends CrudAction<Long, Actor> {
 		this.ownedRoles = this.getActorService().load(this.getId()).getRoles();
 
 		// 加载从上级组织继承的角色信息
+		this.inheritRolesFromOU = new HashSet<Role>();
+		inheritRolesFromOU.addAll(this.belong.getRoles());
+
+		// 加载从上级的上级继承的角色信息
 		List<Actor> ancestorOU = this
 				.getActorService()
 				.findAncestorOrganization(
 						this.belong.getId(),
 						new Integer[] { Actor.TYPE_UNIT, Actor.TYPE_DEPARTMENT });
-		this.inheritRolesFromOU = new HashSet<Role>();
 		for (Actor ou : ancestorOU) {
 			inheritRolesFromOU.addAll(ou.getRoles());
 		}
