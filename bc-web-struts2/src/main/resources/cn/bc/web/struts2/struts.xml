@@ -29,6 +29,8 @@
 			</result>
 			<result name="deleteSuccess" type="freemarker">/cn/bc/web/struts2/form.delete.success.ftl
 			</result>
+			<!-- 导出视图数据为Excel文件 -->
+			<result name="export" type="stream"/>
 		</global-results>
 
 			<!-- <global-exception-mappings> <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping> 

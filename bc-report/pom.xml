@@ -27,6 +27,24 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- 导出Excel需要的包 -->
+		<dependency>
+			<groupId>net.sf.jxls</groupId>
+			<artifactId>jxls-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jxls</groupId>
+			<artifactId>jxls-reader</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+		</dependency>
+
 		<!-- batik需要的包 -->
 		<dependency>
 			<groupId>batik</groupId>

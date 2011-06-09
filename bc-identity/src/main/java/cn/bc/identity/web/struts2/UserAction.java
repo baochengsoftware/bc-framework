@@ -113,16 +113,22 @@ public class UserAction extends AbstractActorAction {
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
 
-		columns.add(new TextColumn("status", getText("actor.status"), 60)
-				.setFormater(new EntityStatusFormater(getEntityStatuses())));
-		columns.add(new TextColumn("order", getText("actor.order"), 80)
-				.setSortable(true).setDir(Direction.Asc));
-		columns.add(new TextColumn("code", getText("user.code"))
-				.setSortable(true));
-		columns.add(new TextColumn("name", getText("user.name"), 100)
-				.setSortable(true));
-		columns.add(new TextColumn("phone", getText("user.phone"), 100));
-		columns.add(new TextColumn("email", getText("user.email"), 100));
+		if (this.useColumn("status"))
+			columns.add(new TextColumn("status", getText("actor.status"), 60)
+					.setFormater(new EntityStatusFormater(getEntityStatuses())));
+		if (this.useColumn("order"))
+			columns.add(new TextColumn("order", getText("actor.order"), 80)
+					.setSortable(true).setDir(Direction.Asc));
+		if (this.useColumn("code"))
+			columns.add(new TextColumn("code", getText("user.code"))
+					.setSortable(true));
+		if (this.useColumn("name"))
+			columns.add(new TextColumn("name", getText("user.name"), 100)
+					.setSortable(true));
+		if (this.useColumn("phone"))
+			columns.add(new TextColumn("phone", getText("user.phone"), 100));
+		if (this.useColumn("email"))
+			columns.add(new TextColumn("email", getText("user.email"), 100));
 
 		return columns;
 	}

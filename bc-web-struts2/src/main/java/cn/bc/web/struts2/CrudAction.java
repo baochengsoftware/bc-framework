@@ -3,6 +3,9 @@
  */
 package cn.bc.web.struts2;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -32,6 +35,7 @@ import cn.bc.web.ui.html.grid.Column;
 import cn.bc.web.ui.html.grid.FooterButton;
 import cn.bc.web.ui.html.grid.Grid;
 import cn.bc.web.ui.html.grid.GridData;
+import cn.bc.web.ui.html.grid.GridExporter;
 import cn.bc.web.ui.html.grid.GridFooter;
 import cn.bc.web.ui.html.grid.GridHeader;
 import cn.bc.web.ui.html.grid.IdColumn;
@@ -43,6 +47,7 @@ import cn.bc.web.ui.html.page.PageOption;
 import cn.bc.web.ui.html.toolbar.Toolbar;
 import cn.bc.web.ui.html.toolbar.ToolbarButton;
 import cn.bc.web.ui.html.toolbar.ToolbarSearchButton;
+import cn.bc.web.util.WebUtils;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -267,6 +272,58 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 		return "page";
 	}
 
+	// 导出视图数据需要的变量
+	public boolean exporting;// 标记当前处于导出状态
+	public String exportKeys;// 要导出列的标识，用逗号连接多个
+	public String fileName;// 下载的文件名
+	public InputStream inputStream;// 下载文件对应的流
+	public String contentType = "application/vnd.ms-excel";// 下载文件类型定义
+	public int bufferSize = 4096;
+	public String inputName = "inputStream";// 文件输出流定义
+	public String contentDisposition;// 下载文件处理方法
+
+	// 导出表格的数据为excel文件
+	public String export() throws Exception {
+		// 确定下载文件的名称(解决跨浏览器中文文件名乱码问题)
+		if (fileName == null || fileName.length() == 0)
+			fileName = getText("export.default.fileName")
+					+ getText(StringUtils.uncapitalize(getEntityConfigName()));// 默认的文件名
+		String title = fileName;
+		fileName = WebUtils.encodeFileName(ServletActionContext.getRequest(),
+				fileName);
+
+		// 确定下载文件处理方法
+		// contentDisposition = "inline;filename=\"" +fileName
+		// +".xls\"";//在页面中打开
+		contentDisposition = "attachment;filename=\"" + fileName + ".xls\"";// 以附件方式下载
+
+		// TODO 根据导出条件构建
+		if (this.page != null) {// 分页的处理
+			this.page = this.findPage();
+			this.es = this.page.getData();
+		} else {// 非分页的处理
+			this.es = this.findList();
+		}
+
+		// 导出数据到Excel
+		GridExporter exporter = new GridExporter();
+		exporter.setColumns(this.buildGridColumns()).setTitle(title)
+				.setData(this.es).setIdLabel(getText("label.idLabel"));
+		ByteArrayOutputStream out = new ByteArrayOutputStream(4096);
+		exporter.exportTo(out);
+		this.inputStream = new ByteArrayInputStream(out.toByteArray());
+
+		return "export";
+
+		// Content-Type:
+		// 163下载.doc：application/msword
+		// 163下载.xls：application/vnd.ms-excel
+		// 163下载.txt：text/plain
+		// 163下载.html：text/html
+		// 163下载.rar|.reg：application/octet-stream
+		// application/x-msdownload
+	}
+
 	/**
 	 * 构建表格列头
 	 * 
@@ -457,6 +514,21 @@ public class CrudAction<K extends Serializable, E extends Entity<K>> extends
 		List<Column> columns = new ArrayList<Column>();
 		columns.add(IdColumn.DEFAULT());
 		return columns;
+	}
+
+	/**
+	 * 判断指定的列是否应该添加
+	 * 返回true的情况：
+	 * 1)非导出状态
+	 * 2)导出状态，用户没有排除某些列不导出
+	 * 3)导出状态，用户选定的某些列
+	 * @param key 列的标识
+	 * @return
+	 */
+	protected boolean useColumn(String key) {
+		return !this.exporting
+				|| (this.exportKeys == null || this.exportKeys.length() == 0 || this.exportKeys
+						.indexOf(key) != -1);
 	}
 
 	/** 构建视图页面表格底部的工具条 */

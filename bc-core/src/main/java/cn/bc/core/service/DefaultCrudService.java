@@ -48,8 +48,8 @@ public class DefaultCrudService<T extends Object> implements CrudService<T>,
 			type = ((ParameterizedType) type).getActualTypeArguments()[0];
 			if (type instanceof Class){
 				this.entityClass = (Class<T>) type;
-				if (logger.isInfoEnabled())
-					logger.info("auto judge entityClass to '" + this.entityClass + "' [" + this.getClass() + "]");
+				if (logger.isDebugEnabled())
+					logger.debug("auto judge entityClass to '" + this.entityClass + "' [" + this.getClass() + "]");
 			}
 		}
 	}
@@ -75,8 +75,8 @@ public class DefaultCrudService<T extends Object> implements CrudService<T>,
 		}
 		if (this.crudDao.getEntityClass() == null && clazz != null) {
 			if (this.crudDao instanceof SetEntityClass) {
-				if (logger.isInfoEnabled())
-					logger.info("auto set crudDao.entityClass to '" + clazz + "' [" + this.getClass() + "]");
+				if (logger.isDebugEnabled())
+					logger.debug("auto set crudDao.entityClass to '" + clazz + "' [" + this.getClass() + "]");
 				// 补充设置crudDao的entityClass
 				((SetEntityClass<T>) this.crudDao).setEntityClass(clazz);
 			}

@@ -63,10 +63,12 @@ public class RoleAction extends CrudAction<Long, Role> {
 	protected List<Column> buildGridColumns() {
 		List<Column> columns = super.buildGridColumns();
 
-		columns.add(new TextColumn("code", getText("label.order"), 200)
-				.setSortable(true).setDir(Direction.Asc));
-		columns.add(new TextColumn("name", getText("label.name"))
-				.setSortable(true));
+		if (this.useColumn("code"))
+			columns.add(new TextColumn("code", getText("label.order"), 200)
+					.setSortable(true).setDir(Direction.Asc));
+		if (this.useColumn("name"))
+			columns.add(new TextColumn("name", getText("label.name"))
+					.setSortable(true));
 
 		return columns;
 	}
@@ -77,6 +79,7 @@ public class RoleAction extends CrudAction<Long, Role> {
 	}
 
 	public String assignModuleIds;// 分派的模块id，多个id用逗号连接
+
 	@Override
 	public String save() throws Exception {
 		// 处理分配的模块

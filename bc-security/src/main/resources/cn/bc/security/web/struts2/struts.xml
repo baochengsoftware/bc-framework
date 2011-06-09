@@ -16,6 +16,7 @@
 		<action name="list" class="moduleAction" method="list"/>
 		<action name="paging" class="moduleAction" method="paging"/>
 		<action name="data" class="moduleAction" method="data"/>
+		<action name="export" class="moduleAction" method="export"/>
 	</package>
 	<package name="role" extends="bc-default" namespace="/bc/role">
 		<action name="create" class="roleAction" method="create">
@@ -30,6 +31,7 @@
 		<action name="list" class="roleAction" method="list"/>
 		<action name="paging" class="roleAction" method="paging"/>
 		<action name="data" class="roleAction" method="data"/>
+		<action name="export" class="roleAction" method="export"/>
 	</package>
 	
 	<package name="selectModule" extends="bc-default" namespace="/bc">

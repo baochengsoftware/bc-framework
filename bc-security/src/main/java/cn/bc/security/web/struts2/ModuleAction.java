@@ -79,19 +79,27 @@ public class ModuleAction extends CrudAction<Long, Module> {
 		List<Column> columns = super.buildGridColumns();
 
 		// columns.add(new TextColumn("status", getText("actor.status"), 40));
-		columns.add(new TextColumn("type", getText("module.type"), 80)
-				.setSortable(true).setFormater(
-						new ModuleTypeFormater(getModuleTypes())));
-		columns.add(new TextColumn("belong.name", getText("module.belong"), 80));
-		columns.add(new TextColumn("code", getText("label.order"), 100)
-				.setSortable(true).setDir(Direction.Asc));
-		columns.add(new TextColumn("name", getText("label.name"), 100)
-				.setSortable(true));
-		columns.add(new TextColumn("url", getText("module.url"))
-				.setSortable(true));
-		columns.add(new TextColumn("iconClass", getText("module.iconClass"),
-				100).setSortable(true));
-		columns.add(new TextColumn("option", getText("module.option"), 100));
+		if (this.useColumn("type"))
+			columns.add(new TextColumn("type", getText("module.type"), 80)
+					.setSortable(true).setFormater(
+							new ModuleTypeFormater(getModuleTypes())));
+		if (this.useColumn("belong.name"))
+			columns.add(new TextColumn("belong.name", getText("module.belong"),
+					80));
+		if (this.useColumn("code"))
+			columns.add(new TextColumn("code", getText("label.order"), 100)
+					.setSortable(true).setDir(Direction.Asc));
+		if (this.useColumn("name"))
+			columns.add(new TextColumn("name", getText("label.name"), 100)
+					.setSortable(true));
+		if (this.useColumn("url"))
+			columns.add(new TextColumn("url", getText("module.url"))
+					.setSortable(true));
+		if (this.useColumn("iconClass"))
+			columns.add(new TextColumn("iconClass",
+					getText("module.iconClass"), 100).setSortable(true));
+		if (this.useColumn("option"))
+			columns.add(new TextColumn("option", getText("module.option"), 100));
 
 		return columns;
 	}
